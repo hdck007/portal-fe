@@ -24,7 +24,7 @@ const drawerWidth = 240;
 
 // stale
 
-
+4
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
