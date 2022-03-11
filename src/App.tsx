@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import StudentDetails from './Pages/Details/StudentDetails';
 
 function PlaceHolder() {
   return <div>Hello</div>;
@@ -13,10 +14,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PlaceHolder />}>
-          <Route index element={<PlaceHolder />} />
-          <Route path="teams" element={<>Hello teams</>} />
-        </Route>
+        <Route path="/" element={<PlaceHolder />} />
+        <Route path="/details" element={<StudentDetails />} />
       </Routes>
     </BrowserRouter>
   );
