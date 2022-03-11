@@ -22,6 +22,10 @@ import MailIcon from '@mui/icons-material/Mail';
 
 const drawerWidth = 240;
 
+// stale
+
+
+
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
