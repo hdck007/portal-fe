@@ -27,9 +27,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "check-types": "tsc",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "pre-commit": "lint-staged"
+    "pre-commit": "check-types && lint-staged"
   },
   "browserslist": {
     "production": [
