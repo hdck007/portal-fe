@@ -30,7 +30,7 @@
     "check-types": "tsc",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "pre-commit": "check-types && lint-staged"
+    "pre-commit": "npm run check-types && lint-staged"
   },
   "browserslist": {
     "production": [
@@ -56,5 +56,10 @@
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^7.0.0",
     "lint-staged": "^12.3.5"
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint"
+    ]
   }
 }
