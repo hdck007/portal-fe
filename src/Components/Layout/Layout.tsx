@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import StudentSidebarList from '../StudentSidebarList/StudentSidebarList';
+import StudentSidebarList from './StudentSidebarList/StudentSidebarList';
 import AppBar from './AppBar';
 import DrawerHeader from './DrawerHeader';
 import Drawer from './Drawer';

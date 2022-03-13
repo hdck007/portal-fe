@@ -1,11 +1,11 @@
 import React from 'react';
-import Academicdetails from '../../Components/Academicdetails/Academicdetails';
+import AcademicdetailsWrapper from '../../Components/Academicdetails/AcademicdetailsWrapper';
 import Layout from '../../Components/Layout/Layout';
 
 function StudentDetails() {
   return (
     <Layout>
-      <Academicdetails />
+      <AcademicdetailsWrapper />
     </Layout>
   );
 }

@@ -1,1 +1,1 @@
-export * from './Academicdetails';
+export * from './AcademicdetailsWrapper';
