@@ -30,7 +30,10 @@
     "check-types": "tsc",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "pre-commit": "npm run check-types && lint-staged"
+    "pre-commit": "npm run check-types && lint-staged",
+    "_lint": "eslint --config ./.eslintrc.json --ext js --ext jsx --ext tsx --ext ts",
+    "lint": "npm run _lint -- ./src/",
+    "lint:fix": "npm run _lint -- --fix ./src/"
   },
   "browserslist": {
     "production": [
