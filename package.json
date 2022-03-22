@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.5.0",
     "@mui/material": "^5.4.3",
+    "@mui/styles": "^5.5.0",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.3",
     "@testing-library/user-event": "^13.5.0",
@@ -19,8 +20,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^6.2.1",
-    "react-scripts": "5.0.0",
-    "typescript": "^4.5.5",
+    "react-scripts": "^5.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -30,7 +30,10 @@
     "check-types": "tsc",
     "eject": "react-scripts eject",
     "prepare": "husky install",
-    "pre-commit": "npm run check-types && lint-staged"
+    "pre-commit": "npm run check-types && lint-staged",
+    "_lint": "eslint --config ./.eslintrc.json --ext js --ext jsx --ext tsx --ext ts",
+    "lint": "npm run _lint -- ./src/",
+    "lint:fix": "npm run _lint -- --fix ./src/"
   },
   "browserslist": {
     "production": [
@@ -55,7 +58,8 @@
     "eslint-plugin-react": "^7.29.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "husky": "^7.0.0",
-    "lint-staged": "^12.3.5"
+    "lint-staged": "^12.3.5",
+    "typescript": "^4.6.2"
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
