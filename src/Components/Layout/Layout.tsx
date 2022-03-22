@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import {
   useTheme,
@@ -46,14 +47,16 @@ export default function Layout({ children }: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            Ramrao Adik Institute of Technology
           </Typography>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            {theme.direction === 'rtl'
+              ? <ChevronRightIcon />
+              : <ChevronLeftIcon />}
           </IconButton>
         </DrawerHeader>
         <Divider />

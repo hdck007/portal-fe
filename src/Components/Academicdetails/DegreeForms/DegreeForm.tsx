@@ -1,18 +1,23 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Accordion, AccordionDetails, AccordionSummary, styled, TextField, Typography,
 } from '@mui/material';
 import React from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { IBoardDetails } from '../../../Interfaces/StudentDetails';
+import { IDegreeDetails } from '../../../Interfaces/StudentDetails';
 
-interface IBoardsFormProps{
-  setBoardsAcadDetails: React.Dispatch<IBoardDetails[]>;
+interface IDegreeFormProps{
+  setBoardsAcadDetails: React.Dispatch<any>;
   index: number;
-  details: IBoardDetails;
+  details: IDegreeDetails;
+  field: string;
+  handleChange: (
+    event: any, value: string, field: string, index: number
+    ) => void
 }
 
-const BoardsRowWrapper = styled('div')(() => ({
+const RowWrapper = styled('div')(({ theme }) => ({
   width: '60%',
   padding: '2px 0',
   display: 'flex',
@@ -20,11 +25,13 @@ const BoardsRowWrapper = styled('div')(() => ({
   justifyContent: 'space-around',
 }));
 
-function BoardsForm({
+function DegreeForm({
   setBoardsAcadDetails,
   index,
   details,
-}: IBoardsFormProps) {
+  field,
+  handleChange,
+}: IDegreeFormProps) {
   const [expanded, setExpanded] = React.useState<boolean>(false);
   return (
     <div>
@@ -41,79 +48,86 @@ function BoardsForm({
             fontSize={18}
             sx={{ width: '33%', flexShrink: 0 }}
           >
-            {details.board}
+            Sem
+            {' '}
+            {details.semester}
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <BoardsRowWrapper>
-            <Typography
-              width="50%"
-            >
-              Select Board:
-            </Typography>
-            <TextField
-              variant="standard"
-              style={{
-                width: '50%',
-              }}
-            />
-          </BoardsRowWrapper>
-          <BoardsRowWrapper>
+          <RowWrapper>
             <Typography
               width="50%"
             >
               Completion Month:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'completionMonth', field, index)}
               variant="standard"
               style={{
                 width: '50%',
               }}
             />
-          </BoardsRowWrapper>
-          <BoardsRowWrapper>
+          </RowWrapper>
+          <RowWrapper>
             <Typography
               width="50%"
             >
               Completion Year:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'completionYear', field, index)}
               variant="standard"
               style={{
                 width: '50%',
               }}
             />
-          </BoardsRowWrapper>
-          <BoardsRowWrapper>
+          </RowWrapper>
+          <RowWrapper>
             <Typography
               width="50%"
             >
               Marks Obtained:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'marksObtained', field, index)}
               variant="standard"
               style={{
                 width: '50%',
               }}
             />
-          </BoardsRowWrapper>
-          <BoardsRowWrapper>
+          </RowWrapper>
+          <RowWrapper>
             <Typography
               width="50%"
             >
               Total Marks:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'totalMarks', field, index)}
               variant="standard"
               style={{
                 width: '50%',
               }}
             />
-          </BoardsRowWrapper>
+          </RowWrapper>
+          <RowWrapper>
+            <Typography
+              width="50%"
+            >
+              CGPA:
+            </Typography>
+            <TextField
+              onChange={(e) => handleChange(e, 'cgpa', field, index)}
+              variant="standard"
+              style={{
+                width: '50%',
+              }}
+            />
+          </RowWrapper>
         </AccordionDetails>
       </Accordion>
     </div>
   );
 }
 
-export default BoardsForm;
+export default DegreeForm;
