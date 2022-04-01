@@ -7,7 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IBoardDetails } from '../../../Interfaces/StudentDetails';
 
 interface IBoardsFormProps{
-  setBoardsAcadDetails: React.Dispatch<IBoardDetails[]>;
+  handleChange: (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string,
+    index: number) => void;
   index: number;
   details: IBoardDetails;
 }
@@ -21,9 +24,9 @@ const BoardsRowWrapper = styled('div')(() => ({
 }));
 
 function BoardsForm({
-  setBoardsAcadDetails,
   index,
   details,
+  handleChange,
 }: IBoardsFormProps) {
   const [expanded, setExpanded] = React.useState<boolean>(false);
   return (
@@ -52,6 +55,7 @@ function BoardsForm({
               Select Board:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'board', index)}
               variant="standard"
               style={{
                 width: '50%',
@@ -65,6 +69,7 @@ function BoardsForm({
               Completion Month:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'completionMonth', index)}
               variant="standard"
               style={{
                 width: '50%',
@@ -78,6 +83,7 @@ function BoardsForm({
               Completion Year:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'completionYear', index)}
               variant="standard"
               style={{
                 width: '50%',
@@ -91,6 +97,7 @@ function BoardsForm({
               Marks Obtained:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'marksObtained', index)}
               variant="standard"
               style={{
                 width: '50%',
@@ -104,6 +111,7 @@ function BoardsForm({
               Total Marks:
             </Typography>
             <TextField
+              onChange={(e) => handleChange(e, 'totalMarks', index)}
               variant="standard"
               style={{
                 width: '50%',

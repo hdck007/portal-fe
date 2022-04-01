@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Button, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
+import CircularProgress from '@mui/material/CircularProgress';
+import { DetailsContext } from '../../Contexts/DetailsContext';
 import { IBoardDetails, IDegreeDetails } from '../../Interfaces/StudentDetails';
+import AdditionaldetailsWrapper from '../Additionaldetails/AdditionaldetailsWrapper';
+import DotsMobileStepper from '../FormStepper/FormStepper';
 import ApplicableOptions from './ApplicableOptions/ApplicableOptions';
 import BoardsForm from './BoardsForm/BoardsForm';
 import DegreeForm from './DegreeForms/DegreeForm';
@@ -18,6 +22,8 @@ function AcademicdetailsWrapper() {
   const [didDiploma, setDidDiploma] = useState<boolean>(false);
   const [didMe, setDidMe] = useState<boolean>(false);
   const [didXII, setDidXII] = useState<boolean>(false);
+
+  const { activeStep, isLoading }: any = React.useContext(DetailsContext);
 
   useEffect(() => {
     const value = new Array(6).fill(0).map((_, index) => ({
@@ -95,8 +101,19 @@ function AcademicdetailsWrapper() {
     }
   };
 
+  const handleChangeBoards = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string,
+    index: number,
+  ) => {
+    const newBoardsAcadDetails = [...boardsAcadDetails];
+    // @ts-ignore
+    newBoardsAcadDetails[index][field] = event.target.value;
+    setBoardsAcadDetails(newBoardsAcadDetails);
+  };
+
   const handleChangeDegree = (
-    event: Event,
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     value: string,
     field: string,
     index: number,
@@ -130,161 +147,167 @@ function AcademicdetailsWrapper() {
 
   return (
     <>
-      <ApplicableOptions
-        didDiploma={didDiploma}
-        setDidDiploma={setDidDiploma}
-        didMe={didMe}
-        setDidMe={setDidMe}
-        didXII={didXII}
-        setDidXII={setDidXII}
-      />
-
-      {/* Boards details */}
-      <div
-        style={{
-          width: '75%',
-          position: 'relative',
-          bottom: '220px',
-        }}
-      >
-        <Typography
-          fontSize={24}
-          style={{
-            padding: '10px 0',
-          }}
-        >
-          Boards academic details
-        </Typography>
-        {boardsAcadDetails.map((item: IBoardDetails, index: number) => (
-          <BoardsForm
-            setBoardsAcadDetails={setBoardsAcadDetails}
-            index={index}
-            details={item}
+      <DotsMobileStepper />
+      {isLoading && <CircularProgress />}
+      {activeStep === 1 && (
+        <>
+          <ApplicableOptions
+            didDiploma={didDiploma}
+            setDidDiploma={setDidDiploma}
+            didMe={didMe}
+            setDidMe={setDidMe}
+            didXII={didXII}
+            setDidXII={setDidXII}
           />
-        ))}
-      </div>
 
-      {/* optional diploma */}
-      {didDiploma && (
-        <div
-          style={{
-            position: 'relative',
-            bottom: '200px',
-            width: '75%',
-            marginBottom: '20px',
-          }}
-        >
-          <Typography
-            fontSize={24}
+          {/* Boards details */}
+          <div
             style={{
-              padding: '10px 0',
+              width: '75%',
+              position: 'relative',
+              bottom: '220px',
             }}
           >
-            Diploma academic details
-          </Typography>
-          {diplomaAcadDetails.map((item: IDegreeDetails, index: number) => (
-            <DegreeForm
-              field="diploma"
-              setBoardsAcadDetails={setBoardsAcadDetails}
-              index={index}
-              details={item}
-              handleChange={handleChangeDegree}
-            />
-          ))}
-        </div>
+            <Typography
+              fontSize={24}
+              style={{
+                padding: '10px 0',
+              }}
+            >
+              Boards academic details
+            </Typography>
+            {boardsAcadDetails.map((item: IBoardDetails, index: number) => (
+              <BoardsForm
+                handleChange={handleChangeBoards}
+                index={index}
+                details={item}
+              />
+            ))}
+          </div>
+
+          {/* optional diploma */}
+          {didDiploma && (
+          <div
+            style={{
+              position: 'relative',
+              bottom: '200px',
+              width: '75%',
+              marginBottom: '20px',
+            }}
+          >
+            <Typography
+              fontSize={24}
+              style={{
+                padding: '10px 0',
+              }}
+            >
+              Diploma academic details
+            </Typography>
+            {diplomaAcadDetails.map((item: IDegreeDetails, index: number) => (
+              <DegreeForm
+                field="diploma"
+                index={index}
+                details={item}
+                handleChange={handleChangeDegree}
+              />
+            ))}
+          </div>
+          )}
+
+          {/* be details */}
+          <div
+            style={{
+              position: 'relative',
+              bottom: '200px',
+              width: '75%',
+            }}
+          >
+            <Typography
+              fontSize={24}
+              style={{
+                padding: '10px 0',
+              }}
+            >
+              Degree academic details
+            </Typography>
+            {engAcadDetails.map((item: IDegreeDetails, index: number) => (
+              <DegreeForm
+                field="eng"
+                index={index}
+                details={item}
+                handleChange={handleChangeDegree}
+              />
+            ))}
+            <Button
+              style={{
+                position: 'absolute',
+                right: '100px',
+              }}
+              onClick={() => handleAddAcad('eng')}
+            >
+              Add
+            </Button>
+            <Button
+              style={{
+                position: 'absolute',
+                right: '0px',
+              }}
+              onClick={() => removeEngAcad('eng')}
+            >
+              Remove
+            </Button>
+          </div>
+
+          {/* pg acad details */}
+          {didMe && (
+          <div
+            style={{
+              position: 'relative',
+              bottom: '200px',
+              width: '75%',
+            }}
+          >
+            <Typography
+              fontSize={24}
+              style={{
+                padding: '10px 0',
+                marginTop: '20px',
+              }}
+            >
+              PG academic details
+            </Typography>
+            {meAcadDetails.map((item: IDegreeDetails, index: number) => (
+              <DegreeForm
+                field="me"
+                index={index}
+                details={item}
+                handleChange={handleChangeDegree}
+              />
+            ))}
+            <Button
+              style={{
+                position: 'absolute',
+                right: '100px',
+              }}
+              onClick={() => handleAddAcad('me')}
+            >
+              Add
+            </Button>
+            <Button
+              style={{
+                position: 'absolute',
+                right: '0px',
+              }}
+              onClick={() => removeEngAcad('me')}
+            >
+              Remove
+            </Button>
+          </div>
+          )}
+        </>
       )}
-
-      {/* be details */}
-      <div
-        style={{
-          position: 'relative',
-          bottom: '200px',
-          width: '75%',
-        }}
-      >
-        <Typography
-          fontSize={24}
-          style={{
-            padding: '10px 0',
-          }}
-        >
-          Degree academic details
-        </Typography>
-        {engAcadDetails.map((item: IDegreeDetails, index: number) => (
-          <DegreeForm
-            field="eng"
-            setBoardsAcadDetails={setBoardsAcadDetails}
-            index={index}
-            details={item}
-            handleChange={handleChangeDegree}
-          />
-        ))}
-        <Button
-          style={{
-            position: 'absolute',
-            right: '100px',
-          }}
-          onClick={() => handleAddAcad('eng')}
-        >
-          Add
-        </Button>
-        <Button
-          style={{
-            position: 'absolute',
-            right: '0px',
-          }}
-          onClick={() => removeEngAcad('eng')}
-        >
-          Remove
-        </Button>
-      </div>
-
-      {/* pg acad details */}
-      {didMe && (
-        <div
-          style={{
-            position: 'relative',
-            bottom: '200px',
-            width: '75%',
-          }}
-        >
-          <Typography
-            fontSize={24}
-            style={{
-              padding: '10px 0',
-              marginTop: '20px',
-            }}
-          >
-            PG academic details
-          </Typography>
-          {meAcadDetails.map((item: IDegreeDetails, index: number) => (
-            <DegreeForm
-              field="me"
-              setBoardsAcadDetails={setBoardsAcadDetails}
-              index={index}
-              details={item}
-              handleChange={handleChangeDegree}
-            />
-          ))}
-          <Button
-            style={{
-              position: 'absolute',
-              right: '100px',
-            }}
-            onClick={() => handleAddAcad('me')}
-          >
-            Add
-          </Button>
-          <Button
-            style={{
-              position: 'absolute',
-              right: '0px',
-            }}
-            onClick={() => removeEngAcad('me')}
-          >
-            Remove
-          </Button>
-        </div>
+      {activeStep === 2 && (
+        <AdditionaldetailsWrapper />
       )}
     </>
   );

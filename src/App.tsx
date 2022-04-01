@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import Dashboard from './Pages/Dashboard';
 import StudentDetails from './Pages/Details/StudentDetails';
 
 function PlaceHolder() {
@@ -14,7 +15,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<PlaceHolder />} />
+        <Route path="/" element={<Dashboard />} />
         <Route path="/details" element={<StudentDetails />} />
       </Routes>
     </BrowserRouter>
