@@ -6,21 +6,15 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { DetailsContext } from '../../Contexts/DetailsContext';
 
-export default function DotsMobileStepper() {
+export default function DotsMobileStepper({
+  handleBack,
+  handleNext,
+  activeStep,
+}: any) {
   const theme = useTheme();
   const {
-    activeStep,
-    setActiveStep, setIsLoading,
+    setIsLoading,
   }: any = React.useContext(DetailsContext);
-  const handleNext = () => {
-    setIsLoading(true);
-    setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setIsLoading(true);
-    setActiveStep((prevActiveStep: number) => prevActiveStep - 1);
-  };
 
   return (
     <MobileStepper

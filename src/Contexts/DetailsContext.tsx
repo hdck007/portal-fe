@@ -8,12 +8,9 @@ export const DetailsContext = React.createContext({});
 export default function DetailsProvider(
   { children }: { children: React.ReactNode},
 ) {
-  const [activeStep, setActiveStep] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
 
   const value = {
-    activeStep,
-    setActiveStep,
     isLoading,
     setIsLoading,
   };

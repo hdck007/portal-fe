@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Button, Typography } from '@mui/material';
+import {
+  Alert, Button, Snackbar, Typography,
+} from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import { DetailsContext } from '../../Contexts/DetailsContext';
@@ -12,6 +14,7 @@ import DegreeForm from './DegreeForms/DegreeForm';
 
 function AcademicdetailsWrapper() {
   const [engAcadDetails, setEngAcadDetails] = useState<IDegreeDetails[]>([]);
+  const [activeStep, setActiveStep] = React.useState(0);
   const [
     diplomaAcadDetails, setDiplomaAcadDetails,
   ] = useState<IDegreeDetails[]>([]);
@@ -22,8 +25,8 @@ function AcademicdetailsWrapper() {
   const [didDiploma, setDidDiploma] = useState<boolean>(false);
   const [didMe, setDidMe] = useState<boolean>(false);
   const [didXII, setDidXII] = useState<boolean>(false);
-
-  const { activeStep, isLoading }: any = React.useContext(DetailsContext);
+  const [open, setOpen] = useState<boolean>(false);
+  const { isLoading, setIsLoading }: any = React.useContext(DetailsContext);
 
   useEffect(() => {
     const value = new Array(6).fill(0).map((_, index) => ({
@@ -101,6 +104,16 @@ function AcademicdetailsWrapper() {
     }
   };
 
+  const handleNext = () => {
+    setIsLoading(true);
+    setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setIsLoading(true);
+    setActiveStep((prevActiveStep: number) => prevActiveStep - 1);
+  };
+
   const handleChangeBoards = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string,
@@ -147,7 +160,37 @@ function AcademicdetailsWrapper() {
 
   return (
     <>
-      <DotsMobileStepper />
+      <DotsMobileStepper
+        handleNext={handleNext}
+        handleBack={handleBack}
+        activeStep={activeStep}
+      />
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={() => setOpen(false)}
+      >
+        <Alert
+          onClose={() => setOpen(false)}
+          severity="success"
+          sx={{ width: '100%' }}
+        >
+          Details submitted
+        </Alert>
+      </Snackbar>
+      {activeStep === 2 && !isLoading && (
+        <Button
+          style={{
+            position: 'absolute',
+            top: '6rem',
+            right: '1rem',
+          }}
+          variant="contained"
+          onClick={() => setOpen(true)}
+        >
+          Submit Details
+        </Button>
+      )}
       {isLoading && <CircularProgress />}
       {activeStep === 1 && (
         <>

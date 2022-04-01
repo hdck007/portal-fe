@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   Checkbox,
+  CircularProgress,
   TextField,
   Typography,
 } from '@mui/material';
@@ -44,9 +45,16 @@ export default function Dashboard() {
   const [queryFields, setQueryFields] = useState<any>({});
   const [requiredFields, setRequiredFields] = useState<any>({});
   const [receivedData, setReceivedData] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     setQueryFields(selectionObject);
+    setRequiredFields({
+      ...selectionObject,
+      rollno: true,
+      first_name: true,
+      last_name: true,
+    });
   }, []);
 
   const handleChange = (event: any) => {
@@ -77,7 +85,7 @@ export default function Dashboard() {
         fieldsObject[key] = true;
       }
     });
-
+    setLoading(true);
     fetch('https://tpc-backend-node.herokuapp.com/filter/dashboard', {
       method: 'POST',
       headers: {
@@ -96,6 +104,7 @@ export default function Dashboard() {
       .then((data) => {
         console.log(data.student);
         setReceivedData(data.student);
+        setLoading(false);
       });
   };
 
@@ -204,6 +213,9 @@ export default function Dashboard() {
           Submit
         </Button>
       </form>
+      {loading && (
+        <CircularProgress />
+      )}
       {
         receivedData.length > 0 && (
           <>
