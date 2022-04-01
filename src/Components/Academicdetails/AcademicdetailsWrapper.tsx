@@ -11,6 +11,7 @@ import DotsMobileStepper from '../FormStepper/FormStepper';
 import ApplicableOptions from './ApplicableOptions/ApplicableOptions';
 import BoardsForm from './BoardsForm/BoardsForm';
 import DegreeForm from './DegreeForms/DegreeForm';
+import Pstudent from '../Info';
 
 function AcademicdetailsWrapper() {
   const [engAcadDetails, setEngAcadDetails] = useState<IDegreeDetails[]>([]);
@@ -191,7 +192,10 @@ function AcademicdetailsWrapper() {
           Submit Details
         </Button>
       )}
-      {isLoading && <CircularProgress />}
+      {/* {isLoading && <CircularProgress />} */}
+      {activeStep === 0 && (
+      <Pstudent />
+      )}
       {activeStep === 1 && (
         <>
           <ApplicableOptions
