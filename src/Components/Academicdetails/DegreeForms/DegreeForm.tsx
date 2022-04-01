@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Accordion, AccordionDetails, AccordionSummary, styled, TextField, Typography,
@@ -8,7 +7,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { IDegreeDetails } from '../../../Interfaces/StudentDetails';
 
 interface IDegreeFormProps{
-  setBoardsAcadDetails: React.Dispatch<any>;
   index: number;
   details: IDegreeDetails;
   field: string;
@@ -26,7 +24,6 @@ const RowWrapper = styled('div')(({ theme }) => ({
 }));
 
 function DegreeForm({
-  setBoardsAcadDetails,
   index,
   details,
   field,
