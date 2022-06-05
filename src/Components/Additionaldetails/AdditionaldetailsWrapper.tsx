@@ -7,8 +7,10 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { DetailsContext } from '../../Contexts/DetailsContext';
 
-function AdditionaldetailsWrapper() {
-  const [additionalDetails, setAdditionalDetails] = useState<any[]>([]);
+function AdditionaldetailsWrapper({
+  additionalDetails,
+  setAdditionalDetails,
+}: any) {
   const { setIsLoading }: any = React.useContext(DetailsContext);
 
   useEffect(() => {
@@ -34,8 +36,8 @@ function AdditionaldetailsWrapper() {
   };
 
   return (
-    <>
-      {additionalDetails.map((item, index) => (
+    <div>
+      {additionalDetails && additionalDetails.map((item: any, index:number) => (
         <>
           <Typography
             variant="h6"
@@ -62,7 +64,7 @@ function AdditionaldetailsWrapper() {
           />
         </>
       ))}
-    </>
+    </div>
   );
 }
 

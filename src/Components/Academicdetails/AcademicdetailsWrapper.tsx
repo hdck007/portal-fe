@@ -14,6 +14,7 @@ import DegreeForm from './DegreeForms/DegreeForm';
 import Pstudent from '../Info';
 
 function AcademicdetailsWrapper() {
+  const [additionalDetails, setAdditionalDetails] = useState<any[]>([]);
   const [engAcadDetails, setEngAcadDetails] = useState<IDegreeDetails[]>([]);
   const [activeStep, setActiveStep] = React.useState(0);
   const [
@@ -185,9 +186,20 @@ function AcademicdetailsWrapper() {
             position: 'absolute',
             top: '6rem',
             right: '1rem',
+            backgroundColor: 'rgba(159, 28, 53, 1)',
           }}
           variant="contained"
-          onClick={() => setOpen(true)}
+          onClick={() => {
+            setOpen(true);
+
+            console.log({
+              engAcadDetails,
+              diplomaAcadDetails,
+              meAcadDetails,
+              boardsAcadDetails,
+              additionalDetails,
+            });
+          }}
         >
           Submit Details
         </Button>
@@ -354,7 +366,10 @@ function AcademicdetailsWrapper() {
         </>
       )}
       {activeStep === 2 && (
-        <AdditionaldetailsWrapper />
+        <AdditionaldetailsWrapper
+          additionalDetails={additionalDetails}
+          setAdditionalDetails={setAdditionalDetails}
+        />
       )}
     </>
   );

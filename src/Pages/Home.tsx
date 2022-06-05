@@ -73,6 +73,7 @@ export default function Home() {
             variant="contained"
             style={{
               width: '100%',
+              background: 'rgba(159, 28, 53, 1)',
             }}
             type="submit"
           >

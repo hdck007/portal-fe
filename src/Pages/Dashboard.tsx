@@ -149,6 +149,7 @@ export default function Dashboard() {
       <form
         onSubmit={handleSubmit}
       >
+        <h3>Select the fields for the data.</h3>
         <div
           style={{
             display: 'flex',
@@ -168,11 +169,13 @@ export default function Dashboard() {
                   position: 'relative',
                   top: '0.5rem',
                   borderRadius: '15rem',
-                  background: requiredFields[item] ? '#2196f3' : '#fff',
-                  color: requiredFields[item] ? '#fff' : '#000',
+                  background: requiredFields[item]
+                    ? 'rgba(159, 28, 53, 0.8)' : '#ccc',
+                  color: requiredFields[item] ? '#fff' : '#777',
                   padding: '5px 10px',
                   marginRight: '1rem',
                   cursor: 'pointer',
+                  transition: 'all 0.3s ease-in-out',
                 }}
                 onClick={() => handleToggle(item)}
               >
@@ -181,6 +184,7 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
+        <h3>Filter the data through below fields.</h3>
         <div
           style={{
             display: 'flex',
@@ -191,8 +195,8 @@ export default function Dashboard() {
             <div
               style={{
                 display: 'flex',
-                width: '25%',
-                marginBottom: '1rem',
+                width: '200px',
+                margin: '0.3rem',
               }}
             >
               <TextField
@@ -208,9 +212,11 @@ export default function Dashboard() {
           variant="contained"
           style={{
             marginBottom: '1rem',
+            marginTop: '1rem',
+            background: 'rgba(159, 28, 53, 1)',
           }}
         >
-          Submit
+          Get Data
         </Button>
       </form>
       {loading && (
