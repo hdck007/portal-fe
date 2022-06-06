@@ -25,12 +25,12 @@ const useStyles = makeStyles({
   label: {
     marginLeft: 50,
     fontSize: 5,
+    marginTop: 5,
   },
   field: {
     marginLeft: 50,
     width: 700,
-    height: 10,
-    marginBottom: 10,
+    marginBottom: 5,
   },
   button: {
     marginLeft: 50,
@@ -53,7 +53,9 @@ const useStyles = makeStyles({
   accord:
   {
     marginTop: 10,
-
+    margonBottom: 10,
+    fontSize: 20,
+    border: 10,
   },
 });
 
@@ -61,60 +63,104 @@ export default function Pstudent() {
   const classes = useStyles();
   const [gender, setGender] = useState('');
   const [department, setDepartment] = useState('');
-  const [religion, setReligion] = useState('');
-  const [caste, setCaste] = useState('');
   const [open, setOpen] = useState(false);
-  const [update, setUpdate] = useState({
-    firstname: '',
-    middlename: '',
-    tname: '',
-    gen: 'online',
-    venue: '',
-    link: '',
-    date: '',
-    time: '',
-    eventspeaker: '',
-    contact: '',
-    ispaid: 'free',
-    cost: '',
-    isfeatured: 'no',
-    tags: ['tags', 'event'],
-    no_of_users: 0,
-    username: 'username',
-  });
-  const handleGender = (event: SelectChangeEvent) => {
+  const [firstname, setFirstName] = useState('');
+  const [middlename, setMiddleName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [phonenumber, setPhoneNumber] = useState(0);
+  const [password, setPassword] = useState('');
+  const [mail, setMail] = useState('');
+  const [rmail, setRmail] = useState('');
+  const [linked, setLinked] = useState('');
+  const [git, setGit] = useState('');
+  const [batch, setBatch] = useState(0);
+  const [offer, setOffer] = useState(0);
+  const [rollno, setRollno] = useState('');
+  const handleGender = (event: any) => {
     setGender(event.target.value);
   };
-  const handleDepartment = (event: SelectChangeEvent) => {
+  const handleDepartment = (event: any) => {
     setDepartment(event.target.value);
   };
-  const handleReligion = (event: SelectChangeEvent) => {
-    setReligion(event.target.value);
+  const handleFname = (event: any) => {
+    setFirstName(event.target.value);
   };
-  const handleCaste = (event: SelectChangeEvent) => {
-    setCaste(event.target.value);
+  const handleMname = (event: any) => {
+    setMiddleName(event.target.value);
   };
+  const handleLname = (event: any) => {
+    setLastName(event.target.value);
+  };
+  const handlePhone = (event: any) => {
+    setPhoneNumber(event.target.value);
+  };
+  const handlePassword = (event: any) => {
+    setPassword(event.target.value);
+  };
+  const handleMail = (event: any) => {
+    setMail(event.target.value);
+  };
+  const handleRmail = (event: any) => {
+    setRmail(event.target.value);
+  };
+  const handleLinked = (event: any) => {
+    setLinked(event.target.value);
+  };
+  const handleGit = (event: any) => {
+    setGit(event.target.value);
+  };
+  const handleBatch = (event: any) => {
+    setBatch(event.target.value);
+  };
+  const handleOffer = (event: any) => {
+    setOffer(event.target.value);
+  };
+  const handleRoll = (event: any) => {
+    setRollno(event.target.value);
+  };
+  console.log(setFirstName);
   const uprofile = () => {
     console.log('clicked');
+    console.log(setFirstName);
+    // eslint-disable-next-line camelcase
+    const formdata = new FormData();
+    formdata.append('roll_no', `${setRollno}`);
+    formdata.append('first_name', `${setFirstName}`);
+    formdata.append('middle_name', `${setMiddleName}`);
+    formdata.append('last_name', `${setLastName}`);
+    formdata.append('email', `${setMail}`);
+    formdata.append('phone_number', `${setPhoneNumber}`);
+    formdata.append('gender', `${setGender}`);
+    formdata.append('github', `${setGit}`);
+    formdata.append('linkedin', `${setLinked}`);
+    formdata.append('no_of_offers', `${setOffer}`);
+    formdata.append('password', `${setPassword}`);
+    formdata.append('department', `${setDepartment}`);
+    formdata.append('batch', `${setOffer}`);
+    formdata.append('rait_email', `${setRmail}`);
+    const requestOptions = {
+      method: 'POST',
+      body: formdata,
+    };
+    fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
   };
   return (
     <Layout>
       <div>
         <Typography className={classes.title} variant="h3">Edit Personal Information</Typography>
-        <Accordion className={classes.accord}>
+        <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1a-content"
+            className={classes.accord}
           >
-            <Typography>Edit Name details</Typography>
+            <Typography>Edit First Name</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography className={classes.label} variant="h5">First Name</Typography>
-            <TextField value={update.firstname} name="firstname" defaultValue="Please enter your First Name as on your marksheet" className={classes.field} required variant="outlined" />
-            <Typography className={classes.label} variant="h5">Middle Name</Typography>
-            <TextField name="middlename" defaultValue="Please enter your Middle Name as on your marksheet" className={classes.field} required variant="outlined" />
-            <Typography className={classes.label} variant="h5">Last Name</Typography>
-            <TextField defaultValue="Please enter your Last Name as on your marksheet" className={classes.field} required variant="outlined" />
+            <TextField onChange={handleFname} name="first_name" className={classes.field} required variant="outlined" />
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -123,14 +169,59 @@ export default function Pstudent() {
             aria-controls="panel1a-content"
             className={classes.accord}
           >
-            <Typography>Edit Phone  No or Password </Typography>
+            <Typography>Edit Middle Name</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography className={classes.label} variant="h5">Mobile Number</Typography>
-            <TextField name="phoneno" defaultValue="Please enter your 10 digit mobile number" className={classes.field} required variant="outlined" />
-            <Typography className={classes.label} variant="h5">Password</Typography>
-            <TextField name="password" defaultValue="Please enter your desired password" className={classes.field} required type="password" variant="outlined" />
-            <Typography className={classes.label} variant="h5">Department</Typography>
+            <TextField onChange={handleMname} name="middle_name" className={classes.field} required variant="outlined" />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Last Name</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField onChange={handleLname} name="last_name" className={classes.field} required variant="outlined" />
+          </AccordionDetails>
+        </Accordion>
+        <Typography variant="h5">Edit Personal Details</Typography>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Mobile Number</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField onChange={handlePhone} type="number" name="phone_number" className={classes.field} required variant="outlined" />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Password</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField name="password" onChange={handlePassword} className={classes.field} required type="password" variant="outlined" />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Department</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+
             <Select
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
@@ -143,7 +234,7 @@ export default function Pstudent() {
               <MenuItem value={20}>Electronics Engineering</MenuItem>
               <MenuItem value={30}>Electronics and Telecommunication</MenuItem>
               <MenuItem value={40}>Information Technology</MenuItem>
-              <MenuItem value={50}>Instrumation Technology</MenuItem>
+              <MenuItem value={50}>Instrumental Engineering</MenuItem>
             </Select>
           </AccordionDetails>
         </Accordion>
@@ -153,58 +244,98 @@ export default function Pstudent() {
             aria-controls="panel1a-content"
             className={classes.accord}
           >
-            <Typography>Miscellaneous</Typography>
+            <Typography>Edit Roll No</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography className={classes.label} variant="h5">Date of Birth</Typography>
-            <TextField type="date" className={classes.field} />
-            <Typography className={classes.label} variant="h5">Gender</Typography>
+            <TextField onChange={handleRoll} className={classes.field} />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Gender</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
             <Select
               labelId="demo-simple-select-helper-label"
               id="demo-simple-select-helper"
               onChange={handleGender}
-              label="Gender"
+              label="Religion"
               className={classes.drop}
+              name="religion"
             >
               <MenuItem value={10}>Male</MenuItem>
               <MenuItem value={20}>Female</MenuItem>
               <MenuItem value={30}>Other</MenuItem>
             </Select>
-            <Typography className={classes.label} variant="h5">Address</Typography>
-            <TextField name="address" defaultValue="Please enter your permanent residential address" className={classes.field} required multiline variant="outlined" />
-            <Typography className={classes.label} variant="h5">Religion</Typography>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              onChange={handleReligion}
-              label="Religion"
-              className={classes.drop}
-              name="religion"
-            >
-              <MenuItem value={10}>Hindu</MenuItem>
-              <MenuItem value={20}>Muslim</MenuItem>
-              <MenuItem value={30}>Sikh</MenuItem>
-              <MenuItem value={40}>Christian</MenuItem>
-            </Select>
-            <Typography className={classes.label} variant="h4">Caste</Typography>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              onChange={handleCaste}
-              label="Caste"
-              className={classes.drop}
-              name="caste"
-            >
-              <MenuItem value={10}>Computer Science</MenuItem>
-              <MenuItem value={20}>Electronics Engineering</MenuItem>
-              <MenuItem value={30}>Electronics and Telecommunication</MenuItem>
-              <MenuItem value={40}>Information Technology</MenuItem>
-              <MenuItem value={50}>Instrumation Technology</MenuItem>
-            </Select>
           </AccordionDetails>
         </Accordion>
-        <TextField name="file" className={classes.file} type="file" />
-        <Button variant="contained" className={classes.button} color="primary">Update Profile </Button>
+        <Typography variant="h5">Miscellaneous</Typography>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Batch</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField type="number" onChange={handleBatch} name="batch" className={classes.field} required multiline variant="outlined" />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Number of Offers</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField type="number" onChange={handleOffer} name="batch" className={classes.field} required multiline variant="outlined" />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit GitHub URL</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField onChange={handleGit} className={classes.field} />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit Linkedin URL</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField onChange={handleGit} className={classes.field} />
+          </AccordionDetails>
+        </Accordion>
+        <Accordion>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            className={classes.accord}
+          >
+            <Typography>Edit RAIT mail</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <TextField onChange={handleRmail} className={classes.field} />
+          </AccordionDetails>
+        </Accordion>
+        <TextField name="photo" className={classes.file} type="file" />
+        <Button variant="contained" onClick={uprofile} className={classes.button} color="primary">Update Profile </Button>
       </div>
     </Layout>
   );

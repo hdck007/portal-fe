@@ -47,7 +47,7 @@ export default function Layout({ children }: any) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Ramrao Adik Institute of Technology
+            Admin
           </Typography>
         </Toolbar>
       </AppBar>
