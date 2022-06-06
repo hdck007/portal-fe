@@ -1,7 +1,8 @@
 import {
   Checkbox, Typography,
 } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { DetailsContext } from '../../../Contexts/DetailsContext';
 
 interface IApplicableOptions{
   setDidDiploma: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +21,12 @@ function ApplicableOptions({
   setDidXII,
   didXII,
 }: IApplicableOptions) {
+  const { setIsLoading }:any = React.useContext(DetailsContext);
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, [setIsLoading]);
+
   return (
     <div
       style={{

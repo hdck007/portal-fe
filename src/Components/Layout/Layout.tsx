@@ -32,7 +32,13 @@ export default function Layout({ children }: any) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar
+        style={{
+          backgroundColor: 'rgba(159, 28, 53, 1)',
+        }}
+        position="fixed"
+        open={open}
+      >
         <Toolbar>
           <IconButton
             color="inherit"
