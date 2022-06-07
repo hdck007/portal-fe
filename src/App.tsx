@@ -21,7 +21,6 @@ function PlaceHolder() {
 
 function App() {
   return (
-<<<<<<< HEAD
     <AuthProvider>
       <BrowserRouter>
         <Routes>
@@ -35,17 +34,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
-=======
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Charts />} />
-        <Route path="/lookup" element={<Dashboard />} />
-        <Route path="/details" element={<Pstudent />} />
-        <Route path="/notice" element={<Notice />} />
-      </Routes>
-    </BrowserRouter>
->>>>>>> b03cb6e3be0b0ac394e8b09b8e184c7117a6d5db
   );
 }
 
