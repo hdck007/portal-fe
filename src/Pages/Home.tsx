@@ -19,8 +19,10 @@ export default function Home() {
       [event.target.name]: event.target.value,
     });
   };
-
-  const handleSubmit = (event: any) => {
+  // eslint-disable-next-line camelcase
+  const rait_email = userInfo.remail;
+  const password = userInfo.passwrd;
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     const loginData = new FormData();
     loginData.append('rait_email', userInfo.username);
@@ -72,12 +74,12 @@ export default function Home() {
         >
           <Typography variant="h2">TPC-PORTAL</Typography>
           <TextField
-            label="Username"
+            label="RAIT E-mail"
             style={{
               width: '100%',
             }}
             variant="outlined"
-            name="username"
+            name="remail"
             onChange={handleChange}
           />
           <TextField
@@ -86,7 +88,7 @@ export default function Home() {
               width: '100%',
             }}
             variant="outlined"
-            name="password"
+            name="passwrd"
             type="password"
             onChange={handleChange}
           />

@@ -1,137 +1,140 @@
-import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import { makeStyles } from '@mui/styles';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import MenuItem from '@mui/material/MenuItem';
-import Snackbar from '@mui/material/Snackbar';
-import MuiAlert, { AlertProps } from '@mui/material/Alert';
-import { styled } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Pdylogo from './Pdylogo.png';
+import React from 'react';
+import './table.css';
 
 function Resume() {
-  const useStyles = makeStyles({
-    field: {
-      width: '50%',
-      color: 'maroon',
-    },
-    label:
-    {
-      width: '50%',
-      paddingLeft: '10%',
-    },
-    flabel: {
-      paddingLeft: '10%',
-      marginBottom: '20px',
-    },
-    span: {
-      rowSpan: 4,
-      colSpan: 4,
-    },
-    logo: {
-      position: 'absolute',
-      right: '0',
-    },
-  });
-  const classes = useStyles();
-  const BoardsRowWrapper = styled('div')(() => ({
-    width: '60%',
-    padding: '2px 0',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    marginBottom: '35px',
-  }));
   return (
     <div>
-      <img className={classes.logo} alt="logo" src={Pdylogo} />
-      <Typography variant="h6" className={classes.flabel}>Name:</Typography>
-      <Typography variant="h6" className={classes.flabel}>Gender:</Typography>
-      <Typography variant="h6" className={classes.flabel}>Email:</Typography>
-      <Typography variant="h6" className={classes.flabel}>Mob:</Typography>
-      <Typography variant="h6" className={classes.flabel}>LinkedIn</Typography>
-      <Typography className={classes.flabel} variant="h5">Career Objective:</Typography>
-      {/* <table>
-        <tr>
-          <th>B.E</th>
-          <td> </td>
-          <td>SEM 8</td>
-          <td>SEM 7</td>
-        </tr>
-        <tr>
-          <th>Department of RAIT</th>
-        </tr>
-        <tr>
-          <th>T.E</th>
-          <td> </td>
-          <td>SEM 6</td>
-          <td>SEM 5</td>
-        </tr>
-        <tr>
-          <th>S.E</th>
-          <td> </td>
-          <td>SEM 4</td>
-          <td>SEM 3</td>
-        </tr>
-        <tr>
-          <th>F.E</th>
-          <td> </td>
-          <td>SEM 2</td>
-          <td>SEM 1</td>
-        </tr>
-        <tr>
-          <th>CLASS XII</th>
-        </tr>
-        <tr>
-          <th>CLASS X</th>
-        </tr>
-      </table> */}
-      <BoardsRowWrapper>
-        <Typography variant="h5" className={classes.label}>Academic Achievements:</Typography>
-        <TextField className={classes.field} variant="standard" />
-      </BoardsRowWrapper>
-      <BoardsRowWrapper>
-        <Typography variant="h5" className={classes.label}>Certifications:</Typography>
-        <ul>
-          <li>one</li>
-          <li>two</li>
-        </ul>
-      </BoardsRowWrapper>
-      <BoardsRowWrapper>
-        <Typography variant="h5" className={classes.label}>Projects:</Typography>
-        <TextField className={classes.field} variant="standard" />
-      </BoardsRowWrapper>
-      <BoardsRowWrapper>
-        <Typography variant="h5" className={classes.label}>Internships:</Typography>
-        <ul>
-          <li>one</li>
-          <li>two</li>
-        </ul>
-      </BoardsRowWrapper>
-      <BoardsRowWrapper>
-        <Typography variant="h5" className={classes.label}>Extra Cirrular Achievements</Typography>
-        <ul>
-          <li>one</li>
-          <li>two</li>
-        </ul>
-      </BoardsRowWrapper>
-      <div>
-        <Typography>Position of responsibility</Typography>
-        <ul>
-          <li>one</li>
-          <li>two</li>
-        </ul>
+      <div className="pdf">
+        <div className="udetail">
+          <div className="info">
+            <h3 className="uinfo">Name:</h3>
+            <h3 className="uinfo">Gender:</h3>
+            <h3 className="uinfo">Email:</h3>
+            <h3 className="uinfo">Mob:</h3>
+            <h3 className="uinfo">LinkedIn</h3>
+          </div>
+          <div>
+            <img alt="pimage" id="pimage" src="download.png" />
+          </div>
+          <div className="logo">
+            <img alt="pimage" className="img" src="logo1.jpeg" />
+          </div>
+        </div>
+        <div className="obj">
+          <h1 className="base1">Career Objective</h1>
+          <p className="objd">Lorem ipsum dolor sit amet, consectet</p>
+        </div>
+        <div className="section">
+          <div className="left side">
+            <div>
+              <h2 className="base">Academic Background</h2>
+              <table className="table">
+                <tbody>
+                  <tr>
+                    <td>BE</td>
+                    <td />
+                    <td>Sem 7</td>
+                    <td>Sem 8</td>
+                    <td rowSpan={4}>three</td>
+                  </tr>
+                  <tr>
+                    <td>TE</td>
+                    <td />
+                    <td>Sem 5</td>
+                    <td>Sem 6</td>
+                  </tr>
+                  <tr>
+                    <td>SE</td>
+                    <td />
+                    <td>Sem 3</td>
+                    <td>Sem 4</td>
+                  </tr>
+                  <tr>
+                    <td>FE</td>
+                    <td />
+                    <td>Sem 1</td>
+                    <td>Sem 2</td>
+                  </tr>
+                  <tr>
+                    <td>Class X11</td>
+                    <td />
+                    <td colSpan={2}>HSC</td>
+                    <td>three</td>
+                  </tr>
+                  <tr>
+                    <td>Class X</td>
+                    <td />
+                    <td colSpan={2}>SSC</td>
+                    <td>three</td>
+                  </tr>
+                </tbody>
+
+              </table>
+            </div>
+            <div>
+              <h3 className="base">Academic Achievements</h3>
+              <ul>
+                <li>one</li>
+                <li>two</li>
+                <li>three</li>
+              </ul>
+            </div>
+            <div>
+              <h3 className="base">Additional information</h3>
+              <ul>
+                <li>one</li>
+                <li>two</li>
+                <li>three</li>
+              </ul>
+            </div>
+          </div>
+          <div className="line" />
+          <div className="right side">
+            <div>
+              <h1 className="base1">Certifications</h1>
+              <ul>
+                <li>one</li>
+                <li>two</li>
+                <li>three</li>
+              </ul>
+            </div>
+            <div className="pin">
+              <h1 className="base1">Projects and internships</h1>
+              <div>
+                <h3 className="base1">Projects</h3>
+                <ul>
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </div>
+              <div style={{ display: 'inline-block' }}>
+                <h1 className="base1">Internships</h1>
+                <ul>
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </div>
+              <div>
+                <div style={{ display: 'inline-block' }}>
+                  <h1 className="base1">Extra curricular Achievements</h1>
+                  <ul>
+                    <li>one</li>
+                    <li>two</li>
+                    <li>three</li>
+                  </ul>
+                </div>
+                <h1 className="base1">Position of Responsibility</h1>
+                <ul>
+                  <li>one</li>
+                  <li>two</li>
+                  <li>three</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
