@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import Cookies from 'universal-cookie';
 import { DetailsContext } from '../../Contexts/DetailsContext';
 import { IBoardDetails, IDegreeDetails } from '../../Interfaces/StudentDetails';
 import AdditionaldetailsWrapper from '../Additionaldetails/AdditionaldetailsWrapper';
@@ -29,6 +30,7 @@ function AcademicdetailsWrapper() {
   const [didXII, setDidXII] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
   const { isLoading, setIsLoading }: any = React.useContext(DetailsContext);
+  const cookies = new Cookies();
 
   useEffect(() => {
     const value = new Array(6).fill(0).map((_, index) => ({
@@ -103,6 +105,148 @@ function AcademicdetailsWrapper() {
           cgpa: null,
         }]);
       }
+    }
+  };
+
+  const validate = () => {
+    let flag = true;
+    engAcadDetails.forEach((item: any) => {
+      Object.keys(item).forEach((key) => {
+        if (item[key] === null) {
+          flag = false;
+        }
+      });
+    });
+    boardsAcadDetails.forEach((item: any) => {
+      Object.keys(item).forEach((key) => {
+        if (item[key] === null) {
+          flag = false;
+        }
+      });
+    });
+
+    if (didMe) {
+      meAcadDetails.forEach((item: any) => {
+        Object.keys(item).forEach((key) => {
+          if (item[key] === null) {
+            flag = false;
+          }
+        });
+      });
+    }
+
+    if (didDiploma) {
+      diplomaAcadDetails.forEach((item: any) => {
+        Object.keys(item).forEach((key) => {
+          if (item[key] === null) {
+            flag = false;
+          }
+        });
+      });
+    }
+    return flag;
+  };
+
+  const handleSubmit = () => {
+    setOpen(true);
+
+    if (validate()) {
+      const academiceData = new FormData();
+      academiceData.append('roll_no', '123');
+      academiceData.append(
+        'tenth_percent',
+        `${(Number(boardsAcadDetails[0].marks) * 100)
+           / Number(boardsAcadDetails[0].totalMarks)}`,
+      );
+      academiceData.append(
+        'tenth_completion_date',
+        String(boardsAcadDetails[0].completionYear),
+      );
+      academiceData.append(
+        'tenth_obtained_marks',
+        String(boardsAcadDetails[0].marks),
+      );
+      academiceData.append(
+        'tenth_total_marks',
+        String(boardsAcadDetails[0].totalMarks),
+      );
+      academiceData.append(
+        'twelveth_percent',
+        `${(Number(boardsAcadDetails[1].marks) * 100)
+           / Number(boardsAcadDetails[1].totalMarks)}`,
+      );
+      academiceData.append(
+        'twelveth_completion_date',
+        String(boardsAcadDetails[1].completionYear),
+      );
+      academiceData.append(
+        'twelveth_obtained_marks',
+        String(boardsAcadDetails[1].marks),
+      );
+      academiceData.append(
+        'twelveth_total_marks',
+        String(boardsAcadDetails[1].totalMarks),
+      );
+      let sum = 0;
+      engAcadDetails.forEach((value, index) => {
+        academiceData.append(
+          `sem${index + 1}_pointer`,
+          String(value.cgpa),
+        );
+        academiceData.append(
+          `sem${index + 1}_completion_data`,
+          String(value.completionYear),
+        );
+        academiceData.append(
+          `sem${index + 1}_obtained_marks`,
+          String(value.marks),
+        );
+        academiceData.append(
+          `sem${index + 1}_total_marks`,
+          String(value.totalMarks),
+        );
+        sum += Number(value.cgpa);
+      });
+      sum /= engAcadDetails.length;
+      academiceData.append('cgpa', String(sum));
+      academiceData.append('be_percent', '60');
+
+      meAcadDetails.forEach((value, index) => {
+        academiceData.append(
+          `masters_sem${index + 1}_pointer`,
+          String(value.cgpa),
+        );
+        academiceData.append(
+          `masters_sem${index + 1}_completion_data`,
+          String(value.completionYear),
+        );
+        academiceData.append(
+          `masters_sem${index + 1}_obtained_marks`,
+          String(value.marks),
+        );
+        academiceData.append(
+          `masters_sem${index + 1}_total_marks`,
+          String(value.totalMarks),
+        );
+      });
+
+      console.log({
+        engAcadDetails,
+        diplomaAcadDetails,
+        meAcadDetails,
+        boardsAcadDetails,
+        additionalDetails,
+      });
+      const access = cookies.get('access');
+      fetch('https://django-tpc.herokuapp.com/addAcademicInfo/', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${access}`,
+        },
+        body: academiceData,
+      })
+        .then((response) => response.json())
+        .then((data) => console.log(data));
     }
   };
 
@@ -189,17 +333,7 @@ function AcademicdetailsWrapper() {
             backgroundColor: 'rgba(159, 28, 53, 1)',
           }}
           variant="contained"
-          onClick={() => {
-            setOpen(true);
-
-            console.log({
-              engAcadDetails,
-              diplomaAcadDetails,
-              meAcadDetails,
-              boardsAcadDetails,
-              additionalDetails,
-            });
-          }}
+          onClick={handleSubmit}
         >
           Submit Details
         </Button>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Button,
   TextField,
@@ -6,12 +6,13 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { AuthContext } from '../Contexts/AuthContext';
 
 export default function Home() {
-  const [userInfo, setUserInfo] = useState<any>({});
+  const [userInfo, setUserInfo] = React.useState<any>({});
   const router = useNavigate();
   const cookies = new Cookies();
-  cookies.set('jwt', 'hello');
+
   const handleChange = (event: any) => {
     setUserInfo({
       ...userInfo,
@@ -21,8 +22,19 @@ export default function Home() {
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    if (userInfo.username === 'admin' && userInfo.password === 'admin') {
-      router('/dashboard', { replace: true });
+    const loginData = new FormData();
+    loginData.append('rait_email', userInfo.username);
+    loginData.append('password', userInfo.password);
+    if (userInfo.username && userInfo.password) {
+      fetch('https://django-tpc.herokuapp.com/auth/studentLogin/', {
+        method: 'POST',
+        body: loginData,
+      }).then((response) => response.json()).then((data) => {
+        cookies.set('refresh', data.refresh);
+        cookies.set('access', data.access);
+        cookies.set('roll_no', userInfo.username);
+        router('/dashboard', { replace: true });
+      });
     }
   };
 
