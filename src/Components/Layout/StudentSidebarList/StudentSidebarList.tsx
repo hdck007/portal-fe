@@ -7,13 +7,21 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Dashboard, Logout } from '@mui/icons-material';
 import { Router, useNavigate } from 'react-router-dom';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
+import Cookies from 'universal-cookie';
 
 interface IStudentSidebarList{
   open: boolean;
 }
-
 export default function StudentSidebarList({ open }: IStudentSidebarList) {
   const navigate = useNavigate();
+  const logout:any = () => {
+    const cookies = new Cookies();
+    cookies.remove('jwt');
+    cookies.remove('roll');
+    window.alert('LOGGED OUT SUCCESSFULLY');
+    navigate('/');
+    window.location.reload();
+  };
   return (
     <>
       <List>
@@ -109,7 +117,7 @@ export default function StudentSidebarList({ open }: IStudentSidebarList) {
               mr: open ? 3 : 'auto',
               justifyContent: 'center',
             }}
-            onClick={() => navigate('/', { replace: true })}
+            onClick={logout}
           >
             <Logout />
           </ListItemIcon>

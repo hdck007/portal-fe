@@ -9,7 +9,6 @@ import Dashboard from './Pages/Dashboard';
 import StudentDetails from './Pages/Details/StudentDetails';
 import Pstudent from './Components/Layout/Pstudent';
 import Layout from './Components/Layout/Layout';
-import Resume from './Components/Layout/Resume';
 import Home from './Pages/Home';
 import Notice from './Pages/Notice';
 
