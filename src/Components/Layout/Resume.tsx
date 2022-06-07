@@ -1,7 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './table.css';
 
 function Resume() {
+  const [gender, setGender] = useState('');
+  const [department, setDepartment] = useState('');
+  const [open, setOpen] = useState(false);
+  const [firstname, setFirstName] = useState('');
+  const [middlename, setMiddleName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [phonenumber, setPhoneNumber] = useState(0);
+  const [password, setPassword] = useState('');
+  const [mail, setMail] = useState('');
+  const [rmail, setRmail] = useState('');
+  const [linked, setLinked] = useState('');
+  const [git, setGit] = useState('');
+  const [batch, setBatch] = useState(0);
+  const [rollno, setRollno] = useState('');
   return (
     <div>
       <div className="pdf">
