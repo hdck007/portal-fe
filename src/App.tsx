@@ -11,6 +11,9 @@ import Pstudent from './Components/Layout/Pstudent';
 import Layout from './Components/Layout/Layout';
 import Home from './Pages/Home';
 import Notice from './Pages/Notice';
+import AuthProvider from './Contexts/AuthContext';
+import MyNotifications from './Components/MyNotifications/Notification';
+import UploadOffers from './Pages/UploadOffers';
 
 function PlaceHolder() {
   return <div>Hello</div>;
@@ -18,15 +21,19 @@ function PlaceHolder() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Charts />} />
-        <Route path="/lookup" element={<Dashboard />} />
-        <Route path="/details" element={<Pstudent />} />
-        <Route path="/notice" element={<Notice />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Charts />} />
+          <Route path="/lookup" element={<Dashboard />} />
+          <Route path="/details" element={<StudentDetails />} />
+          <Route path="/notice" element={<Notice />} />
+          <Route path="/mynotice" element={<MyNotifications />} />
+          <Route path="/upload" element={<UploadOffers />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

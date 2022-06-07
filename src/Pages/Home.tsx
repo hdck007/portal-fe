@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Button,
   TextField,
@@ -6,10 +6,13 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
+import { AuthContext } from '../Contexts/AuthContext';
 
 export default function Home() {
-  const [userInfo, setUserInfo] = useState<any>({});
+  const [userInfo, setUserInfo] = React.useState<any>({});
   const router = useNavigate();
+  const cookies = new Cookies();
+
   const handleChange = (event: any) => {
     setUserInfo({
       ...userInfo,
@@ -21,32 +24,19 @@ export default function Home() {
   const password = userInfo.passwrd;
   const handleSubmit = async (event: any) => {
     event.preventDefault();
-    const res = await fetch('https://django-tpc.herokuapp.com/auth/studentLogin/', {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify({
-        // eslint-disable-next-line camelcase
-        rait_email,
-        password,
-      }),
-    });
-    if (res.status === 200 || res.status === 201) {
-      const data = await res.json();
-      const token = data.access;
-      const ref = data.refresh;
-      console.log(token);
-      console.log(ref);
-      const cookies = new Cookies();
-      // eslint-disable-next-line camelcase
-      cookies.set('roll', `${rait_email}`);
-      cookies.set('jwt', `${token}`);
-      // eslint-disable-next-line camelcase
-      window.alert('SUCCESSFULL LOGIN');
-      router('/dashboard', { replace: true });
-    } else if (res.status === 422) {
-      window.alert('INCORRECT CREDENTIALS');
+    const loginData = new FormData();
+    loginData.append('rait_email', userInfo.username);
+    loginData.append('password', userInfo.password);
+    if (userInfo.username && userInfo.password) {
+      fetch('https://django-tpc.herokuapp.com/auth/studentLogin/', {
+        method: 'POST',
+        body: loginData,
+      }).then((response) => response.json()).then((data) => {
+        cookies.set('refresh', data.refresh);
+        cookies.set('access', data.access);
+        cookies.set('roll_no', userInfo.username);
+        router('/dashboard', { replace: true });
+      });
     }
   };
 
