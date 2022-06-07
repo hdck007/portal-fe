@@ -122,7 +122,7 @@ export default function Pstudent() {
     setRollno(event.target.value);
   };
   const handleFile = (event: any) => {
-    setFile(event.target.value);
+    setFile(event.target.files[0]);
   };
   const uprofile = () => {
     console.log('clicked');
@@ -343,7 +343,7 @@ export default function Pstudent() {
             <TextField onChange={handleRmail} className={classes.field} />
           </AccordionDetails>
         </Accordion>
-        <TextField name="photo" onChange={handleFile} className={classes.file} type="file" />
+        <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
         <Button variant="contained" onClick={uprofile} className={classes.button} color="primary">Update Profile </Button>
       </div>
     </Layout>

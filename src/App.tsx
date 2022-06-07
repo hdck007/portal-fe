@@ -27,7 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Charts />} />
           <Route path="/lookup" element={<Dashboard />} />
-          <Route path="/details" element={<StudentDetails />} />
+          <Route path="/details" element={<Pstudent />} />
           <Route path="/notice" element={<Notice />} />
           <Route path="/mynotice" element={<MyNotifications />} />
           <Route path="/upload" element={<UploadOffers />} />
