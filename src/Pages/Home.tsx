@@ -10,19 +10,40 @@ import Cookies from 'universal-cookie';
 export default function Home() {
   const [userInfo, setUserInfo] = useState<any>({});
   const router = useNavigate();
-  const cookies = new Cookies();
-  cookies.set('jwt', 'hello');
   const handleChange = (event: any) => {
     setUserInfo({
       ...userInfo,
       [event.target.name]: event.target.value,
     });
   };
-
-  const handleSubmit = (event: any) => {
+  // eslint-disable-next-line camelcase
+  const rait_email = userInfo.remail;
+  const password = userInfo.passwrd;
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
-    if (userInfo.username === 'admin' && userInfo.password === 'admin') {
+    const res = await fetch('https://django-tpc.herokuapp.com/auth/studentLogin/', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        // eslint-disable-next-line camelcase
+        rait_email,
+        password,
+      }),
+    });
+    if (res.status === 200 || res.status === 201) {
+      const data = await res.json();
+      const token = data.access;
+      const ref = data.refresh;
+      console.log(token);
+      console.log(ref);
+      const cookies = new Cookies();
+      cookies.set('jwt', `${token}`);
+      window.alert('SUCCESSFULL LOGIN');
       router('/dashboard', { replace: true });
+    } else if (res.status === 422) {
+      window.alert('INCORRECT CREDENTIALS');
     }
   };
 
@@ -60,12 +81,12 @@ export default function Home() {
         >
           <Typography variant="h2">TPC-PORTAL</Typography>
           <TextField
-            label="Username"
+            label="RAIT E-mail"
             style={{
               width: '100%',
             }}
             variant="outlined"
-            name="username"
+            name="remail"
             onChange={handleChange}
           />
           <TextField
@@ -74,7 +95,7 @@ export default function Home() {
               width: '100%',
             }}
             variant="outlined"
-            name="password"
+            name="passwrd"
             type="password"
             onChange={handleChange}
           />
