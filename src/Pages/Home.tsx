@@ -39,7 +39,10 @@ export default function Home() {
       console.log(token);
       console.log(ref);
       const cookies = new Cookies();
+      // eslint-disable-next-line camelcase
+      cookies.set('roll', `${rait_email}`);
       cookies.set('jwt', `${token}`);
+      // eslint-disable-next-line camelcase
       window.alert('SUCCESSFULL LOGIN');
       router('/dashboard', { replace: true });
     } else if (res.status === 422) {
