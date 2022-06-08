@@ -20,8 +20,8 @@ export default function Home() {
     });
   };
   // eslint-disable-next-line camelcase
-  const rait_email = userInfo.remail;
-  const password = userInfo.passwrd;
+  const rait_email = userInfo.username;
+  const { password } = userInfo;
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const loginData = new FormData();
@@ -79,7 +79,7 @@ export default function Home() {
               width: '100%',
             }}
             variant="outlined"
-            name="remail"
+            name="username"
             onChange={handleChange}
           />
           <TextField
@@ -88,7 +88,7 @@ export default function Home() {
               width: '100%',
             }}
             variant="outlined"
-            name="passwrd"
+            name="password"
             type="password"
             onChange={handleChange}
           />
@@ -99,6 +99,7 @@ export default function Home() {
               background: 'rgba(159, 28, 53, 1)',
             }}
             type="submit"
+            onClick={handleSubmit}
           >
             Login
           </Button>

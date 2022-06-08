@@ -148,7 +148,7 @@ export default function Pstudent() {
       method: 'POST',
       body: formdata,
       headers: {
-        Authorization: `Bearer ${cookies.get('jwt')}`,
+        Authorization: `Bearer ${cookies.get('access')}`,
       },
     };
     fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
