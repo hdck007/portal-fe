@@ -80,7 +80,7 @@ export default function Charts() {
       .then((response) => response.json())
       .then((data) => setBranchWiseData(data));
 
-    fetch('http://tpc-backend-node.herokuapp.com/eligible/studentsplacedbranchwise')
+    fetch('http://tpc-backend-node.herokuapp.com/eligible/studentsplacedbranchwise');
   }, []);
 
   return (
@@ -178,9 +178,7 @@ export default function Charts() {
           style={{
             width: '45%',
           }}
-        >
-
-        </div>
+        />
       </div>
     </Layout>
   );

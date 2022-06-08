@@ -5,6 +5,7 @@ import {
 import React, { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
 import Cookies from 'universal-cookie';
+import Swal from 'sweetalert2';
 import { DetailsContext } from '../../Contexts/DetailsContext';
 import { IBoardDetails, IDegreeDetails } from '../../Interfaces/StudentDetails';
 import AdditionaldetailsWrapper from '../Additionaldetails/AdditionaldetailsWrapper';
@@ -35,7 +36,7 @@ function AcademicdetailsWrapper() {
   useEffect(() => {
     const value = new Array(6).fill(0).map((_, index) => ({
       semester: index + 1,
-      completetionMonth: null,
+      completionMonth: null,
       completionYear: null,
       marks: null,
       totalMarks: null,
@@ -44,7 +45,7 @@ function AcademicdetailsWrapper() {
 
     const valueBoards = new Array(2).fill(0).map((_, index) => ({
       board: index === 0 ? 'Class - X' : 'Class - XII',
-      completetionMonth: null,
+      completionMonth: null,
       completionYear: null,
       marks: null,
       totalMarks: null,
@@ -84,7 +85,7 @@ function AcademicdetailsWrapper() {
         }
         setMeAcadDetails((prevValue) => [...meAcadDetails, {
           semester: prevValue.length + 1,
-          completetionMonth: null,
+          completionMonth: null,
           completionYear: null,
           marks: null,
           totalMarks: null,
@@ -98,7 +99,7 @@ function AcademicdetailsWrapper() {
         }
         setEngAcadDetails((prevValue) => [...engAcadDetails, {
           semester: prevValue.length + 1,
-          completetionMonth: null,
+          completionMonth: null,
           completionYear: null,
           marks: null,
           totalMarks: null,
@@ -147,106 +148,217 @@ function AcademicdetailsWrapper() {
     return flag;
   };
 
-  const handleSubmit = () => {
-    setOpen(true);
-
-    if (validate()) {
-      const academiceData = new FormData();
-      academiceData.append('roll_no', '123');
-      academiceData.append(
-        'tenth_percent',
-        `${(Number(boardsAcadDetails[0].marks) * 100)
+  const getAcademicData = () => {
+    const academiceData = new FormData();
+    academiceData.append('roll_no', cookies.get('roll_no'));
+    academiceData.append(
+      'tenth_percent',
+      `${(Number(boardsAcadDetails[0].marks) * 100)
            / Number(boardsAcadDetails[0].totalMarks)}`,
-      );
-      academiceData.append(
-        'tenth_completion_date',
-        String(boardsAcadDetails[0].completionYear),
-      );
-      academiceData.append(
-        'tenth_obtained_marks',
-        String(boardsAcadDetails[0].marks),
-      );
-      academiceData.append(
-        'tenth_total_marks',
-        String(boardsAcadDetails[0].totalMarks),
-      );
-      academiceData.append(
-        'twelveth_percent',
-        `${(Number(boardsAcadDetails[1].marks) * 100)
+    );
+    academiceData.append(
+      'tenth_completion_date',
+      String(boardsAcadDetails[0].completionYear),
+    );
+    academiceData.append(
+      'tenth_obtained_marks',
+      String(boardsAcadDetails[0].marks),
+    );
+    academiceData.append(
+      'tenth_total_marks',
+      String(boardsAcadDetails[0].totalMarks),
+    );
+    academiceData.append(
+      'twelveth_percent',
+      `${(Number(boardsAcadDetails[1].marks) * 100)
            / Number(boardsAcadDetails[1].totalMarks)}`,
+    );
+    academiceData.append(
+      'twelveth_completion_date',
+      String(boardsAcadDetails[1].completionYear),
+    );
+    academiceData.append(
+      'twelveth_obtained_marks',
+      String(boardsAcadDetails[1].marks),
+    );
+    academiceData.append(
+      'twelveth_total_marks',
+      String(boardsAcadDetails[1].totalMarks),
+    );
+    let sum = 0;
+    engAcadDetails.forEach((value, index) => {
+      academiceData.append(
+        `sem${index + 1}_pointer`,
+        String(value.cgpa),
       );
       academiceData.append(
-        'twelveth_completion_date',
-        String(boardsAcadDetails[1].completionYear),
+        `sem${index + 1}_completion_data`,
+        String(value.completionYear),
       );
       academiceData.append(
-        'twelveth_obtained_marks',
-        String(boardsAcadDetails[1].marks),
+        `sem${index + 1}_obtained_marks`,
+        String(value.marks),
       );
       academiceData.append(
-        'twelveth_total_marks',
-        String(boardsAcadDetails[1].totalMarks),
+        `sem${index + 1}_total_marks`,
+        String(value.totalMarks),
       );
-      let sum = 0;
-      engAcadDetails.forEach((value, index) => {
-        academiceData.append(
-          `sem${index + 1}_pointer`,
-          String(value.cgpa),
-        );
-        academiceData.append(
-          `sem${index + 1}_completion_data`,
-          String(value.completionYear),
-        );
-        academiceData.append(
-          `sem${index + 1}_obtained_marks`,
-          String(value.marks),
-        );
-        academiceData.append(
-          `sem${index + 1}_total_marks`,
-          String(value.totalMarks),
-        );
-        sum += Number(value.cgpa);
-      });
-      sum /= engAcadDetails.length;
-      academiceData.append('cgpa', String(sum));
-      academiceData.append('be_percent', '60');
+      sum += Number(value.cgpa);
+    });
+    sum /= engAcadDetails.length;
+    academiceData.append('cgpa', String(sum));
+    academiceData.append('be_percent', '60');
 
-      meAcadDetails.forEach((value, index) => {
-        academiceData.append(
-          `masters_sem${index + 1}_pointer`,
-          String(value.cgpa),
-        );
-        academiceData.append(
-          `masters_sem${index + 1}_completion_data`,
-          String(value.completionYear),
-        );
-        academiceData.append(
-          `masters_sem${index + 1}_obtained_marks`,
-          String(value.marks),
-        );
-        academiceData.append(
-          `masters_sem${index + 1}_total_marks`,
-          String(value.totalMarks),
-        );
-      });
+    meAcadDetails.forEach((value, index) => {
+      academiceData.append(
+        `masters_sem${index + 1}_pointer`,
+        String(value.cgpa),
+      );
+      academiceData.append(
+        `masters_sem${index + 1}_completion_data`,
+        String(value.completionYear),
+      );
+      academiceData.append(
+        `masters_sem${index + 1}_obtained_marks`,
+        String(value.marks),
+      );
+      academiceData.append(
+        `masters_sem${index + 1}_total_marks`,
+        String(value.totalMarks),
+      );
+    });
+    return academiceData;
+  };
 
-      console.log({
-        engAcadDetails,
-        diplomaAcadDetails,
-        meAcadDetails,
-        boardsAcadDetails,
-        additionalDetails,
-      });
+  const getExperienceData = () => {
+    const experience = new FormData();
+    experience.append('roll_no', cookies.get('roll_no'));
+    experience.append('project_one', additionalDetails[7].value);
+    experience.append('project_two', additionalDetails[8].value);
+    experience.append('project_three', additionalDetails[9].value);
+    experience.append('internship_one', additionalDetails[10].value);
+    experience.append('internship_two', additionalDetails[11].value);
+    experience.append('internship_three', additionalDetails[12].value);
+    experience.append('pref_lang', additionalDetails[13].value);
+    experience.append('technologies', additionalDetails[14].value);
+    return experience;
+  };
+
+  const getHobbiesData = () => {
+    const hobbies = new FormData();
+    hobbies.append('roll_no', cookies.get('roll_no'));
+    hobbies.append('hobbies', additionalDetails[15].value);
+    return hobbies;
+  };
+
+  const getAchievementsData = () => {
+    const skillAndObj = new FormData();
+    skillAndObj.append('roll_no', cookies.get('roll_no'));
+    skillAndObj.append('career_obj', additionalDetails[0].value);
+    skillAndObj.append('acad_achievement_one', additionalDetails[1].value);
+    skillAndObj.append('acad_achievement_two', additionalDetails[2].value);
+    skillAndObj.append('acad_achievement_three', additionalDetails[3].value);
+    skillAndObj.append('certificate_one', additionalDetails[4].value);
+    skillAndObj.append('certificate_two', additionalDetails[5].value);
+    skillAndObj.append('certificate_three', additionalDetails[6].value);
+    return skillAndObj;
+  };
+
+  const addAcademicDetails = (academiceData: any, access: any) => new Promise((resolve, reject) => {
+    fetch('https://django-tpc.herokuapp.com/addAcademicInfo/', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+      body: academiceData,
+    }).then((res) => {
+      if (res.status >= 200 && res.status < 400) {
+        resolve('Fullfilled');
+      } else {
+        reject();
+      }
+    });
+  });
+
+  const addExperienceDetails = async (experience: any, access: any) => new Promise((resolve, reject) => {
+    fetch('https://django-tpc.herokuapp.com/addExperience/', {
+      method: 'POST',
+      body: experience,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }).then((res) => {
+      if (res.status >= 200 && res.status < 400) {
+        resolve('Fullfilled');
+      } else {
+        reject();
+      }
+    });
+  });
+
+  const addHobbiesDetails = async (hobbies: any, access: any) => new Promise((resolve, reject) => {
+    fetch('https://django-tpc.herokuapp.com/addOtherInfo/', {
+      method: 'POST',
+      body: hobbies,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }).then((res) => {
+      if (res.status >= 200 && res.status < 400) {
+        resolve('Fullfilled');
+      } else {
+        reject();
+      }
+    });
+  });
+
+  const addAchievementsDetails = async (
+    skillAndObj: any,
+    access: any,
+  ) => new Promise((resolve, reject) => {
+    fetch('https://django-tpc.herokuapp.com/addSkillSet/', {
+      method: 'POST',
+      body: skillAndObj,
+      headers: {
+        Authorization: `Bearer ${access}`,
+      },
+    }).then((res) => {
+      if (res.status >= 200 && res.status < 400) {
+        resolve('Fullfilled');
+      } else {
+        reject();
+      }
+    });
+  });
+
+  const handleSubmit = () => {
+    if (validate()) {
       const access = cookies.get('access');
-      fetch('https://django-tpc.herokuapp.com/addAcademicInfo/', {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${access}`,
-        },
-        body: academiceData,
-      })
-        .then((response) => response.json())
-        .then((data) => console.log(data));
+
+      const apiCalls = [addAcademicDetails(getAcademicData(), access),
+        addExperienceDetails(getExperienceData(), access),
+        addHobbiesDetails(getHobbiesData(), access),
+        addAchievementsDetails(getAchievementsData(), access)];
+
+      console.log(apiCalls);
+
+      Promise.allSettled(apiCalls).then((response) => {
+        response.forEach((value) => {
+          if (value.status === 'rejected') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            });
+          }
+        });
+      });
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please fill all the fields',
+      });
     }
   };
 
