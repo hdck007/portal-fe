@@ -21,7 +21,6 @@ export default function Home() {
   };
   // eslint-disable-next-line camelcase
   const handleSubmit = async (event: any) => {
-    console.log('runs');
     event.preventDefault();
     const loginData = new FormData();
     loginData.append('rait_email', userInfo.username);

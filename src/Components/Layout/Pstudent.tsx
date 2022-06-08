@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Cookies from 'universal-cookie';
 
 import Layout from './Layout';
 
@@ -76,6 +77,8 @@ export default function Pstudent() {
   const [batch, setBatch] = useState(0);
   const [offer, setOffer] = useState(0);
   const [rollno, setRollno] = useState('');
+  const [file, setFile] = useState(null);
+  const cookies = new Cookies();
   const handleGender = (event: any) => {
     setGender(event.target.value);
   };
@@ -118,29 +121,35 @@ export default function Pstudent() {
   const handleRoll = (event: any) => {
     setRollno(event.target.value);
   };
-  console.log(setFirstName);
+  const handleFile = (event: any) => {
+    setFile(event.target.files[0]);
+  };
   const uprofile = () => {
     console.log('clicked');
-    console.log(setFirstName);
+    console.log(firstname);
     // eslint-disable-next-line camelcase
     const formdata = new FormData();
-    formdata.append('roll_no', `${setRollno}`);
-    formdata.append('first_name', `${setFirstName}`);
-    formdata.append('middle_name', `${setMiddleName}`);
-    formdata.append('last_name', `${setLastName}`);
-    formdata.append('email', `${setMail}`);
-    formdata.append('phone_number', `${setPhoneNumber}`);
-    formdata.append('gender', `${setGender}`);
-    formdata.append('github', `${setGit}`);
-    formdata.append('linkedin', `${setLinked}`);
-    formdata.append('no_of_offers', `${setOffer}`);
-    formdata.append('password', `${setPassword}`);
-    formdata.append('department', `${setDepartment}`);
-    formdata.append('batch', `${setOffer}`);
-    formdata.append('rait_email', `${setRmail}`);
+    formdata.append('roll_no', `${rollno}`);
+    formdata.append('first_name', `${firstname}`);
+    formdata.append('middle_name', `${middlename}`);
+    formdata.append('last_name', `${lastname}`);
+    formdata.append('email', `${mail}`);
+    formdata.append('phone_number', `${phonenumber}`);
+    formdata.append('gender', `${gender}`);
+    formdata.append('github', `${git}`);
+    formdata.append('linkedin', `${linked}`);
+    formdata.append('no_of_offers', `${offer}`);
+    formdata.append('password', `${password}`);
+    formdata.append('photo', `${file}`);
+    formdata.append('department', `${department}`);
+    formdata.append('batch', `${batch}`);
+    formdata.append('rait_email', `${rmail}`);
     const requestOptions = {
       method: 'POST',
       body: formdata,
+      headers: {
+        Authorization: `Bearer ${cookies.get('access')}`,
+      },
     };
     fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
       .then((response) => response.text())
@@ -334,7 +343,7 @@ export default function Pstudent() {
             <TextField onChange={handleRmail} className={classes.field} />
           </AccordionDetails>
         </Accordion>
-        <TextField name="photo" className={classes.file} type="file" />
+        <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
         <Button variant="contained" onClick={uprofile} className={classes.button} color="primary">Update Profile </Button>
       </div>
     </Layout>
