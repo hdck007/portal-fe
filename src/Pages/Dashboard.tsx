@@ -51,7 +51,7 @@ export default function Dashboard() {
     setQueryFields(selectionObject);
     setRequiredFields({
       ...selectionObject,
-      rollno: true,
+      roll_no: true,
       first_name: true,
       last_name: true,
     });

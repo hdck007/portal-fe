@@ -154,7 +154,7 @@ function VProfile() {
               <img
                 alt="pimage"
                 className="img"
-                src="../assets/imageslogo1.jpeg"
+                src="../assets/images/logo1.jpeg"
               />
             </div>
           </div>
