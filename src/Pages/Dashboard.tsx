@@ -26,7 +26,7 @@ const selectionObject: any = {
 };
 
 const beautifulLabels: any = {
-  rollno: 'Roll No',
+  roll_no: 'Roll No',
   first_name: 'First Name',
   last_name: 'Last Name',
   middle_name: 'Middle Name',
