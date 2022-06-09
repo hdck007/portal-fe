@@ -17,46 +17,63 @@ import Cookies from 'universal-cookie';
 import Layout from './Layout';
 
 const useStyles = makeStyles({
-  title:
-    {
-      marginLeft: 50,
-      marginTop: 10,
-      marginBottom: 10,
-    },
+  head:
+  {
+    textAlign: 'center',
+    marginTop: '20px',
+    marginBottom: '20px',
+  },
   label: {
-    marginLeft: 50,
     fontSize: 5,
     marginTop: 5,
   },
   field: {
-    marginLeft: 50,
-    width: 700,
+    marginLeft: '50px',
+    width: 500,
     marginBottom: 5,
   },
-  button: {
-    marginLeft: 50,
-    width: 100,
-    height: 50,
-    marginTop: 50,
+  select: {
+    marginBottom: 5,
   },
   drop:
   {
-    marginLeft: 50,
-    width: 200,
+    marginLeft: 30,
+    width: 500,
     height: 30,
     marginBottom: 5,
   },
-  file:
-  {
-    marginLeft: 50,
-    marginTop: 50,
+  file: {
+    fontSize: '15px',
   },
-  accord:
-  {
+  accord: {
     marginTop: 10,
     margonBottom: 10,
     fontSize: 20,
     border: 10,
+  },
+  container: {
+    display: 'flex',
+    flex: '1 1 auto',
+    maxWidth: '70%',
+    justifyContent: 'space-between',
+    marginTop: '10px',
+    marginBottom: '10px',
+    width: '100%',
+  },
+  handle: {
+    display: 'flex',
+    flex: '1 1 auto',
+    maxWidth: '70%',
+    justifyContent: 'space-between',
+    marginTop: '10px',
+    marginBottom: '10px',
+    width: '100%',
+    alignItems: 'center',
+  },
+  outerBorder: {
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
 });
 
@@ -158,193 +175,107 @@ export default function Pstudent() {
   };
   return (
     <Layout>
-      <div>
-        <Typography className={classes.title} variant="h3">Edit Personal Information</Typography>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
+      <div className={classes.outerBorder}>
+        <div className={classes.head}>
+          <Typography variant="h5">Edit Personal Information</Typography>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit First Name</Typography>
+          <TextField variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Middle Name</Typography>
+          <TextField variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Last Name</Typography>
+          <TextField variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
+        </div>
+        <div className={classes.head}>
+          <Typography className={classes.head} variant="h5">Edit Personal Details</Typography>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Mobile Number</Typography>
+          <TextField variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Password</Typography>
+          <TextField variant="standard" name="password" onChange={handlePassword} className={classes.field} required type="password" />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Department</Typography>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            onChange={handleDepartment}
+            label="Department"
+            className={classes.drop}
+            name="department"
           >
-            <Typography>Edit First Name</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleFname} name="first_name" className={classes.field} required variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
+            <MenuItem value={10}>Computer Science</MenuItem>
+            <MenuItem value={20}>Electronics Engineering</MenuItem>
+            <MenuItem value={30}>Electronics and Telecommunication</MenuItem>
+            <MenuItem value={40}>Information Technology</MenuItem>
+            <MenuItem value={50}>Instrumental Engineering</MenuItem>
+          </Select>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Roll No</Typography>
+          <TextField variant="standard" onChange={handleRoll} className={classes.field} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Gender</Typography>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            onChange={handleGender}
+            label="Religion"
+            className={classes.drop}
+            name="religion"
           >
-            <Typography>Edit Middle Name</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleMname} name="middle_name" className={classes.field} required variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Last Name</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleLname} name="last_name" className={classes.field} required variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Typography variant="h5">Edit Personal Details</Typography>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Mobile Number</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handlePhone} type="number" name="phone_number" className={classes.field} required variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Password</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField name="password" onChange={handlePassword} className={classes.field} required type="password" variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Department</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              onChange={handleDepartment}
-              label="Department"
-              className={classes.drop}
-              name="department"
-            >
-              <MenuItem value={10}>Computer Science</MenuItem>
-              <MenuItem value={20}>Electronics Engineering</MenuItem>
-              <MenuItem value={30}>Electronics and Telecommunication</MenuItem>
-              <MenuItem value={40}>Information Technology</MenuItem>
-              <MenuItem value={50}>Instrumental Engineering</MenuItem>
-            </Select>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Roll No</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleRoll} className={classes.field} />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Gender</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Select
-              labelId="demo-simple-select-helper-label"
-              id="demo-simple-select-helper"
-              onChange={handleGender}
-              label="Religion"
-              className={classes.drop}
-              name="religion"
-            >
-              <MenuItem value={10}>Male</MenuItem>
-              <MenuItem value={20}>Female</MenuItem>
-              <MenuItem value={30}>Other</MenuItem>
-            </Select>
-          </AccordionDetails>
-        </Accordion>
-        <Typography variant="h5">Miscellaneous</Typography>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Batch</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField type="number" onChange={handleBatch} name="batch" className={classes.field} required multiline variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Number of Offers</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField type="number" onChange={handleOffer} name="batch" className={classes.field} required multiline variant="outlined" />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit GitHub URL</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleGit} className={classes.field} />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit Linkedin URL</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleGit} className={classes.field} />
-          </AccordionDetails>
-        </Accordion>
-        <Accordion>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            className={classes.accord}
-          >
-            <Typography>Edit RAIT mail</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <TextField onChange={handleRmail} className={classes.field} />
-          </AccordionDetails>
-        </Accordion>
-        <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
-        <Button variant="contained" onClick={uprofile} className={classes.button} color="primary">Update Profile </Button>
+            <MenuItem value={10}>Male</MenuItem>
+            <MenuItem value={20}>Female</MenuItem>
+            <MenuItem value={30}>Other</MenuItem>
+          </Select>
+        </div>
+        <div className={classes.head}>
+          <Typography className={classes.label} variant="h5">Miscellaneous</Typography>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Batch</Typography>
+          <TextField variant="standard" type="number" onChange={handleBatch} name="batch" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Number of Offers</Typography>
+          <TextField variant="standard" type="number" onChange={handleOffer} name="batch" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit GitHub URL</Typography>
+          <TextField variant="standard" onChange={handleGit} className={classes.field} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Linkedin URL</Typography>
+          <TextField variant="standard" onChange={handleLinked} className={classes.field} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit RAIT mail</Typography>
+          <TextField variant="standard" onChange={handleRmail} className={classes.field} />
+        </div>
+        <div className={classes.handle}>
+          <Typography className={classes.label}>Add Photo</Typography>
+          <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
+        </div>
+        <Button
+          variant="contained"
+          onClick={uprofile}
+          style={{
+            marginBottom: '1rem',
+            marginTop: '1rem',
+            background: 'rgba(159, 28, 53, 1)',
+          }}
+        >
+          Update Profile
+        </Button>
       </div>
     </Layout>
   );

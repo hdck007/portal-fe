@@ -15,6 +15,8 @@ import AuthProvider from './Contexts/AuthContext';
 import MyNotifications from './Components/MyNotifications/Notification';
 import UploadOffers from './Pages/UploadOffers';
 import Resume from './Pages/Resume';
+import VStudent from './Pages/VStudent';
+import VProfile from './Pages/VProfile';
 
 function PlaceHolder() {
   return <div>Hello</div>;
@@ -34,6 +36,8 @@ function App() {
           <Route path="/upload" element={<UploadOffers />} />
           <Route path="/resume" element={<Resume />} />
           <Route path="/pstudent" element={<Pstudent />} />
+          <Route path="/vstudent" element={<VStudent />} />
+          <Route path="/vprofile" element={<VProfile />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
