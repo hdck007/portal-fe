@@ -42,6 +42,7 @@ function VProfile() {
   const [acad1, setAcad1] = useState('');
   const [acad2, setAcad2] = useState('');
   const [acad3, setAcad3] = useState('');
+  const [obj, setObj] = useState('');
   loginData.append('roll_no', roll);
   const [data, setData] = useState('');
   useEffect(() => {
@@ -86,6 +87,7 @@ function VProfile() {
       setCert1(resp.student.student_skillset.certificate_one);
       setCert2(resp.student.student_skillset.certificate_two);
       setCert3(resp.student.student_skillset.certificate_three);
+      setObj(resp.student.student_skillset.career_obj);
     });
   }, []);
   const handleResume = async (event: any) => {
@@ -159,7 +161,7 @@ function VProfile() {
             </div>
           </div>
           <div className="obj">
-            <h1 className="base1">Career Objective</h1>
+            <h1 className="base1">{obj}</h1>
             <p className="objd">Lorem ipsum dolor sit amet, consectet</p>
           </div>
           <div className="section">
