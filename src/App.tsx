@@ -34,9 +34,7 @@ function App() {
           <Route path="/notice" element={<Notice />} />
           <Route path="/mynotice" element={<MyNotifications />} />
           <Route path="/upload" element={<UploadOffers />} />
-          <Route path="/resume" element={<Resume />} />
           <Route path="/pstudent" element={<Pstudent />} />
-          <Route path="/vstudent" element={<VStudent />} />
           <Route path="/vprofile" element={<VProfile />} />
         </Routes>
       </BrowserRouter>
