@@ -10,7 +10,7 @@ import Layout from '../Components/Layout/Layout';
 import BasicTable from '../Components/Tables';
 
 const selectionObject: any = {
-  rollno: false,
+  roll_no: false,
   first_name: false,
   last_name: false,
   middle_name: false,
@@ -26,7 +26,7 @@ const selectionObject: any = {
 };
 
 const beautifulLabels: any = {
-  rollno: 'Roll No',
+  roll_no: 'Roll No',
   first_name: 'First Name',
   last_name: 'Last Name',
   middle_name: 'Middle Name',
