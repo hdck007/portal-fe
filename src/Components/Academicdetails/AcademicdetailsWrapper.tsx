@@ -30,7 +30,6 @@ function AcademicdetailsWrapper() {
   const [didMe, setDidMe] = useState<boolean>(false);
   const [didXII, setDidXII] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
-  const { isLoading, setIsLoading }: any = React.useContext(DetailsContext);
   const cookies = new Cookies();
 
   useEffect(() => {
@@ -363,12 +362,10 @@ function AcademicdetailsWrapper() {
   };
 
   const handleNext = () => {
-    setIsLoading(true);
     setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
   };
 
   const handleBack = () => {
-    setIsLoading(true);
     setActiveStep((prevActiveStep: number) => prevActiveStep - 1);
   };
 
@@ -436,12 +433,12 @@ function AcademicdetailsWrapper() {
           Details submitted
         </Alert>
       </Snackbar>
-      {activeStep === 2 && !isLoading && (
+      {activeStep === 2 && (
         <Button
           style={{
             position: 'absolute',
             top: '6rem',
-            right: '1rem',
+            right: '4rem',
             backgroundColor: 'rgba(159, 28, 53, 1)',
           }}
           variant="contained"

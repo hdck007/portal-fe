@@ -9,6 +9,7 @@ import { Router, useNavigate } from 'react-router-dom';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Cookies from 'universal-cookie';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface IStudentSidebarList{
   open: boolean;
@@ -70,7 +71,7 @@ export default function StudentSidebarList({ open }: IStudentSidebarList) {
             justifyContent: open ? 'initial' : 'center',
             px: 2.5,
           }}
-          onClick={() => navigate('/details', { replace: true })}
+          onClick={() => navigate('/vprofile', { replace: true })}
         >
           <ListItemIcon
             sx={{
@@ -82,6 +83,25 @@ export default function StudentSidebarList({ open }: IStudentSidebarList) {
             <AccountCircleIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" sx={{ opacity: open ? 1 : 0 }} />
+        </ListItemButton>
+        <ListItemButton
+          sx={{
+            minHeight: 48,
+            justifyContent: open ? 'initial' : 'center',
+            px: 2.5,
+          }}
+          onClick={() => navigate('/details', { replace: true })}
+        >
+          <ListItemIcon
+            sx={{
+              minWidth: 0,
+              mr: open ? 3 : 'auto',
+              justifyContent: 'center',
+            }}
+          >
+            <EditIcon />
+          </ListItemIcon>
+          <ListItemText primary="Edit Profile" sx={{ opacity: open ? 1 : 0 }} />
         </ListItemButton>
         <ListItemButton
           sx={{

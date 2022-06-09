@@ -4,6 +4,7 @@ import './table.css';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import Layout from '../Components/Layout/Layout';
 
 function VProfile() {
   const cookies = new Cookies();
@@ -108,179 +109,189 @@ function VProfile() {
     }
   };
   return (
-    <div>
-      <div className="pdf">
-        <div className="udetail">
-          <div className="info">
-            <h3 className="uinfo">
-              Name:
-              {' '}
-              {fname}
-              {' '}
-              {' '}
-              {lname}
-            </h3>
-            <h3 className="uinfo">
-              Gender:
-              {' '}
-              {gender}
-            </h3>
-            <h3 className="uinfo">
-              Email:
-              {' '}
-              {email}
-            </h3>
-            <h3 className="uinfo">
-              Mob:
-              {' '}
-              {phone}
-            </h3>
-            <h3 className="uinfo">
-              LinkedIn:
-              {' '}
-              {link}
-            </h3>
-          </div>
-          <div>
-            <img alt="pimage" id="pimage" src="person.jpeg" />
-          </div>
-          <div className="logo">
-            <img alt="pimage" className="img" src="logo1.jpeg" />
-          </div>
-        </div>
-        <div className="obj">
-          <h1 className="base1">Career Objective</h1>
-          <p className="objd">Lorem ipsum dolor sit amet, consectet</p>
-        </div>
-        <div className="section">
-          <div className="left side">
-            <div>
-              <h2 className="base">Academic Background</h2>
-              <table className="table">
-                <tbody>
-                  <tr>
-                    <td>BE</td>
-                    <td />
-                    <td>Sem 7</td>
-                    <td>Sem 8</td>
-                    <td rowSpan={4}>{pointer}</td>
-                  </tr>
-                  <tr>
-                    <td>TE</td>
-                    <td />
-                    <td>Sem 5</td>
-                    <td>Sem 6</td>
-                  </tr>
-                  <tr>
-                    <td>SE</td>
-                    <td />
-                    <td>Sem 3</td>
-                    <td>Sem 4</td>
-                  </tr>
-                  <tr>
-                    <td>FE</td>
-                    <td />
-                    <td>Sem 1</td>
-                    <td>Sem 2</td>
-                  </tr>
-                  <tr>
-                    <td>Class X11</td>
-                    <td />
-                    <td colSpan={2}>HSC</td>
-                    <td>{ten}</td>
-                  </tr>
-                  <tr>
-                    <td>Class X</td>
-                    <td />
-                    <td colSpan={2}>SSC</td>
-                    <td>{twelve}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div>
-              <h3 className="base">Academic Achievements</h3>
-              <ul>
-                <li>{acad1}</li>
-                <li>{acad2}</li>
-                <li>{acad3}</li>
-              </ul>
-            </div>
-            <div>
-              <h3 className="base">Additional information</h3>
-              <ul>
-                <li>{plang}</li>
-                <li>{tech}</li>
-                <li>{hobby}</li>
-              </ul>
-            </div>
-          </div>
-          <div className="line" />
-          <div className="right side">
-            <div>
-              <h1 className="base1">
-                <span className="dot">●</span>
+    <Layout>
+      <div>
+        <div className="pdf">
+          <div className="udetail">
+            <div className="info">
+              <h3 className="uinfo">
+                Name:
                 {' '}
-                Certifications ▶▶▶
-              </h1>
-              <ul>
-                <li>{cert1}</li>
-                <li>{cert2}</li>
-                <li>{cert3}</li>
-              </ul>
-            </div>
-            <div className="pin">
-              <h1 className="base1">
-                <span className="dot">●</span>
+                {fname}
                 {' '}
-                Projects and internships ▶▶▶
-              </h1>
+                {' '}
+                {lname}
+              </h3>
+              <h3 className="uinfo">
+                Gender:
+                {' '}
+                {gender}
+              </h3>
+              <h3 className="uinfo">
+                Email:
+                {' '}
+                {email}
+              </h3>
+              <h3 className="uinfo">
+                Mob:
+                {' '}
+                {phone}
+              </h3>
+              <h3 className="uinfo">
+                LinkedIn:
+                {' '}
+                {link}
+              </h3>
+            </div>
+            <div>
+              <img
+                alt="pimage"
+                id="pimage"
+                src="../assets/image/download.jpeg"
+              />
+            </div>
+            <div className="logo">
+              <img
+                alt="pimage"
+                className="img"
+                src="../assets/imageslogo1.jpeg"
+              />
+            </div>
+          </div>
+          <div className="obj">
+            <h1 className="base1">Career Objective</h1>
+            <p className="objd">Lorem ipsum dolor sit amet, consectet</p>
+          </div>
+          <div className="section">
+            <div className="left side">
               <div>
-                <h3 className="subbase1">Projects</h3>
-                <ul>
-                  <li>{proj1}</li>
-                  <li>{proj2}</li>
-                  <li>{proj3}</li>
-                </ul>
+                <h2 className="base">Academic Background</h2>
+                <table className="table">
+                  <tbody>
+                    <tr>
+                      <td>BE</td>
+                      <td />
+                      <td>Sem 7</td>
+                      <td>Sem 8</td>
+                      <td rowSpan={4}>{pointer}</td>
+                    </tr>
+                    <tr>
+                      <td>TE</td>
+                      <td />
+                      <td>Sem 5</td>
+                      <td>Sem 6</td>
+                    </tr>
+                    <tr>
+                      <td>SE</td>
+                      <td />
+                      <td>Sem 3</td>
+                      <td>Sem 4</td>
+                    </tr>
+                    <tr>
+                      <td>FE</td>
+                      <td />
+                      <td>Sem 1</td>
+                      <td>Sem 2</td>
+                    </tr>
+                    <tr>
+                      <td>Class X11</td>
+                      <td />
+                      <td colSpan={2}>HSC</td>
+                      <td>{ten}</td>
+                    </tr>
+                    <tr>
+                      <td>Class X</td>
+                      <td />
+                      <td colSpan={2}>SSC</td>
+                      <td>{twelve}</td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
-              <div style={{ display: 'inline-block' }}>
-                <h3 className="subbase1">Internships</h3>
+              <div>
+                <h3 className="base">Academic Achievements</h3>
                 <ul>
-                  <li>{intern1}</li>
-                  <li>{intern2}</li>
-                  <li>{intern3}</li>
+                  <li>{acad1}</li>
+                  <li>{acad2}</li>
+                  <li>{acad3}</li>
                 </ul>
               </div>
               <div>
-                <div style={{ display: 'inline-block' }}>
-                  <h1 className="base1">
-                    <span className="dot">●</span>
-                    {' '}
-                    Extra curricular Achievements ▶▶▶
-                  </h1>
-                  <ul>
-                    <li>{extra1}</li>
-                    <li>{extra2}</li>
-                    <li>{extra3}</li>
-                  </ul>
-                </div>
+                <h3 className="base">Additional information</h3>
+                <ul>
+                  <li>{plang}</li>
+                  <li>{tech}</li>
+                  <li>{hobby}</li>
+                </ul>
+              </div>
+            </div>
+            <div className="line" />
+            <div className="right side">
+              <div>
                 <h1 className="base1">
                   <span className="dot">●</span>
                   {' '}
-                  Position of Responsibility ▶▶▶
+                  Certifications ▶▶▶
                 </h1>
                 <ul>
-                  <li>{pos1}</li>
-                  <li>{pos2}</li>
-                  <li>{pos3}</li>
+                  <li>{cert1}</li>
+                  <li>{cert2}</li>
+                  <li>{cert3}</li>
                 </ul>
-                <Button variant="contained" className="btn" onClick={handleResume}>Print resume</Button>
+              </div>
+              <div className="pin">
+                <h1 className="base1">
+                  <span className="dot">●</span>
+                  {' '}
+                  Projects and internships ▶▶▶
+                </h1>
+                <div>
+                  <h3 className="subbase1">Projects</h3>
+                  <ul>
+                    <li>{proj1}</li>
+                    <li>{proj2}</li>
+                    <li>{proj3}</li>
+                  </ul>
+                </div>
+                <div style={{ display: 'inline-block' }}>
+                  <h3 className="subbase1">Internships</h3>
+                  <ul>
+                    <li>{intern1}</li>
+                    <li>{intern2}</li>
+                    <li>{intern3}</li>
+                  </ul>
+                </div>
+                <div>
+                  <div style={{ display: 'inline-block' }}>
+                    <h1 className="base1">
+                      <span className="dot">●</span>
+                      {' '}
+                      Extra curricular Achievements ▶▶▶
+                    </h1>
+                    <ul>
+                      <li>{extra1}</li>
+                      <li>{extra2}</li>
+                      <li>{extra3}</li>
+                    </ul>
+                  </div>
+                  <h1 className="base1">
+                    <span className="dot">●</span>
+                    {' '}
+                    Position of Responsibility ▶▶▶
+                  </h1>
+                  <ul>
+                    <li>{pos1}</li>
+                    <li>{pos2}</li>
+                    <li>{pos3}</li>
+                  </ul>
+                  <Button variant="contained" className="btn" onClick={handleResume}>Print resume</Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 

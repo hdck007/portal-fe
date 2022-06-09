@@ -1,18 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Typography } from '@mui/material';
-import React, { useState, useEffect } from 'react';
-// @ts-ignore
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-// @ts-ignore
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { DetailsContext } from '../../Contexts/DetailsContext';
+import { TextField, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
 
 function AdditionaldetailsWrapper({
   additionalDetails,
   setAdditionalDetails,
 }: any) {
-  const { setIsLoading }: any = React.useContext(DetailsContext);
-
   useEffect(() => {
     const value = ['Career Objective',
       'Academic achievement one',
@@ -59,19 +52,15 @@ function AdditionaldetailsWrapper({
           >
             {item.title}
           </Typography>
-          <CKEditor
-            editor={ClassicEditor}
-            data={item.value}
+          <TextField
+            value={item.value}
             placeholder="Enter details here"
-            // @ts-ignore
-            onReady={(editor) => {
-              setIsLoading(false);
-            }}
-            // @ts-ignore
-            onChange={(event, editor) => {
-              const data = editor.getData();
-              handleAdditonalChange(data, index);
-            }}
+            fullWidth
+            multiline
+            onChange={(event) => handleAdditonalChange(
+              event.target.value,
+              index,
+            )}
           />
         </>
       ))}

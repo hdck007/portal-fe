@@ -12,6 +12,6 @@ code {
     monospace;
 }
 
-/* .ck-editor__editable {
+.ck-editor__editable {
   min-height: 300px;
-} */
+}
