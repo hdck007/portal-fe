@@ -15,9 +15,20 @@ function AdditionaldetailsWrapper({
 
   useEffect(() => {
     const value = ['Career Objective',
-      'Academic achievements',
-      'Certifications',
-      'Extra-curcicular Activities',
+      'Academic achievement one',
+      'Academic achievement two',
+      'Academic achievement three',
+      'Certification One',
+      'Certification Two',
+      'Certification Three',
+      'Project one',
+      'Project two',
+      'Project three',
+      'Internship one',
+      'Internship two',
+      'Internship three',
+      'Prefered Language',
+      'Technologies',
       'Additional Information'].map((item, index) => ({
       title: item,
       value: '',

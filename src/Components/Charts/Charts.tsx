@@ -68,19 +68,19 @@ export default function Charts() {
   const [lpaNumberWiseData, setLpaNumberWiseData] = React.useState([]);
 
   useEffect(() => {
-    fetch('http://tpc-backend-node.herokuapp.com/eligible/studentsplacedcompanywise')
+    fetch('https://tpc-backend-node.herokuapp.com/eligible/studentsplacedcompanywise')
       .then((result) => result.json())
       .then((data) => setCompanyWiseData(data.studentsPlacedCompanyWise));
 
-    fetch('http://tpc-backend-node.herokuapp.com/eligible/companyWisePackage')
+    fetch('https://tpc-backend-node.herokuapp.com/eligible/companyWisePackage')
       .then((result) => result.json())
       .then((data) => setLpaNumberWiseData(data.companyWisePackage));
 
-    fetch('http://tpc-backend-node.herokuapp.com/eligible/placedByDept')
+    fetch('https://tpc-backend-node.herokuapp.com/eligible/placedByDept')
       .then((response) => response.json())
       .then((data) => setBranchWiseData(data));
 
-    fetch('http://tpc-backend-node.herokuapp.com/eligible/studentsplacedbranchwise');
+    fetch('https://tpc-backend-node.herokuapp.com/eligible/studentsplacedbranchwise');
   }, []);
 
   return (

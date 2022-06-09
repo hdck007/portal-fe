@@ -48,7 +48,7 @@ function BoardsForm({
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <BoardsRowWrapper>
+          {/* <BoardsRowWrapper>
             <Typography
               width="50%"
             >
@@ -61,7 +61,7 @@ function BoardsForm({
                 width: '50%',
               }}
             />
-          </BoardsRowWrapper>
+          </BoardsRowWrapper> */}
           <BoardsRowWrapper>
             <Typography
               width="50%"
@@ -74,6 +74,7 @@ function BoardsForm({
               style={{
                 width: '50%',
               }}
+              value={details.completionMonth}
             />
           </BoardsRowWrapper>
           <BoardsRowWrapper>
@@ -88,6 +89,7 @@ function BoardsForm({
               style={{
                 width: '50%',
               }}
+              value={details.completionYear}
             />
           </BoardsRowWrapper>
           <BoardsRowWrapper>
@@ -97,11 +99,12 @@ function BoardsForm({
               Marks Obtained:
             </Typography>
             <TextField
-              onChange={(e) => handleChange(e, 'marksObtained', index)}
+              onChange={(e) => handleChange(e, 'marks', index)}
               variant="standard"
               style={{
                 width: '50%',
               }}
+              value={details.marks}
             />
           </BoardsRowWrapper>
           <BoardsRowWrapper>
@@ -116,6 +119,7 @@ function BoardsForm({
               style={{
                 width: '50%',
               }}
+              value={details.totalMarks}
             />
           </BoardsRowWrapper>
         </AccordionDetails>

@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
-import { AuthContext } from '../Contexts/AuthContext';
+import Swal from 'sweetalert2';
 
 export default function Home() {
   const [userInfo, setUserInfo] = React.useState<any>({});
@@ -20,8 +20,6 @@ export default function Home() {
     });
   };
   // eslint-disable-next-line camelcase
-  const rait_email = userInfo.username;
-  const { password } = userInfo;
   const handleSubmit = async (event: any) => {
     event.preventDefault();
     const loginData = new FormData();
@@ -31,11 +29,25 @@ export default function Home() {
       fetch('https://django-tpc.herokuapp.com/auth/studentLogin/', {
         method: 'POST',
         body: loginData,
-      }).then((response) => response.json()).then((data) => {
-        cookies.set('refresh', data.refresh);
-        cookies.set('access', data.access);
-        cookies.set('roll_no', userInfo.username);
-        router('/dashboard', { replace: true });
+      }).then((response) => response.json()).then((data: any) => {
+        if (data.error_msg) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: data.status,
+          });
+        } else {
+          cookies.set('refresh', data.refresh);
+          cookies.set('access', data.access);
+          cookies.set('roll_no', userInfo.username);
+          router('/dashboard', { replace: true });
+        }
+      }).catch((error) => {
+        Swal.fire({
+          title: 'Error',
+          text: error.message,
+          icon: 'error',
+        });
       });
     }
   };

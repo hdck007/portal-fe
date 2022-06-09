@@ -63,6 +63,7 @@ function DegreeForm({
               style={{
                 width: '50%',
               }}
+              value={details.completionMonth}
             />
           </RowWrapper>
           <RowWrapper>
@@ -77,6 +78,7 @@ function DegreeForm({
               style={{
                 width: '50%',
               }}
+              value={details.completionYear}
             />
           </RowWrapper>
           <RowWrapper>
@@ -86,11 +88,12 @@ function DegreeForm({
               Marks Obtained:
             </Typography>
             <TextField
-              onChange={(e) => handleChange(e, 'marksObtained', field, index)}
+              onChange={(e) => handleChange(e, 'marks', field, index)}
               variant="standard"
               style={{
                 width: '50%',
               }}
+              value={details.marks}
             />
           </RowWrapper>
           <RowWrapper>
@@ -105,6 +108,7 @@ function DegreeForm({
               style={{
                 width: '50%',
               }}
+              value={details.totalMarks}
             />
           </RowWrapper>
           <RowWrapper>
@@ -119,6 +123,7 @@ function DegreeForm({
               style={{
                 width: '50%',
               }}
+              value={details.cgpa}
             />
           </RowWrapper>
         </AccordionDetails>
