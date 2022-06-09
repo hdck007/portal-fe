@@ -10,7 +10,7 @@ import Layout from '../Components/Layout/Layout';
 import BasicTable from '../Components/Tables';
 
 const selectionObject: any = {
-  rollno: false,
+  roll_no: false,
   first_name: false,
   last_name: false,
   middle_name: false,
@@ -51,7 +51,7 @@ export default function Dashboard() {
     setQueryFields(selectionObject);
     setRequiredFields({
       ...selectionObject,
-      rollno: true,
+      roll_no: true,
       first_name: true,
       last_name: true,
     });
