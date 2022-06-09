@@ -142,7 +142,7 @@ function VProfile() {
             </h3>
           </div>
           <div>
-            <img alt="pimage" id="pimage" src="download.png" />
+            <img alt="pimage" id="pimage" src="person.jpeg" />
           </div>
           <div className="logo">
             <img alt="pimage" className="img" src="logo1.jpeg" />

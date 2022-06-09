@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import { makeStyles } from '@mui/styles';
+import Layout from '../Components/Layout/Layout';
 
 function VStudent() {
   const cookies = new Cookies();
