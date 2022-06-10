@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+*{
+  box-sizing: border-box;
+}
+
 .ck-editor__editable {
   min-height: 300px;
 }

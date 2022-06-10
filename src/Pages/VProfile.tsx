@@ -169,41 +169,41 @@ function VProfile() {
                 <table className="table">
                   <tbody>
                     <tr>
-                      <td>BE</td>
+                      <td className="td">BE</td>
                       <td />
-                      <td>Sem 7</td>
-                      <td>Sem 8</td>
+                      <td className="td">Sem 7</td>
+                      <td className="td">Sem 8</td>
                       <td rowSpan={4}>{pointer}</td>
                     </tr>
                     <tr>
-                      <td>TE</td>
+                      <td className="td">TE</td>
                       <td />
-                      <td>Sem 5</td>
-                      <td>Sem 6</td>
+                      <td className="td">Sem 5</td>
+                      <td className="td">Sem 6</td>
                     </tr>
                     <tr>
-                      <td>SE</td>
+                      <td className="td">SE</td>
                       <td />
-                      <td>Sem 3</td>
-                      <td>Sem 4</td>
+                      <td className="td">Sem 3</td>
+                      <td className="td">Sem 4</td>
                     </tr>
                     <tr>
-                      <td>FE</td>
+                      <td className="td">FE</td>
                       <td />
-                      <td>Sem 1</td>
-                      <td>Sem 2</td>
+                      <td className="td">Sem 1</td>
+                      <td className="td">Sem 2</td>
                     </tr>
                     <tr>
-                      <td>Class X11</td>
+                      <td className="td">Class X11</td>
                       <td />
                       <td colSpan={2}>HSC</td>
-                      <td>{ten}</td>
+                      <td className="td">{ten}</td>
                     </tr>
                     <tr>
-                      <td>Class X</td>
+                      <td className="td">Class X</td>
                       <td />
                       <td colSpan={2}>SSC</td>
-                      <td>{twelve}</td>
+                      <td className="td">{twelve}</td>
                     </tr>
                   </tbody>
                 </table>

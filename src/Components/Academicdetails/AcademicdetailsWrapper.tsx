@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import {
-  Alert, Button, Snackbar, Typography,
+  Alert, Button, Card, Snackbar, Typography,
 } from '@mui/material';
 import React, { useState, useEffect } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -609,10 +609,20 @@ function AcademicdetailsWrapper() {
         </>
       )}
       {activeStep === 2 && (
-        <AdditionaldetailsWrapper
-          additionalDetails={additionalDetails}
-          setAdditionalDetails={setAdditionalDetails}
-        />
+        <Card
+          style={{
+            width: '100%',
+            padding: '1rem',
+            borderRadius: '10px',
+            marginTop: '20px',
+            backgroundColor: '#fff',
+          }}
+        >
+          <AdditionaldetailsWrapper
+            additionalDetails={additionalDetails}
+            setAdditionalDetails={setAdditionalDetails}
+          />
+        </Card>
       )}
     </>
   );

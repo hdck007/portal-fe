@@ -68,9 +68,20 @@ export default function Layout({ children }: any) {
         <Divider />
         <StudentSidebarList open={open} />
       </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box
+        component="main"
+        sx={{ flexGrow: 1, p: 2 }}
+        style={{
+          width: '100%',
+          height: '100%',
+          backgroundColor: '#fafafa',
+          minHeight: '100vh',
+        }}
+      >
         <DrawerHeader />
-        {children}
+        <div>
+          {children}
+        </div>
       </Box>
     </Box>
   );

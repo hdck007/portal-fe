@@ -8,6 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Card } from '@mui/material';
 
 const beautifulLabels: any = {
   rollno: 'Roll No',
@@ -27,7 +28,12 @@ const beautifulLabels: any = {
 
 export default function BasicTable({ data }: any) {
   return (
-    <TableContainer component={Paper}>
+    <TableContainer
+      component={Card}
+      style={{
+        borderRadius: '10px',
+      }}
+    >
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
