@@ -37,6 +37,11 @@ export default function Home() {
             text: data.status,
           });
         } else {
+          Swal.fire({
+            icon: 'success',
+            title: 'SUCCESS',
+            text: 'SUCCESSFULL LOGIN',
+          });
           cookies.set('refresh', data.refresh);
           cookies.set('access', data.access);
           cookies.set('roll_no', userInfo.username);
