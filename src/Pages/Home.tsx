@@ -63,7 +63,7 @@ export default function Home() {
       }}
     >
       <div style={{
-        backgroundImage: 'url(/rait.jpeg)',
+        backgroundImage: 'url(..assests/image/rait.jpeg)',
         backgroundRepeat: 'no-repeat',
       }}
       />
