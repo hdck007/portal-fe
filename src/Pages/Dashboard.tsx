@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Button,
+  Card,
   CircularProgress,
   TextField,
   Typography,
@@ -149,64 +150,83 @@ export default function Dashboard() {
       <form
         onSubmit={handleSubmit}
       >
-        <h3>Select the fields for the data.</h3>
-        <div
+        <Card
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
+            width: '100%',
+            padding: '1rem',
+            backgroundColor: 'white',
+            borderRadius: '10px',
           }}
         >
-          {Object.keys(selectionObject).map((item, index) => (
-            <div
-              style={{
-                display: 'flex',
-                marginBottom: '3rem',
-              }}
-            >
-              <Typography
-                textAlign="center"
+          <h3>Select the fields for the data.</h3>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+            }}
+          >
+            {Object.keys(selectionObject).map((item, index) => (
+              <div
                 style={{
-                  position: 'relative',
-                  top: '0.5rem',
-                  borderRadius: '15rem',
-                  background: requiredFields[item]
-                    ? 'rgba(159, 28, 53, 0.8)' : '#ccc',
-                  color: requiredFields[item] ? '#fff' : '#777',
-                  padding: '5px 10px',
-                  marginRight: '1rem',
-                  cursor: 'pointer',
-                  transition: 'all 0.3s ease-in-out',
+                  display: 'flex',
+                  marginBottom: '3rem',
                 }}
-                onClick={() => handleToggle(item)}
               >
-                {beautifulLabels[item]}
-              </Typography>
-            </div>
-          ))}
-        </div>
-        <h3>Filter the data through below fields.</h3>
-        <div
+                <Typography
+                  textAlign="center"
+                  style={{
+                    position: 'relative',
+                    top: '0.5rem',
+                    borderRadius: '15rem',
+                    background: requiredFields[item]
+                      ? 'rgba(159, 28, 53, 0.8)' : '#ccc',
+                    color: requiredFields[item] ? '#fff' : '#777',
+                    padding: '5px 10px',
+                    marginRight: '1rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease-in-out',
+                  }}
+                  onClick={() => handleToggle(item)}
+                >
+                  {beautifulLabels[item]}
+                </Typography>
+              </div>
+            ))}
+          </div>
+        </Card>
+        <Card
           style={{
-            display: 'flex',
-            flexWrap: 'wrap',
+            width: '100%',
+            padding: '1rem',
+            backgroundColor: 'white',
+            marginTop: '1rem',
+            borderRadius: '10px',
           }}
         >
-          {Object.keys(selectionObject).map((item, index) => (
-            <div
-              style={{
-                display: 'flex',
-                width: '200px',
-                margin: '0.3rem',
-              }}
-            >
-              <TextField
-                label={beautifulLabels[item]}
-                name={item}
-                onChange={handleChange}
-              />
-            </div>
-          ))}
-        </div>
+          <h3>Filter the data through below fields.</h3>
+          <div
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+            }}
+          >
+            {Object.keys(selectionObject).map((item, index) => (
+              <div
+                style={{
+                  display: 'flex',
+                  width: '200px',
+                  margin: '0.3rem',
+                }}
+              >
+                <TextField
+                  label={beautifulLabels[item]}
+                  name={item}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
+          </div>
+        </Card>
         <Button
           type="submit"
           variant="contained"

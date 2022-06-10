@@ -10,6 +10,7 @@ import {
   ArcElement,
 } from 'chart.js';
 import { Bar, Doughnut } from 'react-chartjs-2';
+import { Card, Grid } from '@mui/material';
 import Layout from '../Layout/Layout';
 
 ChartJS.register(
@@ -81,105 +82,133 @@ export default function Charts() {
       .then((data) => setBranchWiseData(data));
 
     fetch('https://tpc-backend-node.herokuapp.com/eligible/studentsplacedbranchwise');
+
+    fetch('https://tpc-backend-node.herokuapp.com/eligible/top10student')
+      .then((res) => res.json())
+      .then((data) => console.log(data));
   }, []);
 
   return (
     <Layout>
-      <div
+      <Grid
+        container
+        spacing={3}
         style={{
           width: '100%',
           height: '100%',
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
-          flexWrap: 'wrap',
         }}
       >
-        <div
-          style={{
-            width: '45%',
-          }}
-        >
-          <Bar
-            options={options1}
-            data={{
-              labels: Object.keys(branchWiseData).map((item :any) => item),
-              datasets: [
-                {
-                  label: 'Placed Students',
-                  data: Object.keys(branchWiseData).map((item: any) => branchWiseData[item]),
-                  backgroundColor: 'rgba(159, 28, 53, 0.9)',
-                },
-              ],
-            }}
-          />
-        </div>
-        <div
-          style={{
-            width: '45%',
-          }}
-        >
-          <Bar
-            options={options2}
-            data={{
-              labels: companyWiseData?.map((item: any) => item.placed_company),
-              datasets: [
-                {
-                  label: 'Placed Students',
-                  data: companyWiseData?.map((item: any) => item.count),
-                  backgroundColor: 'rgba(159, 28, 53, 0.9)',
-                },
-              ],
-            }}
-          />
-        </div>
-        <div
-          style={{
-            width: '45%',
-          }}
-        >
-          <h3
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Card
+            raised
             style={{
-              textAlign: 'center',
+              width: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '10px',
+              padding: '1rem',
             }}
           >
-            Number of students LPA wise
+            <Bar
+              options={options1}
+              data={{
+                labels: Object.keys(branchWiseData).map((item :any) => item),
+                datasets: [
+                  {
+                    label: 'Placed Students',
+                    data: Object.keys(branchWiseData).map((item: any) => branchWiseData[item]),
+                    backgroundColor: 'rgba(159, 28, 53, 0.9)',
+                  },
+                ],
+              }}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Card
+            raised
+            style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '10px',
+              padding: '1rem',
+            }}
+          >
+            <Bar
+              options={options2}
+              data={{
+                labels: companyWiseData?.map((item: any) => item.placed_company),
+                datasets: [
+                  {
+                    label: 'Placed Students',
+                    data: companyWiseData?.map((item: any) => item.count),
+                    backgroundColor: 'rgba(159, 28, 53, 0.9)',
+                  },
+                ],
+              }}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={8} lg={8}>
+          <Card
+            raised
+            style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '10px',
+              padding: '1rem',
+            }}
+          >
+            <h3
+              style={{
+                textAlign: 'center',
+              }}
+            >
+              Number of students LPA wise
 
-          </h3>
-          <Doughnut data={{
-            labels: lpaNumberWiseData?.map((item: any) => Object.keys(item)[0]),
-            datasets: [
-              {
-                label: '# of Students',
-                data: lpaNumberWiseData?.map((item: any) => Object.values(item)[0]),
-                backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(255, 206, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                ],
-                borderColor: [
-                  'rgba(255, 99, 132, 1)',
-                  'rgba(54, 162, 235, 1)',
-                  'rgba(255, 206, 86, 1)',
-                  'rgba(75, 192, 192, 1)',
-                  'rgba(153, 102, 255, 1)',
-                  'rgba(255, 159, 64, 1)',
-                ],
-                borderWidth: 1,
-              },
-            ],
-          }}
-          />
-        </div>
-        <div
-          style={{
-            width: '45%',
-          }}
-        />
-      </div>
+            </h3>
+            <Doughnut data={{
+              labels: lpaNumberWiseData?.map((item: any) => Object.keys(item)[0]),
+              datasets: [
+                {
+                  label: '# of Students',
+                  data: lpaNumberWiseData?.map((item: any) => Object.values(item)[0]),
+                  backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)',
+                  ],
+                  borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)',
+                  ],
+                  borderWidth: 1,
+                },
+              ],
+            }}
+            />
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={4} lg={4}>
+          <Card
+            raised
+            style={{
+              width: '100%',
+              backgroundColor: '#fff',
+              borderRadius: '10px',
+              padding: '1rem',
+            }}
+          >
+            Cool
+          </Card>
+        </Grid>
+      </Grid>
     </Layout>
   );
 }

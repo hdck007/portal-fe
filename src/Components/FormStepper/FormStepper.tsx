@@ -18,13 +18,21 @@ export default function DotsMobileStepper({
 
   return (
     <MobileStepper
+      style={{
+        boxShadow: '1px 2px 3px rgba(0, 0, 0, 0.5)',
+        borderRadius: '5px',
+      }}
       variant="dots"
       steps={3}
       position="static"
       activeStep={activeStep}
       sx={{ maxWidth: 400, flexGrow: 1 }}
       nextButton={(
-        <Button size="small" onClick={handleNext} disabled={activeStep === 2}>
+        <Button
+          size="small"
+          onClick={handleNext}
+          disabled={activeStep === 2}
+        >
           Next
           {theme.direction === 'rtl' ? (
             <KeyboardArrowLeft />

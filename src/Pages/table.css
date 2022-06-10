@@ -5,16 +5,14 @@ body {
 	box-sizing: border-box;
 	font-family: "Poppins", sans-serif;
 }
-table,
-th,
-td {
+.table,
+.td {
 	border: 2px solid black;
 	border-collapse: collapse;
 	margin-left: 3px;
 }
 
-th,
-td {
+.td {
 	padding: 20px;
 	text-align: center;
 }
