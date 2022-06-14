@@ -175,7 +175,7 @@ function VProfile() {
             </div>
           </div>
           <div className="obj">
-            <h1 className="base1">Career Objective</h1>
+            <h1 className="base1">Career Objective:</h1>
             <p className="objd">{obj}</p>
           </div>
           <div className="section">
