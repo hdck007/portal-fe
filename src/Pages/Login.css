@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+title
+{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+@media only screen and (max-width: 722px) {
+    .box
+    {
+        width: 450px;
+        height:450px;
+    }
+    .title
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .form
+    {
+        width: 60%;
+    }
+    .mail
+    {
+        width: 100px;
+    }
+    .bttn
+    {
+        width: 100px;
+    }
+    .pass
+    {
+        width: 100px;
+    }
+
+  }
+
+@media only screen and (max-width: 600px) {
+    .box
+    {
+        width: 400px;
+        height:400px;
+    }
+    .title
+    {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .form
+    {
+        width: 50%;
+    }
+    .mail
+    {
+        width: 100px;
+    }
+    .bttn
+    {
+        width: 100px;
+    }
+    .pass
+    {
+        width: 100px;
+    }
+
+  }

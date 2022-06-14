@@ -3,7 +3,7 @@
 import { Button, InputLabel, TextField } from '@mui/material';
 import React, { useEffect } from 'react';
 import Cookies from 'universal-cookie';
-import Layout from '../Components/Layout/Layout';
+import SLayout from '../Components/SLayout/SLayout';
 
 function UploadOffers() {
   const [offers, setOffers] = React.useState<any>([]);
@@ -77,7 +77,7 @@ function UploadOffers() {
   };
 
   return (
-    <Layout>
+    <SLayout>
       <h3>Upload Offers</h3>
       <TextField
         label="Roll No"
@@ -146,7 +146,7 @@ function UploadOffers() {
       >
         Submit
       </Button>
-    </Layout>
+    </SLayout>
   );
 }
 
