@@ -4,7 +4,9 @@ import './table.css';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Layout from '../Components/Layout/Layout';
+import SLayout from '../Components/SLayout/SLayout';
+import person from '../assets/image/person.jpeg';
+import logo1 from '../assets/image/logo1.jpeg';
 
 function VProfile() {
   const cookies = new Cookies();
@@ -33,15 +35,22 @@ function VProfile() {
   const [proj1, setProj1] = useState('');
   const [proj2, setProj2] = useState('');
   const [proj3, setProj3] = useState('');
+  const [proj1des, setProj1des] = useState('');
+  const [proj2des, setProj2des] = useState('');
+  const [proj3des, setProj3des] = useState('');
   const [intern1, setIntern1] = useState('');
   const [intern2, setIntern2] = useState('');
   const [intern3, setIntern3] = useState('');
+  const [intern1des, setIntern1des] = useState('');
+  const [intern2des, setIntern2des] = useState('');
+  const [intern3des, setIntern3des] = useState('');
   const [hobby, setHobby] = useState('');
   const [plang, setPlang] = useState('');
   const [tech, setTech] = useState('');
   const [acad1, setAcad1] = useState('');
   const [acad2, setAcad2] = useState('');
   const [acad3, setAcad3] = useState('');
+  const [obj, setObj] = useState('');
   loginData.append('roll_no', roll);
   const [data, setData] = useState('');
   useEffect(() => {
@@ -71,12 +80,18 @@ function VProfile() {
       setPos1(resp.student.other_info.pos_of_res_one);
       setPos2(resp.student.other_info.pos_of_res_two);
       setPos3(resp.student.other_info.pos_of_res_three);
-      setProj1(resp.student.student_experience.project_one);
-      setProj2(resp.student.student_experience.project_two);
-      setProj3(resp.student.student_experience.project_three);
-      setIntern1(resp.student.student_experience.internship_one);
-      setIntern2(resp.student.student_experience.internship_two);
-      setIntern3(resp.student.student_experience.internship_three);
+      setProj1(resp.student.student_experience.project_one_title);
+      setProj2(resp.student.student_experience.project_two_title);
+      setProj3(resp.student.student_experience.project_three_title);
+      setProj1des(resp.student.student_experience.project_one_description);
+      setProj2des(resp.student.student_experience.project_two_description);
+      setProj3des(resp.student.student_experience.project_three_description);
+      setIntern1(resp.student.student_experience.internship_one_title);
+      setIntern2(resp.student.student_experience.internship_two_title);
+      setIntern3(resp.student.student_experience.internship_three_title);
+      setIntern1des(resp.student.student_experience.internship_one_description);
+      setIntern2des(resp.student.student_experience.internship_two_description);
+      setIntern3des(resp.student.student_experience.internship_three_description);
       setPlang(resp.student.student_experience.pref_lang);
       setTech(resp.student.student_experience.technologies);
       setHobby(resp.student.other_info.hobbies);
@@ -86,6 +101,7 @@ function VProfile() {
       setCert1(resp.student.student_skillset.certificate_one);
       setCert2(resp.student.student_skillset.certificate_two);
       setCert3(resp.student.student_skillset.certificate_three);
+      setObj(resp.student.student_skillset.career_obj);
     });
   }, []);
   const handleResume = async (event: any) => {
@@ -109,7 +125,7 @@ function VProfile() {
     }
   };
   return (
-    <Layout>
+    <SLayout>
       <div>
         <div className="pdf">
           <div className="udetail">
@@ -147,20 +163,20 @@ function VProfile() {
               <img
                 alt="pimage"
                 id="pimage"
-                src="../assets/image/download.jpeg"
+                src={person}
               />
             </div>
             <div className="logo">
               <img
                 alt="pimage"
                 className="img"
-                src="../assets/images/logo1.jpeg"
+                src={logo1}
               />
             </div>
           </div>
           <div className="obj">
             <h1 className="base1">Career Objective</h1>
-            <p className="objd">Lorem ipsum dolor sit amet, consectet</p>
+            <p className="objd">{obj}</p>
           </div>
           <div className="section">
             <div className="left side">
@@ -248,17 +264,43 @@ function VProfile() {
                 <div>
                   <h3 className="subbase1">Projects</h3>
                   <ul>
-                    <li>{proj1}</li>
-                    <li>{proj2}</li>
-                    <li>{proj3}</li>
+                    <li>
+                      {proj1}
+                      {' '}
+                      :
+                      {' '}
+                      {proj1des}
+                    </li>
+                    <li>
+                      {proj2}
+                      :
+                      {proj2des}
+                    </li>
+                    <li>
+                      {proj3}
+                      :
+                      {proj3des}
+                    </li>
                   </ul>
                 </div>
                 <div style={{ display: 'inline-block' }}>
                   <h3 className="subbase1">Internships</h3>
                   <ul>
-                    <li>{intern1}</li>
-                    <li>{intern2}</li>
-                    <li>{intern3}</li>
+                    <li>
+                      {intern1}
+                      :
+                      {intern1des}
+                    </li>
+                    <li>
+                      {intern2}
+                      :
+                      {intern2des}
+                    </li>
+                    <li>
+                      {intern3}
+                      :
+                      {intern3des}
+                    </li>
                   </ul>
                 </div>
                 <div>
@@ -291,7 +333,7 @@ function VProfile() {
           </div>
         </div>
       </div>
-    </Layout>
+    </SLayout>
   );
 }
 

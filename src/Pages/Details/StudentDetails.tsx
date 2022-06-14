@@ -1,16 +1,16 @@
 import React from 'react';
 import AcademicdetailsWrapper
   from '../../Components/Academicdetails/AcademicdetailsWrapper';
-import Layout from '../../Components/Layout/Layout';
+import SLayout from '../../Components/SLayout/SLayout';
 import DetailsProvider from '../../Contexts/DetailsContext';
 
 function StudentDetails() {
   return (
-    <Layout>
+    <SLayout>
       <DetailsProvider>
         <AcademicdetailsWrapper />
       </DetailsProvider>
-    </Layout>
+    </SLayout>
   );
 }
 

@@ -3,7 +3,7 @@ import { CircularProgress } from '@mui/material';
 import React, { useContext, useEffect } from 'react';
 import Cookies from 'universal-cookie';
 import { AuthContext } from '../../Contexts/AuthContext';
-import Layout from '../Layout/Layout';
+import SLayout from '../SLayout/SLayout';
 
 export default function MyNotifications() {
   const { rollNo }: any = useContext(AuthContext);
@@ -27,7 +27,7 @@ export default function MyNotifications() {
   }, [rollNo]);
 
   return (
-    <Layout>
+    <SLayout>
       <h3>My Notifications</h3>
       {isLoading ? <CircularProgress /> : (
         notifications.length > 0 ? (
@@ -37,6 +37,6 @@ export default function MyNotifications() {
           <div>No Notifications</div>
         )
       )}
-    </Layout>
+    </SLayout>
   );
 }

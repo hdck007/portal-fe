@@ -17,6 +17,8 @@ import UploadOffers from './Pages/UploadOffers';
 import Resume from './Pages/Resume';
 import VStudent from './Pages/VStudent';
 import VProfile from './Pages/VProfile';
+import Login from './Pages/Login';
+import Student from './Pages/Student';
 
 function PlaceHolder() {
   return <div>Hello</div>;
@@ -27,14 +29,13 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Login />} />
           <Route path="/dashboard" element={<Charts />} />
           <Route path="/lookup" element={<Dashboard />} />
           <Route path="/details" element={<StudentDetails />} />
           <Route path="/notice" element={<Notice />} />
           <Route path="/mynotice" element={<MyNotifications />} />
           <Route path="/upload" element={<UploadOffers />} />
-          <Route path="/pstudent" element={<Pstudent />} />
           <Route path="/vprofile" element={<VProfile />} />
         </Routes>
       </BrowserRouter>

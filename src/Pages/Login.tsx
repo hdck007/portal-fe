@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './Login.css';
 import {
   Button,
   TextField,
@@ -7,8 +8,9 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
+import logo from '../assets/image/dy.jpeg';
 
-export default function Home() {
+function Login() {
   const [userInfo, setUserInfo] = React.useState<any>({});
   const router = useNavigate();
   const cookies = new Cookies();
@@ -45,7 +47,7 @@ export default function Home() {
           cookies.set('refresh', data.refresh);
           cookies.set('access', data.access);
           cookies.set('roll_no', userInfo.username);
-          if (role[0] === 'Student') {
+          if (data.role[0] === 'Student') {
             router('/vprofile', { replace: true });
           } else {
             router('/dashboard', { replace: true });
@@ -62,6 +64,7 @@ export default function Home() {
   };
 
   return (
+
     <div
       style={{
         height: '100vh',
@@ -69,15 +72,18 @@ export default function Home() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        marginTop: '50px',
       }}
     >
       <div
+        className="box"
         style={{
-          width: '400px',
-          height: '400px',
+          width: '700px',
+          height: '900px',
         }}
       >
         <form
+          className="form"
           onSubmit={handleSubmit}
           style={{
             height: '60%',
@@ -88,11 +94,27 @@ export default function Home() {
             justifyContent: 'space-around',
           }}
         >
-          <Typography variant="h2">TPC-PORTAL</Typography>
+          <div className="title">
+            <img src={logo} alt="Logo" />
+            <Typography
+              className="head"
+              style={{
+                marginTop: '30px',
+                marginBottom: '30px',
+              }}
+              variant="h2"
+            >
+              TPC-PORTAL
+
+            </Typography>
+          </div>
           <TextField
             label="RAIT E-mail"
+            className="mail"
             style={{
               width: '100%',
+              marginTop: '10px',
+              marginBottom: '10px',
             }}
             variant="outlined"
             name="username"
@@ -100,8 +122,11 @@ export default function Home() {
           />
           <TextField
             label="Password"
+            className="pass"
             style={{
               width: '100%',
+              marginTop: '10px',
+              marginBottom: '10px',
             }}
             variant="outlined"
             name="password"
@@ -110,6 +135,7 @@ export default function Home() {
           />
           <Button
             variant="contained"
+            className="bttn"
             style={{
               width: '100%',
               background: 'rgba(159, 28, 53, 1)',
@@ -124,3 +150,5 @@ export default function Home() {
     </div>
   );
 }
+
+export default Login;

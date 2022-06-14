@@ -12,7 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import AdminSidebarList from './AdminSidebarList/AdminSidebarList';
+import StudentSidebarList from './StudentSidebarList/StudentSidebarList';
 import AppBar from './AppBar';
 import DrawerHeader from './DrawerHeader';
 import Drawer from './Drawer';
@@ -60,7 +60,7 @@ export default function Layout({ children }: any) {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <AdminSidebarList open={open} />
+        <StudentSidebarList open={open} />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader />
