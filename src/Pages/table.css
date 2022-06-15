@@ -17,15 +17,15 @@ body {
 	text-align: center;
 }
 .udetail {
-	padding: 1rem;
+	padding: 0rem;
 	background-color: #9f1d37;
 	color: white;
 	display: flex;
 	justify-content: space-between;
-	height: 220px;
+	height: 180px;
 	border-bottom: 23px solid black;
 	margin-top: 0;
-	font-size: 16px;
+	font-size: 13px;
 	font-family: poppins;
 }
 .base {
@@ -49,6 +49,7 @@ body {
 
 .img {
 	height: 180px;
+	width: 120px;
 }
 
 .uinfo {
@@ -65,10 +66,11 @@ body {
 }
 
 #pimage {
-	border-radius: 100%;
-	height: 12rem;
-	/* margin-top: 50px; */
-	margin-left: 30%;
+    border-radius: 100%;
+    height: 8rem;
+    margin-left: 0%;
+    position: relative;
+    top: 40%;
 }
 
 .right-side {
