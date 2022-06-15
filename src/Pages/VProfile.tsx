@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import SLayout from '../Components/SLayout/SLayout';
 import person from '../assets/image/person.jpeg';
-import logo1 from '../assets/image/logo1.jpeg';
+import logo1 from '../assets/image/rait2.jpg';
 
 function VProfile() {
   const cookies = new Cookies();
