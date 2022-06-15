@@ -13,22 +13,23 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Cookies from 'universal-cookie';
+import { Card } from '@mui/material';
 
 const useStyles = makeStyles({
   head:
   {
-    textAlign: 'center',
     marginTop: '20px',
     marginBottom: '20px',
   },
   label: {
     fontSize: 16,
     marginTop: 5,
+    width: '250px',
   },
   field: {
     marginLeft: '50px',
-    width: 500,
     marginBottom: 5,
+    width: '250px',
   },
   select: {
     marginBottom: 5,
@@ -36,9 +37,8 @@ const useStyles = makeStyles({
   drop:
   {
     marginLeft: 30,
-    width: 500,
-    height: 30,
     marginBottom: 5,
+    width: '250px',
   },
   file: {
     fontSize: '15px',
@@ -51,9 +51,9 @@ const useStyles = makeStyles({
   },
   container: {
     display: 'flex',
-    flex: '1 1 auto',
-    maxWidth: '70%',
-    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
     marginTop: '10px',
     marginBottom: '10px',
     width: '100%',
@@ -69,9 +69,6 @@ const useStyles = makeStyles({
     alignItems: 'center',
   },
   outerBorder: {
-    display: 'flex',
-    alignItems: 'center',
-    flexDirection: 'column',
   },
 });
 
@@ -170,95 +167,122 @@ export default function Pstudent() {
   };
   return (
     <div className={classes.outerBorder}>
-      <div className={classes.head}>
-        <Typography variant="h5">Edit Personal Information</Typography>
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit First Name</Typography>
-        <TextField variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Middle Name</Typography>
-        <TextField variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Last Name</Typography>
-        <TextField variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
-      </div>
-      <div className={classes.head}>
-        <Typography className={classes.head} variant="h5">Edit Personal Details</Typography>
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Mobile Number</Typography>
-        <TextField variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Password</Typography>
-        <TextField variant="standard" name="password" onChange={handlePassword} className={classes.field} required type="password" />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Department</Typography>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          onChange={handleDepartment}
-          label="Department"
-          className={classes.drop}
-          name="department"
-        >
-          <MenuItem value={10}>Computer Science</MenuItem>
-          <MenuItem value={20}>Electronics Engineering</MenuItem>
-          <MenuItem value={30}>Electronics and Telecommunication</MenuItem>
-          <MenuItem value={40}>Information Technology</MenuItem>
-          <MenuItem value={50}>Instrumental Engineering</MenuItem>
-        </Select>
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Gender</Typography>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          onChange={handleGender}
-          label="Religion"
-          className={classes.drop}
-          name="religion"
-        >
-          <MenuItem value={10}>Male</MenuItem>
-          <MenuItem value={20}>Female</MenuItem>
-          <MenuItem value={30}>Other</MenuItem>
-        </Select>
-      </div>
-      <div className={classes.head}>
-        <Typography className={classes.label} variant="h5">Miscellaneous</Typography>
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Batch</Typography>
-        <TextField variant="standard" type="number" onChange={handleBatch} name="batch" className={classes.field} required />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Number of Offers</Typography>
-        <TextField variant="standard" type="number" onChange={handleOffer} name="batch" className={classes.field} required />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit GitHub URL</Typography>
-        <TextField variant="standard" onChange={handleGit} className={classes.field} />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit Linkedin URL</Typography>
-        <TextField variant="standard" onChange={handleLinked} className={classes.field} />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit RAIT mail</Typography>
-        <TextField variant="standard" onChange={handleRmail} className={classes.field} />
-      </div>
-      <div className={classes.container}>
-        <Typography className={classes.label}>Edit mail</Typography>
-        <TextField variant="standard" onChange={handleMail} className={classes.field} />
-      </div>
-      <div className={classes.handle}>
-        <Typography className={classes.label}>Add Photo</Typography>
-        <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
-      </div>
+      <Card
+        style={{
+          width: '100%',
+          padding: '1rem',
+          borderRadius: '10px',
+          marginTop: '1rem',
+        }}
+      >
+        <div className={classes.head}>
+          <Typography variant="h5">Edit Personal Information</Typography>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit First Name</Typography>
+          <TextField variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Middle Name</Typography>
+          <TextField variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Last Name</Typography>
+          <TextField variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
+        </div>
+      </Card>
+      <Card
+        style={{
+          width: '100%',
+          padding: '1rem',
+          borderRadius: '10px',
+          marginTop: '1rem',
+        }}
+      >
+        <div className={classes.head}>
+          <Typography className={classes.head} variant="h5">Edit Personal Details</Typography>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Mobile Number</Typography>
+          <TextField variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Password</Typography>
+          <TextField variant="standard" name="password" onChange={handlePassword} className={classes.field} required type="password" />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Department</Typography>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            onChange={handleDepartment}
+            label="Department"
+            className={classes.drop}
+            name="department"
+          >
+            <MenuItem value={10}>Computer Science</MenuItem>
+            <MenuItem value={20}>Electronics Engineering</MenuItem>
+            <MenuItem value={30}>Electronics and Telecommunication</MenuItem>
+            <MenuItem value={40}>Information Technology</MenuItem>
+            <MenuItem value={50}>Instrumental Engineering</MenuItem>
+          </Select>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Gender</Typography>
+          <Select
+            labelId="demo-simple-select-helper-label"
+            id="demo-simple-select-helper"
+            onChange={handleGender}
+            label="Religion"
+            className={classes.drop}
+            name="religion"
+          >
+            <MenuItem value={10}>Male</MenuItem>
+            <MenuItem value={20}>Female</MenuItem>
+            <MenuItem value={30}>Other</MenuItem>
+          </Select>
+        </div>
+      </Card>
+      <Card
+        style={{
+          width: '100%',
+          padding: '1rem',
+          borderRadius: '10px',
+          marginTop: '1rem',
+        }}
+      >
+        <div className={classes.head}>
+          <Typography className={classes.head} variant="h5">Miscellaneous</Typography>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Batch</Typography>
+          <TextField variant="standard" type="number" onChange={handleBatch} name="batch" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Number of Offers</Typography>
+          <TextField variant="standard" type="number" onChange={handleOffer} name="batch" className={classes.field} required />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit GitHub URL</Typography>
+          <TextField variant="standard" onChange={handleGit} className={classes.field} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Linkedin URL</Typography>
+          <TextField variant="standard" onChange={handleLinked} className={classes.field} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit RAIT mail</Typography>
+          <TextField variant="standard" onChange={handleRmail} className={classes.field} />
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit mail</Typography>
+          <TextField variant="standard" onChange={handleMail} className={classes.field} />
+        </div>
+        <div className={classes.handle}>
+          <Typography className={classes.label}>Add Photo</Typography>
+          <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
+        </div>
+      </Card>
       <Button
         variant="contained"
         onClick={uprofile}

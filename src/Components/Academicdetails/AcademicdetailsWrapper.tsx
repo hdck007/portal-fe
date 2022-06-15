@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable */
 import {
   Alert, Button, Card, Snackbar, Typography,
 } from '@mui/material';
@@ -19,13 +19,13 @@ function AcademicdetailsWrapper() {
   const [additionalDetails, setAdditionalDetails] = useState<any[]>([]);
   const [engAcadDetails, setEngAcadDetails] = useState<IDegreeDetails[]>([]);
   const [activeStep, setActiveStep] = React.useState(0);
-  const [
-    diplomaAcadDetails, setDiplomaAcadDetails,
-  ] = useState<IDegreeDetails[]>([]);
+  const [diplomaAcadDetails, setDiplomaAcadDetails] = useState<
+		IDegreeDetails[]
+	>([]);
   const [meAcadDetails, setMeAcadDetails] = useState<IDegreeDetails[]>([]);
-  const [
-    boardsAcadDetails, setBoardsAcadDetails,
-  ] = useState<IBoardDetails[]>([]);
+  const [boardsAcadDetails, setBoardsAcadDetails] = useState<IBoardDetails[]>(
+    [],
+  );
   const [didDiploma, setDidDiploma] = useState<boolean>(false);
   const [didMe, setDidMe] = useState<boolean>(false);
   const [didXII, setDidXII] = useState<boolean>(false);
@@ -82,28 +82,34 @@ function AcademicdetailsWrapper() {
         if (meAcadDetails.length === 4) {
           return;
         }
-        setMeAcadDetails((prevValue) => [...meAcadDetails, {
-          semester: prevValue.length + 1,
-          completionMonth: null,
-          completionYear: null,
-          marks: null,
-          totalMarks: null,
-          cgpa: null,
-        }]);
+        setMeAcadDetails((prevValue) => [
+          ...meAcadDetails,
+          {
+            semester: prevValue.length + 1,
+            completionMonth: null,
+            completionYear: null,
+            marks: null,
+            totalMarks: null,
+            cgpa: null,
+          },
+        ]);
         break;
       }
       default: {
         if (engAcadDetails.length === 8) {
           return;
         }
-        setEngAcadDetails((prevValue) => [...engAcadDetails, {
-          semester: prevValue.length + 1,
-          completionMonth: null,
-          completionYear: null,
-          marks: null,
-          totalMarks: null,
-          cgpa: null,
-        }]);
+        setEngAcadDetails((prevValue) => [
+          ...engAcadDetails,
+          {
+            semester: prevValue.length + 1,
+            completionMonth: null,
+            completionYear: null,
+            marks: null,
+            totalMarks: null,
+            cgpa: null,
+          },
+        ]);
       }
     }
   };
@@ -152,8 +158,10 @@ function AcademicdetailsWrapper() {
     academiceData.append('roll_no', cookies.get('roll_no'));
     academiceData.append(
       'tenth_percent',
-      `${(Number(boardsAcadDetails[0].marks) * 100)
-           / Number(boardsAcadDetails[0].totalMarks)}`,
+      `${
+        (Number(boardsAcadDetails[0].marks) * 100)
+				/ Number(boardsAcadDetails[0].totalMarks)
+      }`,
     );
     academiceData.append(
       'tenth_completion_date',
@@ -169,8 +177,10 @@ function AcademicdetailsWrapper() {
     );
     academiceData.append(
       'twelveth_percent',
-      `${(Number(boardsAcadDetails[1].marks) * 100)
-           / Number(boardsAcadDetails[1].totalMarks)}`,
+      `${
+        (Number(boardsAcadDetails[1].marks) * 100)
+				/ Number(boardsAcadDetails[1].totalMarks)
+      }`,
     );
     academiceData.append(
       'twelveth_completion_date',
@@ -186,10 +196,7 @@ function AcademicdetailsWrapper() {
     );
     let sum = 0;
     engAcadDetails.forEach((value, index) => {
-      academiceData.append(
-        `sem${index + 1}_pointer`,
-        String(value.cgpa),
-      );
+      academiceData.append(`sem${index + 1}_pointer`, String(value.cgpa));
       academiceData.append(
         `sem${index + 1}_completion_data`,
         String(value.completionYear),
@@ -229,15 +236,38 @@ function AcademicdetailsWrapper() {
     return academiceData;
   };
 
+  const appendData = (
+    formData: any,
+    prefix:string,
+    i: number,
+  ) => {
+    formData.append(
+      `${prefix}_title`,
+      String(additionalDetails[i].value.title),
+    );
+    formData.append(
+      `${prefix}_description`,
+      String(additionalDetails[i].value.description),
+    );
+    formData.append(
+      `${prefix}_start_date`,
+      String(additionalDetails[i].value.startDate),
+    );
+    formData.append(
+      `${prefix}_end_date`,
+      String(additionalDetails[i].value.endDate),
+    );
+  };
+
   const getExperienceData = () => {
     const experience = new FormData();
     experience.append('roll_no', cookies.get('roll_no'));
-    experience.append('project_one', additionalDetails[7].value);
-    experience.append('project_two', additionalDetails[8].value);
-    experience.append('project_three', additionalDetails[9].value);
-    experience.append('internship_one', additionalDetails[10].value);
-    experience.append('internship_two', additionalDetails[11].value);
-    experience.append('internship_three', additionalDetails[12].value);
+    appendData(experience, 'project_one', 7);
+    appendData(experience, 'project_two', 8);
+    appendData(experience, 'project_three', 9);
+    appendData(experience, 'internship_one', 10);
+    appendData(experience, 'internship_two', 11);
+    appendData(experience, 'internship_three', 12);
     experience.append('pref_lang', additionalDetails[13].value);
     experience.append('technologies', additionalDetails[14].value);
     return experience;
@@ -247,6 +277,12 @@ function AcademicdetailsWrapper() {
     const hobbies = new FormData();
     hobbies.append('roll_no', cookies.get('roll_no'));
     hobbies.append('hobbies', additionalDetails[15].value);
+    hobbies.append('pos_of_res_one', additionalDetails[16].value);
+    hobbies.append('pos_of_res_two', additionalDetails[17].value);
+    hobbies.append('pos_of_res_three', additionalDetails[18].value);
+    hobbies.append('extracuricular_one', additionalDetails[19].value);
+    hobbies.append('extracuricular_two', additionalDetails[20].value);
+    hobbies.append('extracuricular_three', additionalDetails[21].value);
     return hobbies;
   };
 
@@ -311,10 +347,7 @@ function AcademicdetailsWrapper() {
     });
   });
 
-  const addAchievementsDetails = async (
-    skillAndObj: any,
-    access: any,
-  ) => new Promise((resolve, reject) => {
+  const addAchievementsDetails = async (skillAndObj: any, access: any) => new Promise((resolve, reject) => {
     fetch('https://django-tpc.herokuapp.com/addSkillSet/', {
       method: 'POST',
       body: skillAndObj,
@@ -334,12 +367,12 @@ function AcademicdetailsWrapper() {
     if (validate()) {
       const access = cookies.get('access');
 
-      const apiCalls = [addAcademicDetails(getAcademicData(), access),
+      const apiCalls = [
+        addAcademicDetails(getAcademicData(), access),
         addExperienceDetails(getExperienceData(), access),
         addHobbiesDetails(getHobbiesData(), access),
-        addAchievementsDetails(getAchievementsData(), access)];
-
-      console.log(apiCalls);
+        addAchievementsDetails(getAchievementsData(), access),
+      ];
 
       Promise.allSettled(apiCalls).then((response) => {
         response.forEach((value) => {
@@ -434,46 +467,58 @@ function AcademicdetailsWrapper() {
         </Alert>
       </Snackbar>
       {activeStep === 2 && (
+      <div
+        style={{
+					  position: 'relative',
+					  padding: '1rem 0 0 0',
+					  display: 'flex',
+        }}
+      >
         <Button
           style={{
-            position: 'absolute',
-            top: '6rem',
-            right: '4rem',
-            backgroundColor: 'rgba(159, 28, 53, 1)',
+						  backgroundColor: 'rgba(159, 28, 53, 1)',
+						  marginLeft: 'auto',
           }}
           variant="contained"
           onClick={handleSubmit}
         >
           Submit Details
         </Button>
+      </div>
       )}
       {/* {isLoading && <CircularProgress />} */}
-      {activeStep === 0 && (
-      <Pstudent />
-      )}
+      {activeStep === 0 && <Pstudent />}
       {activeStep === 1 && (
-        <>
-          <ApplicableOptions
-            didDiploma={didDiploma}
-            setDidDiploma={setDidDiploma}
-            didMe={didMe}
-            setDidMe={setDidMe}
-            didXII={didXII}
-            setDidXII={setDidXII}
-          />
+      <>
+        <ApplicableOptions
+          didDiploma={didDiploma}
+          setDidDiploma={setDidDiploma}
+          didMe={didMe}
+          setDidMe={setDidMe}
+          didXII={didXII}
+          setDidXII={setDidXII}
+        />
 
-          {/* Boards details */}
-          <div
+        {/* Boards details */}
+        <div
+          style={{
+						  width: '75%',
+						  position: 'relative',
+						  bottom: '220px',
+          }}
+        >
+          <Card
             style={{
-              width: '75%',
-              position: 'relative',
-              bottom: '220px',
+							  width: '100%',
+							  padding: '10px',
+							  marginBottom: '20px',
+							  borderRadius: '10px',
             }}
           >
             <Typography
               fontSize={24}
               style={{
-                padding: '10px 0',
+								  padding: '10px 0',
               }}
             >
               Boards academic details
@@ -485,49 +530,70 @@ function AcademicdetailsWrapper() {
                 details={item}
               />
             ))}
-          </div>
+          </Card>
+        </div>
 
-          {/* optional diploma */}
-          {didDiploma && (
-          <div
+        {/* optional diploma */}
+        {didDiploma && (
+        <div
+          style={{
+							  position: 'relative',
+							  bottom: '200px',
+							  width: '75%',
+							  marginBottom: '20px',
+          }}
+        >
+          <Card
             style={{
-              position: 'relative',
-              bottom: '200px',
-              width: '75%',
-              marginBottom: '20px',
+								  width: '100%',
+								  padding: '10px',
+								  marginBottom: '20px',
+								  borderRadius: '10px',
             }}
           >
             <Typography
               fontSize={24}
               style={{
-                padding: '10px 0',
+									  padding: '10px 0',
               }}
             >
               Diploma academic details
             </Typography>
-            {diplomaAcadDetails.map((item: IDegreeDetails, index: number) => (
-              <DegreeForm
-                field="diploma"
-                index={index}
-                details={item}
-                handleChange={handleChangeDegree}
-              />
-            ))}
-          </div>
-          )}
+            {diplomaAcadDetails.map(
+								  (item: IDegreeDetails, index: number) => (
+  <DegreeForm
+    field="diploma"
+    index={index}
+    details={item}
+    handleChange={handleChangeDegree}
+  />
+								  ),
+            )}
+          </Card>
+        </div>
+        )}
 
-          {/* be details */}
-          <div
+        {/* be details */}
+        <div
+          style={{
+						  position: 'relative',
+						  bottom: '200px',
+						  width: '75%',
+          }}
+        >
+          <Card
             style={{
-              position: 'relative',
-              bottom: '200px',
-              width: '75%',
+							  width: '100%',
+							  padding: '10px',
+							  paddingBottom: '50px',
+							  marginBottom: '20px',
+							  borderRadius: '10px',
             }}
           >
             <Typography
               fontSize={24}
               style={{
-                padding: '10px 0',
+								  padding: '10px 0',
               }}
             >
               Degree academic details
@@ -542,8 +608,9 @@ function AcademicdetailsWrapper() {
             ))}
             <Button
               style={{
-                position: 'absolute',
-                right: '100px',
+								  position: 'absolute',
+								  right: '100px',
+								  bottom: '5px',
               }}
               onClick={() => handleAddAcad('eng')}
             >
@@ -551,29 +618,39 @@ function AcademicdetailsWrapper() {
             </Button>
             <Button
               style={{
-                position: 'absolute',
-                right: '0px',
+								  position: 'absolute',
+								  right: '10px',
+								  bottom: '5px',
               }}
               onClick={() => removeEngAcad('eng')}
             >
               Remove
             </Button>
-          </div>
+          </Card>
+        </div>
 
-          {/* pg acad details */}
-          {didMe && (
-          <div
+        {/* pg acad details */}
+        {didMe && (
+        <div
+          style={{
+							  position: 'relative',
+							  bottom: '200px',
+							  width: '75%',
+          }}
+        >
+          <Card
             style={{
-              position: 'relative',
-              bottom: '200px',
-              width: '75%',
+								  width: '100%',
+								  padding: '10px',
+								  paddingBottom: '50px',
+								  borderRadius: '10px',
             }}
           >
             <Typography
               fontSize={24}
               style={{
-                padding: '10px 0',
-                marginTop: '20px',
+									  padding: '10px 0',
+									  marginTop: '20px',
               }}
             >
               PG academic details
@@ -588,8 +665,9 @@ function AcademicdetailsWrapper() {
             ))}
             <Button
               style={{
-                position: 'absolute',
-                right: '100px',
+									  position: 'absolute',
+									  right: '100px',
+									  bottom: '5px',
               }}
               onClick={() => handleAddAcad('me')}
             >
@@ -597,32 +675,24 @@ function AcademicdetailsWrapper() {
             </Button>
             <Button
               style={{
-                position: 'absolute',
-                right: '0px',
+									  position: 'absolute',
+									  right: '5px',
+									  bottom: '5px',
               }}
               onClick={() => removeEngAcad('me')}
             >
               Remove
             </Button>
-          </div>
-          )}
-        </>
+          </Card>
+        </div>
+        )}
+      </>
       )}
       {activeStep === 2 && (
-        <Card
-          style={{
-            width: '100%',
-            padding: '1rem',
-            borderRadius: '10px',
-            marginTop: '20px',
-            backgroundColor: '#fff',
-          }}
-        >
-          <AdditionaldetailsWrapper
-            additionalDetails={additionalDetails}
-            setAdditionalDetails={setAdditionalDetails}
-          />
-        </Card>
+      <AdditionaldetailsWrapper
+        additionalDetails={additionalDetails}
+        setAdditionalDetails={setAdditionalDetails}
+      />
       )}
     </>
   );
