@@ -50,6 +50,14 @@ function VProfile() {
   const [acad1, setAcad1] = useState('');
   const [acad2, setAcad2] = useState('');
   const [acad3, setAcad3] = useState('');
+  const [sem1, setSem1] = useState('0');
+  const [sem2, setSem2] = useState('0');
+  const [sem3, setSem3] = useState('0');
+  const [sem4, setSem4] = useState('0');
+  const [sem5, setSem5] = useState('0');
+  const [sem6, setSem6] = useState('0');
+  const [sem7, setSem7] = useState('0');
+  const [sem8, setSem8] = useState('0');
   const [obj, setObj] = useState('');
   loginData.append('roll_no', roll);
   const [data, setData] = useState('');
@@ -102,6 +110,14 @@ function VProfile() {
       setTen(resp.student.academic_info.tenth_percent);
       setTwelve(resp.student.academic_info.twelveth_percent);
       setPointer(resp.student.academic_info.cgpa);
+      setSem1(resp.student.academic_info.sem1_pointer);
+      setSem2(resp.student.academic_info.sem2_pointer);
+      setSem3(resp.student.academic_info.sem3_pointer);
+      setSem4(resp.student.academic_info.sem4_pointer);
+      setSem5(resp.student.academic_info.sem5_pointer);
+      setSem6(resp.student.academic_info.sem6_pointer);
+      setSem7(resp.student.academic_info.sem7_pointer);
+      setSem8(resp.student.academic_info.sem8_pointer);
     });
   }, []);
   const handleResume = async (event: any) => {
@@ -187,27 +203,59 @@ function VProfile() {
                     <tr>
                       <td className="td">BE</td>
                       <td />
-                      <td className="td">Sem 7</td>
-                      <td className="td">Sem 8</td>
+                      <td className="td">
+                        Sem 7:
+                        {' '}
+                        {sem7}
+                      </td>
+                      <td className="td">
+                        Sem 8:
+                        {' '}
+                        {sem8}
+                      </td>
                       <td rowSpan={4}>{pointer}</td>
                     </tr>
                     <tr>
                       <td className="td">TE</td>
                       <td />
-                      <td className="td">Sem 5</td>
-                      <td className="td">Sem 6</td>
+                      <td className="td">
+                        Sem 5:
+                        {' '}
+                        {sem5}
+                      </td>
+                      <td className="td">
+                        Sem 6:
+                        {' '}
+                        {sem6}
+                      </td>
                     </tr>
                     <tr>
                       <td className="td">SE</td>
                       <td />
-                      <td className="td">Sem 3</td>
-                      <td className="td">Sem 4</td>
+                      <td className="td">
+                        Sem 3:
+                        {' '}
+                        {sem3}
+                      </td>
+                      <td className="td">
+                        Sem 4:
+                        {' '}
+                        {sem4}
+                      </td>
                     </tr>
                     <tr>
                       <td className="td">FE</td>
                       <td />
-                      <td className="td">Sem 1</td>
-                      <td className="td">Sem 2</td>
+                      <td className="td">
+                        Sem 1:
+                        {' '}
+                        {sem1}
+                      </td>
+                      <td className="td">
+                        Sem 2:
+                        {' '}
+                        {sem2}
+                      </td>
                     </tr>
                     <tr>
                       <td className="td">Class X11</td>
