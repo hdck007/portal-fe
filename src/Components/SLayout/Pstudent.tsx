@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -77,8 +77,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Pstudent() {
+function Pstudent() {
   const classes = useStyles();
+  const loginData = new FormData();
   const [gender, setGender] = useState('');
   const [department, setDepartment] = useState('');
   const [open, setOpen] = useState(false);
@@ -173,6 +174,32 @@ export default function Pstudent() {
       .then((result) => console.log(result))
       .catch((error) => console.log('error', error));
   };
+  useEffect(() => {
+    fetch('https://django-tpc.herokuapp.com/node/getStudentProfile/', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${cookies.get('access')}`,
+      },
+      // eslint-disable-next-line camelcase
+      body: loginData,
+    }).then((response) => response.json()).then((resp) => {
+      console.log(resp);
+      setFirstName(resp.first_name);
+      setLastName(resp.last_name);
+      setMiddleName(resp.middle_name);
+      setRollno(resp.roll_no);
+      setLinked(resp.linkedin);
+      setMail(resp.email);
+      setDepartment(resp.department);
+      setGender(resp.gender);
+      setPhoneNumber(resp.phone_number);
+      setPassword(resp.password);
+      setBatch(resp.batch);
+      setFile(resp.photo);
+      setOffer(resp.no_of_offers);
+      setGit(resp.github);
+    });
+  }, []);
   return (
     <Layout>
       <div className={classes.outerBorder}>
@@ -280,3 +307,5 @@ export default function Pstudent() {
     </Layout>
   );
 }
+
+export default Pstudent;

@@ -71,9 +71,6 @@ function VProfile() {
       setDepartment(resp.student.department);
       setGender(resp.student.gender);
       setPhone(resp.student.phone_number);
-      setPointer(resp.student.academic_info.cgpa);
-      setTen(resp.student.academic_info.tenth_percent);
-      setTwelve(resp.student.academic_info.twelveth_percent);
       setExtra1(resp.student.other_info.extracuricular_one);
       setExtra2(resp.student.other_info.extracuricular_two);
       setExtra3(resp.student.other_info.extracuricular_three);
@@ -102,6 +99,9 @@ function VProfile() {
       setCert2(resp.student.student_skillset.certificate_two);
       setCert3(resp.student.student_skillset.certificate_three);
       setObj(resp.student.student_skillset.career_obj);
+      setTen(resp.student.academic_info.tenth_percent);
+      setTwelve(resp.student.academic_info.twelveth_percent);
+      setPointer(resp.student.academic_info.cgpa);
     });
   }, []);
   const handleResume = async (event: any) => {
