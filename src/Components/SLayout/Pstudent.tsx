@@ -97,6 +97,21 @@ function Pstudent() {
   const [rollno, setRollno] = useState('');
   const [file, setFile] = useState(null);
   const cookies = new Cookies();
+  const uphoto = () => {
+    const photo = new FormData();
+    // @ ts-ignore
+    const requestOptions = {
+      method: 'POST',
+      body: photo,
+      // headers: {
+      //   Authorization: `Bearer ${cookies.get('access')}`,
+      // },
+    };
+    fetch(`https://tpc-backend-node.herokuapp.com/image/upload/${rollno}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => window.alert('Details updated'))
+      .catch((error) => console.log('error', error));
+  };
   const handleGender = (event: any) => {
     setGender(event.target.value);
   };
@@ -158,10 +173,11 @@ function Pstudent() {
     formdata.append('linkedin', `${linked}`);
     formdata.append('no_of_offers', `${offer}`);
     formdata.append('password', `${password}`);
-    formdata.append('photo', `${file}`);
+    // formdata.append('profile', `${file}`);
     formdata.append('department', `${department}`);
     formdata.append('batch', `${batch}`);
     formdata.append('rait_email', `${rmail}`);
+    uphoto();
     const requestOptions = {
       method: 'POST',
       body: formdata,
@@ -171,7 +187,7 @@ function Pstudent() {
     };
     fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => window.alert('Details updated'))
       .catch((error) => console.log('error', error));
   };
   useEffect(() => {

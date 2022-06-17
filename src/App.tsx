@@ -19,6 +19,7 @@ import VStudent from './Pages/VStudent';
 import VProfile from './Pages/VProfile';
 import Login from './Pages/Login';
 import Student from './Pages/Student';
+import Image from './Pages/Image';
 
 function PlaceHolder() {
   return <div>Hello</div>;
@@ -37,6 +38,7 @@ function App() {
           <Route path="/mynotice" element={<MyNotifications />} />
           <Route path="/upload" element={<UploadOffers />} />
           <Route path="/vprofile" element={<VProfile />} />
+          <Route path="/image" element={<Image />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>
