@@ -70,7 +70,7 @@ function Image() {
         <Typography className="rule" variant="h5">Photo must be uploaded with proper background</Typography>
       </div>
       <div className="submit">
-        <input className="file" name="profile" onChange={handleFile} type="file" accept=".jpg" />
+        <input name="profile" onChange={handleFile} type="file" accept=".jpg" />
         <Button className="btn" onClick={uphoto} variant="contained">SUBMIT</Button>
       </div>
     </div>

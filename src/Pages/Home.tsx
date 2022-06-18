@@ -38,13 +38,12 @@ export default function Home() {
           });
         } else {
           console.log(data);
-          console.log(data.role);
-          console.log(data.role[0]);
+          console.log('ye', data.roll_no);
           setRole(data.role[0]);
           console.log(role);
           cookies.set('refresh', data.refresh);
           cookies.set('access', data.access);
-          cookies.set('roll_no', userInfo.username);
+          cookies.set('roll_no', data.roll_no);
           if (role[0] === 'Student') {
             router('/vprofile', { replace: true });
           } else {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
@@ -14,7 +15,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Cookies from 'universal-cookie';
 
-import Layout from './SLayout';
+import SLayout from './SLayout';
 
 const useStyles = makeStyles({
   head:
@@ -96,22 +97,9 @@ function Pstudent() {
   const [offer, setOffer] = useState(0);
   const [rollno, setRollno] = useState('');
   const [file, setFile] = useState(null);
+  const [fname, setFname] = useState(' ');
   const cookies = new Cookies();
-  const uphoto = () => {
-    const photo = new FormData();
-    // @ ts-ignore
-    const requestOptions = {
-      method: 'POST',
-      body: photo,
-      // headers: {
-      //   Authorization: `Bearer ${cookies.get('access')}`,
-      // },
-    };
-    fetch(`https://tpc-backend-node.herokuapp.com/image/upload/${rollno}`, requestOptions)
-      .then((response) => response.text())
-      .then((result) => window.alert('Details updated'))
-      .catch((error) => console.log('error', error));
-  };
+  const roll = cookies.get('roll_no');
   const handleGender = (event: any) => {
     setGender(event.target.value);
   };
@@ -157,13 +145,44 @@ function Pstudent() {
   const handleFile = (event: any) => {
     setFile(event.target.files[0]);
   };
+  const url = `https://tpc-backend-node.herokuapp.com/image/upload/${roll}`;
+  const uphoto = (event:any) => {
+    event.preventDefault();
+    const profile = new FormData();
+    const n = fname;
+    const l = fname.length;
+    const a = n.indexOf('.');
+    const a1 = a + 1;
+    const s = fname.slice(a1, l);
+    // eslint-disable-next-line
+    if (s !== 'jpg') {
+      window.alert('Please enter .jpg format image');
+      // @ts-ignore
+    } else if (file.size > 256000) {
+      window.alert('Please enter image size less than 256kB');
+    } else {
+      // @ts-ignore
+      profile.append('profile', file);
+      const requestOptions = {
+        method: 'POST',
+        body: profile,
+        // headers: {
+        //   Authorization: `Bearer ${cookies.get('access')}`,
+        // },
+      };
+      fetch(`${url}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
+    }
+  };
   const uprofile = () => {
     console.log('clicked');
     console.log(firstname);
     setRollno(cookies.get('roll_no'));
     // eslint-disable-next-line camelcase
     const formdata = new FormData();
-    formdata.append('roll_no', `${rollno}`);
+    formdata.append('roll_no', `${roll}`);
     formdata.append('first_name', `${firstname}`);
     formdata.append('middle_name', `${middlename}`);
     formdata.append('last_name', `${lastname}`);
@@ -178,7 +197,6 @@ function Pstudent() {
     formdata.append('department', `${department}`);
     formdata.append('batch', `${batch}`);
     formdata.append('rait_email', `${rmail}`);
-    uphoto();
     const requestOptions = {
       method: 'POST',
       body: formdata,
@@ -218,7 +236,7 @@ function Pstudent() {
     });
   }, []);
   return (
-    <Layout>
+    <SLayout>
       <div className={classes.outerBorder}>
         <div className={classes.head}>
           <Typography variant="h5">Edit Personal Information</Typography>
@@ -301,6 +319,10 @@ function Pstudent() {
           <Typography className={classes.label}>Edit RAIT mail</Typography>
           <TextField type="mail" variant="standard" onChange={handleRmail} className={classes.field} />
         </div>
+        <div className={classes.container}>
+          <input name="profile" onChange={handleFile} type="file" accept=".jpg" />
+          <Button onClick={uphoto}>Submit</Button>
+        </div>
         <Button
           variant="contained"
           onClick={uprofile}
@@ -313,7 +335,7 @@ function Pstudent() {
           Update Profile
         </Button>
       </div>
-    </Layout>
+    </SLayout>
   );
 }
 
