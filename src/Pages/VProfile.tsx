@@ -58,7 +58,9 @@ function VProfile() {
   const [sem6, setSem6] = useState('0');
   const [sem7, setSem7] = useState('0');
   const [sem8, setSem8] = useState('0');
+  const [base, setBase] = useState('');
   const [obj, setObj] = useState('');
+  const [img, setImg] = useState('');
   loginData.append('roll_no', roll);
   const [data, setData] = useState('');
   useEffect(() => {
@@ -118,7 +120,10 @@ function VProfile() {
       setSem6(resp.student.academic_info.sem6_pointer);
       setSem7(resp.student.academic_info.sem7_pointer);
       setSem8(resp.student.academic_info.sem8_pointer);
+      setBase(resp.student.photo);
     });
+    console.log('y', base);
+    setImg(atob(base));
   }, []);
   const handleResume = async (event: any) => {
     event.preventDefault();
@@ -179,7 +184,7 @@ function VProfile() {
               <img
                 alt="pimage"
                 id="pimage"
-                src={person}
+                src={img}
               />
             </div>
             <div className="logo">

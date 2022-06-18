@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
 import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
@@ -91,6 +92,8 @@ export default function Pstudent() {
   const [rollno, setRollno] = useState('');
   const [file, setFile] = useState(null);
   const cookies = new Cookies();
+  const roll = cookies.get('roll_no');
+  const [fname, setFname] = useState(' ');
   const handleGender = (event: any) => {
     setGender(event.target.value);
   };
@@ -135,6 +138,7 @@ export default function Pstudent() {
   };
   const handleFile = (event: any) => {
     setFile(event.target.files[0]);
+    setFname(event.target.files[0].name);
   };
   const uprofile = () => {
     // eslint-disable-next-line camelcase
@@ -164,6 +168,41 @@ export default function Pstudent() {
     fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
       .then((response) => response.text())
       .catch((error) => console.log('error', error));
+  };
+  const url = `https://tpc-backend-node.herokuapp.com/image/upload/${roll}`;
+  const uphoto = (event:any) => {
+    event.preventDefault();
+    const profile = new FormData();
+    const n = fname;
+    const l = fname.length;
+    const a = n.indexOf('.');
+    const a1 = a + 1;
+    const s = fname.slice(a1, l);
+    console.log(a);
+    console.log(l);
+    console.log(a1);
+    console.log(s);
+    // eslint-disable-next-line
+    if (s !== 'jpg') {
+      window.alert('Please enter .jpg format image');
+      // @ts-ignore
+    } else if (file.size > 256000) {
+      window.alert('Please enter image size less than 256kB');
+    } else {
+      // @ts-ignore
+      profile.append('profile', file);
+      const requestOptions = {
+        method: 'POST',
+        body: profile,
+        // headers: {
+        //   Authorization: `Bearer ${cookies.get('access')}`,
+        // },
+      };
+      fetch(`${url}`, requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log('error', error));
+    }
   };
   return (
     <div className={classes.outerBorder}>
@@ -281,6 +320,7 @@ export default function Pstudent() {
         <div className={classes.handle}>
           <Typography className={classes.label}>Add Photo</Typography>
           <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
+          <Button variant="contained" onClick={uphoto}>Submit</Button>
         </div>
       </Card>
       <Button

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -78,9 +78,9 @@ const useStyles = makeStyles({
   },
 });
 
-function Pstudent() {
+export default function Pstudent() {
   const classes = useStyles();
-  const loginData = new FormData();
+  const [fname, setFname] = useState('');
   const [gender, setGender] = useState('');
   const [department, setDepartment] = useState('');
   const [open, setOpen] = useState(false);
@@ -97,7 +97,6 @@ function Pstudent() {
   const [offer, setOffer] = useState(0);
   const [rollno, setRollno] = useState('');
   const [file, setFile] = useState(null);
-  const [fname, setFname] = useState(' ');
   const cookies = new Cookies();
   const roll = cookies.get('roll_no');
   const handleGender = (event: any) => {
@@ -143,7 +142,40 @@ function Pstudent() {
     setRollno(event.target.value);
   };
   const handleFile = (event: any) => {
+    setFname(event.target.files[0].name);
     setFile(event.target.files[0]);
+  };
+  const uprofile = () => {
+    console.log('clicked');
+    console.log(firstname);
+    // eslint-disable-next-line camelcase
+    const formdata = new FormData();
+    formdata.append('roll_no', `${rollno}`);
+    formdata.append('first_name', `${firstname}`);
+    formdata.append('middle_name', `${middlename}`);
+    formdata.append('last_name', `${lastname}`);
+    formdata.append('email', `${mail}`);
+    formdata.append('phone_number', `${phonenumber}`);
+    formdata.append('gender', `${gender}`);
+    formdata.append('github', `${git}`);
+    formdata.append('linkedin', `${linked}`);
+    formdata.append('no_of_offers', `${offer}`);
+    formdata.append('password', `${password}`);
+    formdata.append('photo', `${file}`);
+    formdata.append('department', `${department}`);
+    formdata.append('batch', `${batch}`);
+    formdata.append('rait_email', `${rmail}`);
+    const requestOptions = {
+      method: 'POST',
+      body: formdata,
+      headers: {
+        Authorization: `Bearer ${cookies.get('access')}`,
+      },
+    };
+    fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.log('error', error));
   };
   const url = `https://tpc-backend-node.herokuapp.com/image/upload/${roll}`;
   const uphoto = (event:any) => {
@@ -176,65 +208,6 @@ function Pstudent() {
         .catch((error) => console.log('error', error));
     }
   };
-  const uprofile = () => {
-    console.log('clicked');
-    console.log(firstname);
-    setRollno(cookies.get('roll_no'));
-    // eslint-disable-next-line camelcase
-    const formdata = new FormData();
-    formdata.append('roll_no', `${roll}`);
-    formdata.append('first_name', `${firstname}`);
-    formdata.append('middle_name', `${middlename}`);
-    formdata.append('last_name', `${lastname}`);
-    formdata.append('email', `${mail}`);
-    formdata.append('phone_number', `${phonenumber}`);
-    formdata.append('gender', `${gender}`);
-    formdata.append('github', `${git}`);
-    formdata.append('linkedin', `${linked}`);
-    formdata.append('no_of_offers', `${offer}`);
-    formdata.append('password', `${password}`);
-    // formdata.append('profile', `${file}`);
-    formdata.append('department', `${department}`);
-    formdata.append('batch', `${batch}`);
-    formdata.append('rait_email', `${rmail}`);
-    const requestOptions = {
-      method: 'POST',
-      body: formdata,
-      headers: {
-        Authorization: `Bearer ${cookies.get('access')}`,
-      },
-    };
-    fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
-      .then((response) => response.text())
-      .then((result) => window.alert('Details updated'))
-      .catch((error) => console.log('error', error));
-  };
-  useEffect(() => {
-    fetch('https://django-tpc.herokuapp.com/node/getStudentProfile/', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${cookies.get('access')}`,
-      },
-      // eslint-disable-next-line camelcase
-      body: loginData,
-    }).then((response) => response.json()).then((resp) => {
-      console.log(resp);
-      setFirstName(resp.first_name);
-      setLastName(resp.last_name);
-      setMiddleName(resp.middle_name);
-      setRollno(resp.roll_no);
-      setLinked(resp.linkedin);
-      setMail(resp.email);
-      setDepartment(resp.department);
-      setGender(resp.gender);
-      setPhoneNumber(resp.phone_number);
-      setPassword(resp.password);
-      setBatch(resp.batch);
-      setFile(resp.photo);
-      setOffer(resp.no_of_offers);
-      setGit(resp.github);
-    });
-  }, []);
   return (
     <SLayout>
       <div className={classes.outerBorder}>
@@ -243,15 +216,15 @@ function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit First Name</Typography>
-          <TextField inputProps={{ maxLength: 25 }} variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
+          <TextField variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Middle Name</Typography>
-          <TextField inputProps={{ maxLength: 25 }} variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
+          <TextField variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Last Name</Typography>
-          <TextField inputProps={{ maxLength: 25 }} variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
+          <TextField variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
         </div>
         <div className={classes.head}>
           <Typography className={classes.head} variant="h5">Edit Personal Details</Typography>
@@ -280,6 +253,10 @@ function Pstudent() {
             <MenuItem value={40}>Information Technology</MenuItem>
             <MenuItem value={50}>Instrumental Engineering</MenuItem>
           </Select>
+        </div>
+        <div className={classes.container}>
+          <Typography className={classes.label}>Edit Roll No</Typography>
+          <TextField variant="standard" onChange={handleRoll} className={classes.field} />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Gender</Typography>
@@ -317,11 +294,11 @@ function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit RAIT mail</Typography>
-          <TextField type="mail" variant="standard" onChange={handleRmail} className={classes.field} />
+          <TextField variant="standard" onChange={handleRmail} className={classes.field} />
         </div>
-        <div className={classes.container}>
-          <input name="profile" onChange={handleFile} type="file" accept=".jpg" />
-          <Button onClick={uphoto}>Submit</Button>
+        <div>
+          <Typography className={classes.label}>Add Photo</Typography>
+          <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
         </div>
         <Button
           variant="contained"
@@ -338,5 +315,3 @@ function Pstudent() {
     </SLayout>
   );
 }
-
-export default Pstudent;
