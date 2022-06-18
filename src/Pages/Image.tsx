@@ -33,15 +33,10 @@ function Image() {
     event.preventDefault();
     const profile = new FormData();
     const n = fname;
-    console.log(n);
     const l = fname.length;
     const a = n.indexOf('.');
     const a1 = a + 1;
-    console.log(l);
-    console.log(a);
-    console.log(file);
     const s = fname.slice(a1, l);
-    console.log(s);
     // eslint-disable-next-line
     if (s !== 'jpg') {
       window.alert('Please enter .jpg format image');
@@ -67,16 +62,17 @@ function Image() {
   return (
     <div>
       <div className="title">
-        <Typography variant="h2">Enter profile image</Typography>
+        <Typography variant="h3">Enter profile image</Typography>
       </div>
       <div className="note">
-        <Typography variant="h3">Note:</Typography>
-        <Typography variant="h4">Photo must be taken in formal attire</Typography>
+        <Typography variant="h4">Note:</Typography>
+        <Typography className="rule" variant="h5">Photo must be taken in formal attire</Typography>
+        <Typography className="rule" variant="h5">Photo must be uploaded with proper background</Typography>
       </div>
-      <form>
-        <input name="profile" onChange={handleFile} type="file" accept=".jpg" />
-        <Button className=".btn" onClick={uphoto} variant="contained" />
-      </form>
+      <div className="submit">
+        <input className="file" name="profile" onChange={handleFile} type="file" accept=".jpg" />
+        <Button className="btn" onClick={uphoto} variant="contained">SUBMIT</Button>
+      </div>
     </div>
   );
 }

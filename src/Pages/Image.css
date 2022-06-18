@@ -1,4 +1,42 @@
 .btn
 {
     background-color: #9f1d37;
+    width: 10rem;
+    height: 2rem;
+    margin-top: 4rem;
+    margin-bottom: 4rem;
+}
+
+.title
+{
+    justify-content:space-around;
+    display:flex;
+    align-items: center;
+    margin-top: 10rem;
+    margin-bottom: 3rem;
+}
+
+.note
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+}
+
+.submit
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 5rem;
+    margin-bottom: 3rem;
+}
+
+.file
+{
+    
 }
