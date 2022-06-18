@@ -40,7 +40,7 @@ body {
 .base1 {
 	color: #9f1d37;
 	font-weight: bold;
-	font-size: 25px;
+	font-size: 15px;
 	margin-right: 1rem;
 }
 .logo {
@@ -109,7 +109,7 @@ body {
 }
 
 .objd {
-	vertical-align: middle;
+	margin-right: 1rem;
 }
 
 .atable {

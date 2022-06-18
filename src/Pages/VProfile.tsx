@@ -191,7 +191,7 @@ function VProfile() {
             </div>
           </div>
           <div className="obj">
-            <h1 className="base1">Career Objective:</h1>
+            <h3 className="base1">Career Objective:</h3>
             <p className="objd">{obj}</p>
           </div>
           <div className="section">
@@ -283,9 +283,20 @@ function VProfile() {
               <div>
                 <h3 className="base">Additional information</h3>
                 <ul>
-                  <li>{plang}</li>
-                  <li>{tech}</li>
-                  <li>{hobby}</li>
+                  <li>
+                    Preffered Language :
+                    {plang}
+                  </li>
+                  <li>
+                    Other Languages:
+                    {' '}
+                    {tech}
+                  </li>
+                  <li>
+                    Hobbies:
+                    {' '}
+                    {hobby}
+                  </li>
                 </ul>
               </div>
             </div>

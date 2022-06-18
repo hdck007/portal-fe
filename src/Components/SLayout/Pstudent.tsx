@@ -160,6 +160,7 @@ function Pstudent() {
   const uprofile = () => {
     console.log('clicked');
     console.log(firstname);
+    setRollno(cookies.get('roll_no'));
     // eslint-disable-next-line camelcase
     const formdata = new FormData();
     formdata.append('roll_no', `${rollno}`);
@@ -224,15 +225,15 @@ function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit First Name</Typography>
-          <TextField variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
+          <TextField inputProps={{ maxLength: 25 }} variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Middle Name</Typography>
-          <TextField variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
+          <TextField inputProps={{ maxLength: 25 }} variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Last Name</Typography>
-          <TextField variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
+          <TextField inputProps={{ maxLength: 25 }} variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
         </div>
         <div className={classes.head}>
           <Typography className={classes.head} variant="h5">Edit Personal Details</Typography>
@@ -261,10 +262,6 @@ function Pstudent() {
             <MenuItem value={40}>Information Technology</MenuItem>
             <MenuItem value={50}>Instrumental Engineering</MenuItem>
           </Select>
-        </div>
-        <div className={classes.container}>
-          <Typography className={classes.label}>Edit Roll No</Typography>
-          <TextField variant="standard" onChange={handleRoll} className={classes.field} />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Gender</Typography>
@@ -302,11 +299,7 @@ function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit RAIT mail</Typography>
-          <TextField variant="standard" onChange={handleRmail} className={classes.field} />
-        </div>
-        <div className={classes.handle}>
-          <Typography className={classes.label}>Add Photo</Typography>
-          <input name="photo" onChange={handleFile} className={classes.file} type="file" accept=".jpg" />
+          <TextField type="mail" variant="standard" onChange={handleRmail} className={classes.field} />
         </div>
         <Button
           variant="contained"
