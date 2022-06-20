@@ -134,9 +134,7 @@ export default function Pstudent() {
   const handleOffer = (event: any) => {
     setOffer(event.target.value);
   };
-  const handleRoll = (event: any) => {
-    setRollno(event.target.value);
-  };
+
   const handleFile = (event: any) => {
     setFile(event.target.files[0]);
     setFname(event.target.files[0].name);
@@ -252,7 +250,7 @@ export default function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Mobile Number</Typography>
-          <TextField variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
+          <TextField inputProps={{ maxLength: 9 }} variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Password</Typography>
