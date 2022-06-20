@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -139,6 +139,33 @@ export default function Pstudent() {
     setFile(event.target.files[0]);
     setFname(event.target.files[0].name);
   };
+  useEffect(() => {
+    const loginData = new FormData();
+    loginData.append('roll_no', roll);
+    fetch('https://django-tpc.herokuapp.com/viewStudent/', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${cookies.get('access')}`,
+      },
+      // eslint-disable-next-line camelcase
+      body: loginData,
+    }).then((response) => response.json()).then((resp) => {
+      console.log(resp);
+      setFirstName(resp.first_name);
+      setMiddleName(resp.middle_name);
+      setLastName(resp.last_name);
+      setRollno(resp.roll_no);
+      setLinked(resp.linkedin);
+      setMail(resp.email);
+      setDepartment(resp.department);
+      setGender(resp.gender);
+      setPhoneNumber(resp.phone_number);
+      setBatch(resp.batch);
+      setOffer(resp.no_of_offers);
+      setGit(resp.github);
+      setRmail(resp.rait_mail);
+    });
+  }, []);
   const uprofile = () => {
     // eslint-disable-next-line camelcase
     const formdata = new FormData();
@@ -226,15 +253,15 @@ export default function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit First Name</Typography>
-          <TextField variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
+          <TextField value={firstname} variant="standard" onChange={handleFname} name="first_name" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Middle Name</Typography>
-          <TextField variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
+          <TextField value={middlename} variant="standard" onChange={handleMname} name="middle_name" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Last Name</Typography>
-          <TextField variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
+          <TextField value={lastname} variant="standard" onChange={handleLname} name="last_name" className={classes.field} required />
         </div>
       </Card>
       <Card
@@ -250,7 +277,7 @@ export default function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Mobile Number</Typography>
-          <TextField inputProps={{ maxLength: 9 }} variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
+          <TextField value={phonenumber} inputProps={{ maxLength: 9 }} variant="standard" onChange={handlePhone} type="number" name="phone_number" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Password</Typography>
@@ -265,6 +292,7 @@ export default function Pstudent() {
             label="Department"
             className={classes.drop}
             name="department"
+            value={department}
           >
             <MenuItem value={10}>Computer Science</MenuItem>
             <MenuItem value={20}>Electronics Engineering</MenuItem>
@@ -282,6 +310,7 @@ export default function Pstudent() {
             label="Religion"
             className={classes.drop}
             name="religion"
+            value={gender}
           >
             <MenuItem value={10}>Male</MenuItem>
             <MenuItem value={20}>Female</MenuItem>
@@ -302,27 +331,27 @@ export default function Pstudent() {
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Batch</Typography>
-          <TextField variant="standard" type="number" onChange={handleBatch} name="batch" className={classes.field} required />
+          <TextField value={batch} variant="standard" type="number" onChange={handleBatch} name="batch" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Number of Offers</Typography>
-          <TextField variant="standard" type="number" onChange={handleOffer} name="batch" className={classes.field} required />
+          <TextField value={offer} variant="standard" type="number" onChange={handleOffer} name="batch" className={classes.field} required />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit GitHub URL</Typography>
-          <TextField variant="standard" onChange={handleGit} className={classes.field} />
+          <TextField value={git} variant="standard" onChange={handleGit} className={classes.field} />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit Linkedin URL</Typography>
-          <TextField variant="standard" onChange={handleLinked} className={classes.field} />
+          <TextField value={linked} variant="standard" onChange={handleLinked} className={classes.field} />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit RAIT mail</Typography>
-          <TextField variant="standard" onChange={handleRmail} className={classes.field} />
+          <TextField value={rmail} variant="standard" onChange={handleRmail} className={classes.field} />
         </div>
         <div className={classes.container}>
           <Typography className={classes.label}>Edit mail</Typography>
-          <TextField variant="standard" onChange={handleMail} className={classes.field} />
+          <TextField value={mail} variant="standard" onChange={handleMail} className={classes.field} />
         </div>
         <div className={classes.handle}>
           <Typography className={classes.label}>Add Photo</Typography>
