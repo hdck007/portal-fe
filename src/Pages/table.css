@@ -74,6 +74,10 @@ body {
     position: relative;
     top: 40%;
 }
+.pmg
+{
+	margin-left: -12rem;
+}
 
 .right-side {
 	position: relative;

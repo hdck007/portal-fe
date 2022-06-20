@@ -3,10 +3,17 @@ import Cookies from 'universal-cookie';
 import './table.css';
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
+import { makeStyles } from '@mui/styles';
 import Button from '@mui/material/Button';
 import SLayout from '../Components/SLayout/SLayout';
 import person from '../assets/image/person.jpeg';
 import logo1 from '../assets/image/rait2.jpg';
+
+// const useStyles = makeStyles({
+//   back: {
+//     backgroundImage: `url(data:image/jpg; base64, ${base})`,
+//   },
+// });
 
 function VProfile() {
   const cookies = new Cookies();
@@ -122,8 +129,8 @@ function VProfile() {
       setSem8(resp.student.academic_info.sem8_pointer);
       setBase(resp.student.photo);
     });
-    console.log('y', base);
-    setImg(atob(base));
+    console.log(base);
+    console.log(img);
   }, []);
   const handleResume = async (event: any) => {
     event.preventDefault();
@@ -180,11 +187,11 @@ function VProfile() {
                 {link}
               </h3>
             </div>
-            <div>
+            <div className="pmg">
               <img
                 alt="pimage"
                 id="pimage"
-                src={img}
+                src={`data:image/jpg; base64, ${base}`}
               />
             </div>
             <div className="logo">
