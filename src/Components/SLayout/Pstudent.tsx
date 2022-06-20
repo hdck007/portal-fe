@@ -14,6 +14,7 @@ import Snackbar from '@mui/material/Snackbar';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Cookies from 'universal-cookie';
+import Swal from 'sweetalert2';
 
 import SLayout from './SLayout';
 
@@ -188,10 +189,18 @@ export default function Pstudent() {
     const s = fname.slice(a1, l);
     // eslint-disable-next-line
     if (s !== 'jpg') {
-      window.alert('Please enter .jpg format image');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter .jpg format image',
+      });
       // @ts-ignore
     } else if (file.size > 256000) {
-      window.alert('Please enter image size less than 256kB');
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Please enter image size less than 256kB',
+      });
     } else {
       // @ts-ignore
       profile.append('profile', file);
