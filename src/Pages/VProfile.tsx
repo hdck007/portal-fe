@@ -272,14 +272,14 @@ function VProfile() {
                     <tr>
                       <td className="td">Class X11</td>
                       <td />
-                      <td colSpan={2}>HSC</td>
-                      <td className="td">{ten}</td>
+                      <td style={{ borderBottom: '2px solid black' }} colSpan={2}>HSC</td>
+                      <td className="td">{twelve}</td>
                     </tr>
                     <tr>
                       <td className="td">Class X</td>
                       <td />
                       <td colSpan={2}>SSC</td>
-                      <td className="td">{twelve}</td>
+                      <td className="td">{ten}</td>
                     </tr>
                   </tbody>
                 </table>
