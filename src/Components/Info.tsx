@@ -163,7 +163,7 @@ export default function Pstudent() {
       setBatch(resp.batch);
       setOffer(resp.no_of_offers);
       setGit(resp.github);
-      setRmail(resp.rait_mail);
+      setRmail(resp.rait_email);
     });
   }, []);
   const uprofile = () => {
