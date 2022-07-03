@@ -7,9 +7,6 @@ import {
 import Charts from './Components/Charts/Charts';
 import Dashboard from './Pages/Dashboard';
 import StudentDetails from './Pages/Details/StudentDetails';
-import Pstudent from './Components/Layout/Pstudent';
-import Layout from './Components/Layout/Layout';
-import Home from './Pages/Home';
 import Notice from './Pages/Notice';
 import AuthProvider from './Contexts/AuthContext';
 import MyNotifications from './Components/MyNotifications/Notification';
@@ -20,6 +17,8 @@ import VProfile from './Pages/VProfile';
 import Login from './Pages/Login';
 import Student from './Pages/Student';
 import Image from './Pages/Image';
+import StudentAcadDetails from './Pages/Details/StudentAcadDetails';
+import StudentAdditionalDetails from './Pages/Details/StudentAdditionalDetails';
 
 function PlaceHolder() {
   return <div>Hello</div>;
@@ -34,6 +33,8 @@ function App() {
           <Route path="/dashboard" element={<Charts />} />
           <Route path="/lookup" element={<Dashboard />} />
           <Route path="/details" element={<StudentDetails />} />
+          <Route path="/details/2" element={<StudentAcadDetails />} />
+          <Route path="/details/3" element={<StudentAdditionalDetails />} />
           <Route path="/notice" element={<Notice />} />
           <Route path="/mynotice" element={<MyNotifications />} />
           <Route path="/upload" element={<UploadOffers />} />

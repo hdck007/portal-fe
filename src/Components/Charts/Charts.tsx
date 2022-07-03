@@ -67,6 +67,7 @@ export default function Charts() {
   const [companyWiseData, setCompanyWiseData] = React.useState([]);
   const [branchWiseData, setBranchWiseData] = React.useState([]);
   const [lpaNumberWiseData, setLpaNumberWiseData] = React.useState([]);
+  const [top10Data, setTop10Data] = React.useState([]);
 
   useEffect(() => {
     fetch('https://tpc-backend-node.herokuapp.com/eligible/studentsplacedcompanywise')
@@ -81,11 +82,9 @@ export default function Charts() {
       .then((response) => response.json())
       .then((data) => setBranchWiseData(data));
 
-    fetch('https://tpc-backend-node.herokuapp.com/eligible/studentsplacedbranchwise');
-
-    fetch('https://tpc-backend-node.herokuapp.com/eligible/top10student')
-      .then((res) => res.json())
-      .then((data) => console.log(data));
+    fetch('http://tpc-backend-node.herokuapp.com/eligible/top10student')
+      .then((response) => response.json())
+      .then((data) => setTop10Data(data.top10studentplaced));
   }, []);
 
   return (
@@ -205,7 +204,20 @@ export default function Charts() {
               padding: '1rem',
             }}
           >
-            Cool
+            {top10Data.filter((item: any) => (!!item.roll_no
+                && !!item.placed_company
+                && !!item.placed_package)).map((item: any) => (
+                  <Card
+                    style={{
+                      margin: '1rem 0',
+                      padding: '0.5rem',
+                    }}
+                  >
+                    {`${item.roll_no}`}
+                    {` placed in ${item.placed_company} for a package of `}
+                    {`${item.placed_package}`}
+                  </Card>
+            ))}
           </Card>
         </Grid>
       </Grid>

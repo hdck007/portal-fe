@@ -83,4 +83,4 @@ function ApplicableOptions({
   );
 }
 
-export default ApplicableOptions;
+export default React.memo(ApplicableOptions);

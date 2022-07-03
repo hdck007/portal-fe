@@ -1,701 +1,395 @@
 /* eslint-disable */
-import {
-  Alert, Button, Card, Snackbar, Typography,
-} from '@mui/material';
+import {  Button, Card, Skeleton, Typography } from '@mui/material';
 import React, { useState, useEffect } from 'react';
-import CircularProgress from '@mui/material/CircularProgress';
 import Cookies from 'universal-cookie';
 import Swal from 'sweetalert2';
-import { DetailsContext } from '../../Contexts/DetailsContext';
 import { IBoardDetails, IDegreeDetails } from '../../Interfaces/StudentDetails';
-import AdditionaldetailsWrapper from '../Additionaldetails/AdditionaldetailsWrapper';
-import DotsMobileStepper from '../FormStepper/FormStepper';
 import ApplicableOptions from './ApplicableOptions/ApplicableOptions';
 import BoardsForm from './BoardsForm/BoardsForm';
 import DegreeForm from './DegreeForms/DegreeForm';
-import Pstudent from '../Info';
+import { getEngDataPopulated,
+    getDiplomaData, 
+  getBoardsDataPopulated, getMeDataPopulated } from '../../Utils/helpers/mapData';
+import { validate } from '../../Utils/helpers/validateData';
+import { getAcademicData } from '../../Utils/helpers/createFormData';
+import { addAcademicDetails } from '../../APIcalls/academicApis';
+import DotsMobileStepper from '../FormStepper/FormStepper';
 
 function AcademicdetailsWrapper() {
-  const [additionalDetails, setAdditionalDetails] = useState<any[]>([]);
-  const [engAcadDetails, setEngAcadDetails] = useState<IDegreeDetails[]>([]);
-  const [activeStep, setActiveStep] = React.useState(0);
-  const [diplomaAcadDetails, setDiplomaAcadDetails] = useState<
+	const [isLoading, setIsLoading] = useState(true);
+	const [engAcadDetails, setEngAcadDetails] = useState<IDegreeDetails[]>([]);
+	const [diplomaAcadDetails, setDiplomaAcadDetails] = useState<
 		IDegreeDetails[]
 	>([]);
-  const [meAcadDetails, setMeAcadDetails] = useState<IDegreeDetails[]>([]);
-  const [boardsAcadDetails, setBoardsAcadDetails] = useState<IBoardDetails[]>(
-    [],
-  );
-  const [didDiploma, setDidDiploma] = useState<boolean>(false);
-  const [didMe, setDidMe] = useState<boolean>(false);
-  const [didXII, setDidXII] = useState<boolean>(false);
-  const [open, setOpen] = useState<boolean>(false);
-  const cookies = new Cookies();
+	const [meAcadDetails, setMeAcadDetails] = useState<IDegreeDetails[]>([]);
+	const [boardsAcadDetails, setBoardsAcadDetails] = useState<IBoardDetails[]>(
+		[]
+	);
+	const [didDiploma, setDidDiploma] = useState<boolean>(false);
+	const [didMe, setDidMe] = useState<boolean>(false);
+	const [didXII, setDidXII] = useState<boolean>(false);
+	const cookies = new Cookies();
 
-  useEffect(() => {
-    const value = new Array(6).fill(0).map((_, index) => ({
-      semester: index + 1,
-      completionMonth: null,
-      completionYear: null,
-      marks: null,
-      totalMarks: null,
-      cgpa: null,
-    }));
+	useEffect(() => {
+		const studentData = new FormData();
+		studentData.append('roll_no', cookies.get('roll_no'));
+		fetch('https://django-tpc.herokuapp.com/viewAcademicInfo/', {
+			method: 'POST',
+			body: studentData,
+			headers: {
+				Authorization: `Bearer ${cookies.get('access')}`,
+			},
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				setBoardsAcadDetails(getBoardsDataPopulated(data));
+				setEngAcadDetails(getEngDataPopulated(data));
+				const mastersData = getMeDataPopulated(data);
+				setMeAcadDetails(mastersData.values);
+        setDidMe(mastersData.didMe);
+				setDiplomaAcadDetails(getDiplomaData(data));
+				// setIsLoading(false);
+			});
+	}, []);
 
-    const valueBoards = new Array(2).fill(0).map((_, index) => ({
-      board: index === 0 ? 'Class - X' : 'Class - XII',
-      completionMonth: null,
-      completionYear: null,
-      marks: null,
-      totalMarks: null,
-    }));
+	const removeEngAcad = (value: string) => {
+		switch (value) {
+			case 'eng': {
+				if (engAcadDetails.length === 6) {
+					return;
+				}
+				const newAcadDetails = [...engAcadDetails];
+				newAcadDetails.pop();
+				setEngAcadDetails(newAcadDetails);
+				break;
+			}
+			default: {
+				const newAcadDetails = [...meAcadDetails];
+				newAcadDetails.pop();
+				setMeAcadDetails(newAcadDetails);
+				break;
+			}
+		}
+	};
 
-    setBoardsAcadDetails(valueBoards);
-    setEngAcadDetails(value);
-    setDiplomaAcadDetails(value);
-    setMeAcadDetails([...value].splice(0, 2));
-  }, []);
+	const handleAddAcad = (value: string) => {
+		switch (value) {
+			case 'me': {
+				if (meAcadDetails.length === 4) {
+					return;
+				}
+				setMeAcadDetails((prevValue) => [
+					...meAcadDetails,
+					{
+						semester: prevValue.length + 1,
+						completionDate: new Date(),
+						marks: null,
+						totalMarks: null,
+						cgpa: null,
+					},
+				]);
+				break;
+			}
+			default: {
+				if (engAcadDetails.length === 8) {
+					return;
+				}
+				setEngAcadDetails((prevValue) => [
+					...engAcadDetails,
+					{
+						semester: prevValue.length + 1,
+						completionDate: new Date(),
+						marks: null,
+						totalMarks: null,
+						cgpa: null,
+					},
+				]);
+			}
+		}
+	};
 
-  const removeEngAcad = (value: string) => {
-    switch (value) {
-      case 'eng': {
-        if (engAcadDetails.length === 6) {
-          return;
-        }
-        const newAcadDetails = [...engAcadDetails];
-        newAcadDetails.pop();
-        setEngAcadDetails(newAcadDetails);
-        break;
-      }
-      default: {
-        const newAcadDetails = [...meAcadDetails];
-        newAcadDetails.pop();
-        setMeAcadDetails(newAcadDetails);
-        break;
-      }
-    }
-  };
+	const handleSubmit = () => {
+		if (validate(
+      engAcadDetails,
+      boardsAcadDetails,
+      didMe,
+      meAcadDetails,
+      didDiploma,
+      diplomaAcadDetails,
+    )) {
+			const access = cookies.get('access');
+      const rollNo = cookies.get('roll_no');
+			const apiCalls = [
+				addAcademicDetails(getAcademicData(
+          boardsAcadDetails,
+          engAcadDetails,
+          meAcadDetails,
+          rollNo,
+        ), access),
+			];
 
-  const handleAddAcad = (value: string) => {
-    switch (value) {
-      case 'me': {
-        if (meAcadDetails.length === 4) {
-          return;
-        }
-        setMeAcadDetails((prevValue) => [
-          ...meAcadDetails,
-          {
-            semester: prevValue.length + 1,
-            completionMonth: null,
-            completionYear: null,
-            marks: null,
-            totalMarks: null,
-            cgpa: null,
-          },
-        ]);
-        break;
-      }
-      default: {
-        if (engAcadDetails.length === 8) {
-          return;
-        }
-        setEngAcadDetails((prevValue) => [
-          ...engAcadDetails,
-          {
-            semester: prevValue.length + 1,
-            completionMonth: null,
-            completionYear: null,
-            marks: null,
-            totalMarks: null,
-            cgpa: null,
-          },
-        ]);
-      }
-    }
-  };
+			Promise.allSettled(apiCalls).then((response) => {
+				response.forEach((value) => {
+					if (value.status === 'rejected') {
+						Swal.fire({
+							icon: 'error',
+							title: 'Oops...',
+							text: 'Something went wrong!',
+						});
+					}
+				});
+			});
+		} else {
+			Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Please fill all the fields',
+			});
+		}
+	};
 
-  const validate = () => {
-    let flag = true;
-    engAcadDetails.forEach((item: any) => {
-      Object.keys(item).forEach((key) => {
-        if (item[key] === null) {
-          flag = false;
-        }
-      });
-    });
-    boardsAcadDetails.forEach((item: any) => {
-      Object.keys(item).forEach((key) => {
-        if (item[key] === null) {
-          flag = false;
-        }
-      });
-    });
+	const handleChangeBoards = (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+		field: string,
+		index: number
+	) => {
+		const newBoardsAcadDetails = [...boardsAcadDetails];
+		// @ts-ignore
+		newBoardsAcadDetails[index][field] = event.target.value;
+		setBoardsAcadDetails(newBoardsAcadDetails);
+	};
 
-    if (didMe) {
-      meAcadDetails.forEach((item: any) => {
-        Object.keys(item).forEach((key) => {
-          if (item[key] === null) {
-            flag = false;
-          }
-        });
-      });
-    }
+	const handleChangeDegree = (
+		event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+		value: string,
+		field: string,
+		index: number
+	) => {
+		switch (field) {
+			case 'eng': {
+				const newAcadDetails = [...engAcadDetails];
+				// @ts-ignore
+				newAcadDetails[index][value] = event.target.value;
+				setEngAcadDetails(newAcadDetails);
+				break;
+			}
+			case 'me': {
+				const newAcadDetails = [...meAcadDetails];
+				// @ts-ignore
+				newAcadDetails[index][value] = event.target.value;
+				setMeAcadDetails(newAcadDetails);
+				break;
+			}
+			default: {
+				const newAcadDetails = [...diplomaAcadDetails];
+				// @ts-ignore
+				newAcadDetails[index][value] = event.target.value;
+				setDiplomaAcadDetails(newAcadDetails);
+			}
+		}
+	};
 
-    if (didDiploma) {
-      diplomaAcadDetails.forEach((item: any) => {
-        Object.keys(item).forEach((key) => {
-          if (item[key] === null) {
-            flag = false;
-          }
-        });
-      });
-    }
-    return flag;
-  };
+	return (
+		<>
+			<DotsMobileStepper activeStep={1} handleSubmit={handleSubmit} />
+			<ApplicableOptions
+				didDiploma={didDiploma}
+				setDidDiploma={setDidDiploma}
+				didMe={didMe}
+				setDidMe={setDidMe}
+				didXII={didXII}
+				setDidXII={setDidXII}
+			/>
 
-  const getAcademicData = () => {
-    const academiceData = new FormData();
-    academiceData.append('roll_no', cookies.get('roll_no'));
-    academiceData.append(
-      'tenth_percent',
-      `${
-        (Number(boardsAcadDetails[0].marks) * 100)
-				/ Number(boardsAcadDetails[0].totalMarks)
-      }`,
-    );
-    academiceData.append(
-      'tenth_completion_date',
-      String(boardsAcadDetails[0].completionYear),
-    );
-    academiceData.append(
-      'tenth_obtained_marks',
-      String(boardsAcadDetails[0].marks),
-    );
-    academiceData.append(
-      'tenth_total_marks',
-      String(boardsAcadDetails[0].totalMarks),
-    );
-    academiceData.append(
-      'twelveth_percent',
-      `${
-        (Number(boardsAcadDetails[1].marks) * 100)
-				/ Number(boardsAcadDetails[1].totalMarks)
-      }`,
-    );
-    academiceData.append(
-      'twelveth_completion_date',
-      String(boardsAcadDetails[1].completionYear),
-    );
-    academiceData.append(
-      'twelveth_obtained_marks',
-      String(boardsAcadDetails[1].marks),
-    );
-    academiceData.append(
-      'twelveth_total_marks',
-      String(boardsAcadDetails[1].totalMarks),
-    );
-    let sum = 0;
-    engAcadDetails.forEach((value, index) => {
-      academiceData.append(`sem${index + 1}_pointer`, String(value.cgpa));
-      academiceData.append(
-        `sem${index + 1}_completion_data`,
-        String(value.completionYear),
-      );
-      academiceData.append(
-        `sem${index + 1}_obtained_marks`,
-        String(value.marks),
-      );
-      academiceData.append(
-        `sem${index + 1}_total_marks`,
-        String(value.totalMarks),
-      );
-      sum += Number(value.cgpa);
-    });
-    sum /= engAcadDetails.length;
-    academiceData.append('cgpa', String(sum));
-    academiceData.append('be_percent', '60');
+			{/* Boards details */}
+			<div
+				style={{
+					width: '75%',
+					position: 'relative',
+					bottom: '220px',
+				}}
+			>
+				<Card
+					style={{
+						width: '100%',
+						padding: '10px',
+						marginBottom: '20px',
+						borderRadius: '10px',
+					}}
+				>
+					<Typography
+						fontSize={24}
+						style={{
+							padding: '10px 0',
+						}}
+					>
+						Boards academic details
+					</Typography>
+					{boardsAcadDetails.map((item: IBoardDetails, index: number) => (
+						<BoardsForm
+							handleChange={handleChangeBoards}
+							index={index}
+							details={item}
+						/>
+					))}
+				</Card>
+			</div>
 
-    meAcadDetails.forEach((value, index) => {
-      academiceData.append(
-        `masters_sem${index + 1}_pointer`,
-        String(value.cgpa),
-      );
-      academiceData.append(
-        `masters_sem${index + 1}_completion_data`,
-        String(value.completionYear),
-      );
-      academiceData.append(
-        `masters_sem${index + 1}_obtained_marks`,
-        String(value.marks),
-      );
-      academiceData.append(
-        `masters_sem${index + 1}_total_marks`,
-        String(value.totalMarks),
-      );
-    });
-    return academiceData;
-  };
+			{/* optional diploma */}
+			{didDiploma && (
+				<div
+					style={{
+						position: 'relative',
+						bottom: '200px',
+						width: '75%',
+						marginBottom: '20px',
+					}}
+				>
+					<Card
+						style={{
+							width: '100%',
+							padding: '10px',
+							marginBottom: '20px',
+							borderRadius: '10px',
+						}}
+					>
+						<Typography
+							fontSize={24}
+							style={{
+								padding: '10px 0',
+							}}
+						>
+							Diploma academic details
+						</Typography>
+						{diplomaAcadDetails.map(
+							(item: IDegreeDetails, index: number) => (
+								<DegreeForm
+									field='diploma'
+									index={index}
+									details={item}
+									handleChange={handleChangeDegree}
+								/>
+							)
+						)}
+					</Card>
+				</div>
+			)}
 
-  const appendData = (
-    formData: any,
-    prefix:string,
-    i: number,
-  ) => {
-    formData.append(
-      `${prefix}_title`,
-      String(additionalDetails[i].value.title),
-    );
-    formData.append(
-      `${prefix}_description`,
-      String(additionalDetails[i].value.description),
-    );
-    formData.append(
-      `${prefix}_start_date`,
-      String(additionalDetails[i].value.startDate),
-    );
-    formData.append(
-      `${prefix}_end_date`,
-      String(additionalDetails[i].value.endDate),
-    );
-  };
+			{/* be details */}
+			<div
+				style={{
+					position: 'relative',
+					bottom: '200px',
+					width: '75%',
+				}}
+			>
+				<Card
+					style={{
+						width: '100%',
+						padding: '10px',
+						paddingBottom: '50px',
+						marginBottom: '20px',
+						borderRadius: '10px',
+					}}
+				>
+					<Typography
+						fontSize={24}
+						style={{
+							padding: '10px 0',
+						}}
+					>
+						Degree academic details
+					</Typography>
+					{engAcadDetails.map((item: IDegreeDetails, index: number) => (
+						<DegreeForm
+							field='eng'
+							index={index}
+							details={item}
+							handleChange={handleChangeDegree}
+						/>
+					))}
+					<Button
+						style={{
+							position: 'absolute',
+							right: '100px',
+							bottom: '5px',
+						}}
+						onClick={() => handleAddAcad('eng')}
+					>
+						Add
+					</Button>
+					<Button
+						style={{
+							position: 'absolute',
+							right: '10px',
+							bottom: '5px',
+						}}
+						onClick={() => removeEngAcad('eng')}
+					>
+						Remove
+					</Button>
+				</Card>
+			</div>
 
-  const getExperienceData = () => {
-    const experience = new FormData();
-    experience.append('roll_no', cookies.get('roll_no'));
-    appendData(experience, 'project_one', 7);
-    appendData(experience, 'project_two', 8);
-    appendData(experience, 'project_three', 9);
-    appendData(experience, 'internship_one', 10);
-    appendData(experience, 'internship_two', 11);
-    appendData(experience, 'internship_three', 12);
-    experience.append('pref_lang', additionalDetails[13].value);
-    experience.append('technologies', additionalDetails[14].value);
-    return experience;
-  };
-
-  const getHobbiesData = () => {
-    const hobbies = new FormData();
-    hobbies.append('roll_no', cookies.get('roll_no'));
-    hobbies.append('hobbies', additionalDetails[15].value);
-    hobbies.append('pos_of_res_one', additionalDetails[16].value);
-    hobbies.append('pos_of_res_two', additionalDetails[17].value);
-    hobbies.append('pos_of_res_three', additionalDetails[18].value);
-    hobbies.append('extracuricular_one', additionalDetails[19].value);
-    hobbies.append('extracuricular_two', additionalDetails[20].value);
-    hobbies.append('extracuricular_three', additionalDetails[21].value);
-    return hobbies;
-  };
-
-  const getAchievementsData = () => {
-    const skillAndObj = new FormData();
-    skillAndObj.append('roll_no', cookies.get('roll_no'));
-    skillAndObj.append('career_obj', additionalDetails[0].value);
-    skillAndObj.append('acad_achievement_one', additionalDetails[1].value);
-    skillAndObj.append('acad_achievement_two', additionalDetails[2].value);
-    skillAndObj.append('acad_achievement_three', additionalDetails[3].value);
-    skillAndObj.append('certificate_one', additionalDetails[4].value);
-    skillAndObj.append('certificate_two', additionalDetails[5].value);
-    skillAndObj.append('certificate_three', additionalDetails[6].value);
-    return skillAndObj;
-  };
-
-  const addAcademicDetails = (academiceData: any, access: any) => new Promise((resolve, reject) => {
-    fetch('https://django-tpc.herokuapp.com/addAcademicInfo/', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-      body: academiceData,
-    }).then((res) => {
-      if (res.status >= 200 && res.status < 400) {
-        resolve('Fullfilled');
-      } else {
-        reject();
-      }
-    });
-  });
-
-  const addExperienceDetails = async (experience: any, access: any) => new Promise((resolve, reject) => {
-    fetch('https://django-tpc.herokuapp.com/addExperience/', {
-      method: 'POST',
-      body: experience,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    }).then((res) => {
-      if (res.status >= 200 && res.status < 400) {
-        resolve('Fullfilled');
-      } else {
-        reject();
-      }
-    });
-  });
-
-  const addHobbiesDetails = async (hobbies: any, access: any) => new Promise((resolve, reject) => {
-    fetch('https://django-tpc.herokuapp.com/addOtherInfo/', {
-      method: 'POST',
-      body: hobbies,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    }).then((res) => {
-      if (res.status >= 200 && res.status < 400) {
-        resolve('Fullfilled');
-      } else {
-        reject();
-      }
-    });
-  });
-
-  const addAchievementsDetails = async (skillAndObj: any, access: any) => new Promise((resolve, reject) => {
-    fetch('https://django-tpc.herokuapp.com/addSkillSet/', {
-      method: 'POST',
-      body: skillAndObj,
-      headers: {
-        Authorization: `Bearer ${access}`,
-      },
-    }).then((res) => {
-      if (res.status >= 200 && res.status < 400) {
-        resolve('Fullfilled');
-      } else {
-        reject();
-      }
-    });
-  });
-
-  const handleSubmit = () => {
-    if (validate()) {
-      const access = cookies.get('access');
-
-      const apiCalls = [
-        addAcademicDetails(getAcademicData(), access),
-        addExperienceDetails(getExperienceData(), access),
-        addHobbiesDetails(getHobbiesData(), access),
-        addAchievementsDetails(getAchievementsData(), access),
-      ];
-
-      Promise.allSettled(apiCalls).then((response) => {
-        response.forEach((value) => {
-          if (value.status === 'rejected') {
-            Swal.fire({
-              icon: 'error',
-              title: 'Oops...',
-              text: 'Something went wrong!',
-            });
-          }
-        });
-      });
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Please fill all the fields',
-      });
-    }
-  };
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep: number) => prevActiveStep + 1);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep: number) => prevActiveStep - 1);
-  };
-
-  const handleChangeBoards = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: string,
-    index: number,
-  ) => {
-    const newBoardsAcadDetails = [...boardsAcadDetails];
-    // @ts-ignore
-    newBoardsAcadDetails[index][field] = event.target.value;
-    setBoardsAcadDetails(newBoardsAcadDetails);
-  };
-
-  const handleChangeDegree = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    value: string,
-    field: string,
-    index: number,
-  ) => {
-    switch (field) {
-      case 'eng': {
-        if (engAcadDetails.length === 5) {
-          return;
-        }
-        const newAcadDetails = [...engAcadDetails];
-        // @ts-ignore
-        newAcadDetails[index][value] = event.target.value;
-        setEngAcadDetails(newAcadDetails);
-        break;
-      }
-      case 'me': {
-        const newAcadDetails = [...meAcadDetails];
-        // @ts-ignore
-        newAcadDetails[index][value] = event.target.value;
-        setMeAcadDetails(newAcadDetails);
-        break;
-      }
-      default: {
-        const newAcadDetails = [...diplomaAcadDetails];
-        // @ts-ignore
-        newAcadDetails[index][value] = event.target.value;
-        setDiplomaAcadDetails(newAcadDetails);
-      }
-    }
-  };
-
-  return (
-    <>
-      <DotsMobileStepper
-        handleNext={handleNext}
-        handleBack={handleBack}
-        activeStep={activeStep}
-      />
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={() => setOpen(false)}
-      >
-        <Alert
-          onClose={() => setOpen(false)}
-          severity="success"
-          sx={{ width: '100%' }}
-        >
-          Details submitted
-        </Alert>
-      </Snackbar>
-      {activeStep === 2 && (
-      <div
-        style={{
-					  position: 'relative',
-					  padding: '1rem 0 0 0',
-					  display: 'flex',
-        }}
-      >
-        <Button
-          style={{
-						  backgroundColor: 'rgba(159, 28, 53, 1)',
-						  marginLeft: 'auto',
-          }}
-          variant="contained"
-          onClick={handleSubmit}
-        >
-          Submit Details
-        </Button>
-      </div>
-      )}
-      {/* {isLoading && <CircularProgress />} */}
-      {activeStep === 0 && <Pstudent />}
-      {activeStep === 1 && (
-      <>
-        <ApplicableOptions
-          didDiploma={didDiploma}
-          setDidDiploma={setDidDiploma}
-          didMe={didMe}
-          setDidMe={setDidMe}
-          didXII={didXII}
-          setDidXII={setDidXII}
-        />
-
-        {/* Boards details */}
-        <div
-          style={{
-						  width: '75%',
-						  position: 'relative',
-						  bottom: '220px',
-          }}
-        >
-          <Card
-            style={{
-							  width: '100%',
-							  padding: '10px',
-							  marginBottom: '20px',
-							  borderRadius: '10px',
-            }}
-          >
-            <Typography
-              fontSize={24}
-              style={{
-								  padding: '10px 0',
-              }}
-            >
-              Boards academic details
-            </Typography>
-            {boardsAcadDetails.map((item: IBoardDetails, index: number) => (
-              <BoardsForm
-                handleChange={handleChangeBoards}
-                index={index}
-                details={item}
-              />
-            ))}
-          </Card>
-        </div>
-
-        {/* optional diploma */}
-        {didDiploma && (
-        <div
-          style={{
-							  position: 'relative',
-							  bottom: '200px',
-							  width: '75%',
-							  marginBottom: '20px',
-          }}
-        >
-          <Card
-            style={{
-								  width: '100%',
-								  padding: '10px',
-								  marginBottom: '20px',
-								  borderRadius: '10px',
-            }}
-          >
-            <Typography
-              fontSize={24}
-              style={{
-									  padding: '10px 0',
-              }}
-            >
-              Diploma academic details
-            </Typography>
-            {diplomaAcadDetails.map(
-								  (item: IDegreeDetails, index: number) => (
-  <DegreeForm
-    field="diploma"
-    index={index}
-    details={item}
-    handleChange={handleChangeDegree}
-  />
-								  ),
-            )}
-          </Card>
-        </div>
-        )}
-
-        {/* be details */}
-        <div
-          style={{
-						  position: 'relative',
-						  bottom: '200px',
-						  width: '75%',
-          }}
-        >
-          <Card
-            style={{
-							  width: '100%',
-							  padding: '10px',
-							  paddingBottom: '50px',
-							  marginBottom: '20px',
-							  borderRadius: '10px',
-            }}
-          >
-            <Typography
-              fontSize={24}
-              style={{
-								  padding: '10px 0',
-              }}
-            >
-              Degree academic details
-            </Typography>
-            {engAcadDetails.map((item: IDegreeDetails, index: number) => (
-              <DegreeForm
-                field="eng"
-                index={index}
-                details={item}
-                handleChange={handleChangeDegree}
-              />
-            ))}
-            <Button
-              style={{
-								  position: 'absolute',
-								  right: '100px',
-								  bottom: '5px',
-              }}
-              onClick={() => handleAddAcad('eng')}
-            >
-              Add
-            </Button>
-            <Button
-              style={{
-								  position: 'absolute',
-								  right: '10px',
-								  bottom: '5px',
-              }}
-              onClick={() => removeEngAcad('eng')}
-            >
-              Remove
-            </Button>
-          </Card>
-        </div>
-
-        {/* pg acad details */}
-        {didMe && (
-        <div
-          style={{
-							  position: 'relative',
-							  bottom: '200px',
-							  width: '75%',
-          }}
-        >
-          <Card
-            style={{
-								  width: '100%',
-								  padding: '10px',
-								  paddingBottom: '50px',
-								  borderRadius: '10px',
-            }}
-          >
-            <Typography
-              fontSize={24}
-              style={{
-									  padding: '10px 0',
-									  marginTop: '20px',
-              }}
-            >
-              PG academic details
-            </Typography>
-            {meAcadDetails.map((item: IDegreeDetails, index: number) => (
-              <DegreeForm
-                field="me"
-                index={index}
-                details={item}
-                handleChange={handleChangeDegree}
-              />
-            ))}
-            <Button
-              style={{
-									  position: 'absolute',
-									  right: '100px',
-									  bottom: '5px',
-              }}
-              onClick={() => handleAddAcad('me')}
-            >
-              Add
-            </Button>
-            <Button
-              style={{
-									  position: 'absolute',
-									  right: '5px',
-									  bottom: '5px',
-              }}
-              onClick={() => removeEngAcad('me')}
-            >
-              Remove
-            </Button>
-          </Card>
-        </div>
-        )}
-      </>
-      )}
-      {activeStep === 2 && (
-      <AdditionaldetailsWrapper
-        additionalDetails={additionalDetails}
-        setAdditionalDetails={setAdditionalDetails}
-      />
-      )}
-    </>
-  );
+			{/* pg acad details */}
+			{didMe && (
+				<div
+					style={{
+						position: 'relative',
+						bottom: '200px',
+						width: '75%',
+					}}
+				>
+					<Card
+						style={{
+							width: '100%',
+							padding: '10px',
+							paddingBottom: '50px',
+							borderRadius: '10px',
+						}}
+					>
+						<Typography
+							fontSize={24}
+							style={{
+								padding: '10px 0',
+								marginTop: '20px',
+							}}
+						>
+							PG academic details
+						</Typography>
+						{meAcadDetails.map((item: IDegreeDetails, index: number) => (
+							<DegreeForm
+								field='me'
+								index={index}
+								details={item}
+								handleChange={handleChangeDegree}
+							/>
+						))}
+						<Button
+							style={{
+								position: 'absolute',
+								right: '100px',
+								bottom: '5px',
+							}}
+							onClick={() => handleAddAcad('me')}
+						>
+							Add
+						</Button>
+						<Button
+							style={{
+								position: 'absolute',
+								right: '5px',
+								bottom: '5px',
+							}}
+							onClick={() => removeEngAcad('me')}
+						>
+							Remove
+						</Button>
+					</Card>
+				</div>
+			)}
+		</>
+	);
 }
 
 export default AcademicdetailsWrapper;

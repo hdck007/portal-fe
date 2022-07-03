@@ -55,30 +55,16 @@ function DegreeForm({
             <Typography
               width="50%"
             >
-              Completion Month:
+              Completion Date:
             </Typography>
             <TextField
-              onChange={(e) => handleChange(e, 'completionMonth', field, index)}
+              onChange={(e) => handleChange(e, 'completionDate', field, index)}
               variant="standard"
+              placeholder="Month Year"
               style={{
                 width: '50%',
               }}
-              value={details.completionMonth}
-            />
-          </RowWrapper>
-          <RowWrapper>
-            <Typography
-              width="50%"
-            >
-              Completion Year:
-            </Typography>
-            <TextField
-              onChange={(e) => handleChange(e, 'completionYear', field, index)}
-              variant="standard"
-              style={{
-                width: '50%',
-              }}
-              value={details.completionYear}
+              value={details.completionDate}
             />
           </RowWrapper>
           <RowWrapper>

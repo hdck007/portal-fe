@@ -4,17 +4,41 @@ import MobileStepper from '@mui/material/MobileStepper';
 import Button from '@mui/material/Button';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import { DetailsContext } from '../../Contexts/DetailsContext';
+import { useNavigate } from 'react-router-dom';
 
-export default function DotsMobileStepper({
-  handleBack,
-  handleNext,
-  activeStep,
-}: any) {
+export default function DotsMobileStepper(
+  { activeStep, handleSubmit }: any,
+) {
   const theme = useTheme();
-  const {
-    setIsLoading,
-  }: any = React.useContext(DetailsContext);
+  const navigate = useNavigate();
+
+  const handleNext = () => {
+    // handleSubmit();
+    switch (activeStep) {
+      case 0:
+        navigate('/details/2', { replace: true });
+        break;
+      case 1:
+        navigate('/details/3', { replace: true });
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleBack = () => {
+    // handleSubmit();
+    switch (activeStep) {
+      case 1:
+        navigate('/details', { replace: true });
+        break;
+      case 2:
+        navigate('/details/2', { replace: true });
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <MobileStepper

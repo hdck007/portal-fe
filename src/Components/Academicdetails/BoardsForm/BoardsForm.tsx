@@ -66,30 +66,16 @@ function BoardsForm({
             <Typography
               width="50%"
             >
-              Completion Month:
+              Completion Date:
             </Typography>
             <TextField
-              onChange={(e) => handleChange(e, 'completionMonth', index)}
+              onChange={(e) => handleChange(e, 'completionDate', index)}
               variant="standard"
+              placeholder="Month Year"
               style={{
                 width: '50%',
               }}
-              value={details.completionMonth}
-            />
-          </BoardsRowWrapper>
-          <BoardsRowWrapper>
-            <Typography
-              width="50%"
-            >
-              Completion Year:
-            </Typography>
-            <TextField
-              onChange={(e) => handleChange(e, 'completionYear', index)}
-              variant="standard"
-              style={{
-                width: '50%',
-              }}
-              value={details.completionYear}
+              value={details.completionDate}
             />
           </BoardsRowWrapper>
           <BoardsRowWrapper>
@@ -128,4 +114,4 @@ function BoardsForm({
   );
 }
 
-export default BoardsForm;
+export default React.memo(BoardsForm);

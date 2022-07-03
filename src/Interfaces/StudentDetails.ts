@@ -1,15 +1,13 @@
 export interface IBoardDetails{
   board: string;
-  completionMonth: null|string,
-  completionYear: null|number,
+  completionDate: any;
   marks: null|number,
   totalMarks: null|number,
 }
 
 export interface IDegreeDetails{
   semester: number;
-  completionMonth: null | string;
-  completionYear: null | number;
+  completionDate: any,
   marks: number | null;
   totalMarks: number | null;
   cgpa: number | null;
