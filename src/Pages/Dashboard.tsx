@@ -4,49 +4,29 @@ import {
   Button,
   Card,
   CircularProgress,
+  Pagination,
   TextField,
   Typography,
 } from '@mui/material';
 import Layout from '../Components/Layout/Layout';
 import BasicTable from '../Components/Tables';
-
-const selectionObject: any = {
-  roll_no: false,
-  first_name: false,
-  last_name: false,
-  middle_name: false,
-  email: false,
-  phone_number: false,
-  gender: false,
-  github: false,
-  linkedin: false,
-  no_of_offers: false,
-  department: false,
-  batch: false,
-  rait_email: false,
-};
-
-const beautifulLabels: any = {
-  roll_no: 'Roll No',
-  first_name: 'First Name',
-  last_name: 'Last Name',
-  middle_name: 'Middle Name',
-  email: 'Email',
-  phone_number: 'Phone Number',
-  gender: 'Gender',
-  github: 'Github',
-  linkedin: 'Linkedin',
-  no_of_offers: 'No of offers',
-  department: 'Department',
-  batch: 'Batch',
-  rait_email: 'Rait Email',
-};
+import { filterQueryObject } from '../Utils/helpers/filterQueryObject';
+import {
+  downloadCsvForGivenData,
+  downloadExcelForGivenData, getDashboarData,
+} from '../APIcalls/dashboardApis';
+import {
+  beautifulLabels,
+  selectionObject,
+} from '../Utils/helpers/constants/dashboardConstants';
 
 export default function Dashboard() {
   const [queryFields, setQueryFields] = useState<any>({});
   const [requiredFields, setRequiredFields] = useState<any>({});
   const [receivedData, setReceivedData] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isNextDisabled, setIsNextDisabled] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
     setQueryFields(selectionObject);
@@ -72,77 +52,50 @@ export default function Dashboard() {
     });
   };
 
+  const handleNext = () => {
+    const queryBody = filterQueryObject(queryFields, requiredFields);
+    setLoading(true);
+    getDashboarData(queryBody, page + 1)
+      .then((data) => {
+        setReceivedData(data?.results.students);
+        if (data.results.next < page) {
+          setIsNextDisabled(true);
+        } else {
+          setPage((prev) => prev + 1);
+          setIsNextDisabled(false);
+        }
+        setLoading(false);
+      });
+  };
+
+  const handlePrevious = () => {
+    const queryBody = filterQueryObject(queryFields, requiredFields);
+    setLoading(true);
+    getDashboarData(queryBody, page - 1)
+      .then((data) => {
+        setReceivedData(data?.results.students);
+        setLoading(false);
+        setPage((prev) => prev - 1);
+      });
+  };
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
-    const queryObject: any = {};
-    Object.keys(queryFields).forEach((key) => {
-      if (queryFields[key]) {
-        queryObject[key] = queryFields[key];
-      }
-    });
-    const fieldsObject: any = {};
-    Object.keys(requiredFields).forEach((key) => {
-      if (requiredFields[key]) {
-        fieldsObject[key] = true;
-      }
-    });
+    const queryBody = filterQueryObject(queryFields, requiredFields);
     setLoading(true);
-    fetch('https://tpc-backend-node.herokuapp.com/filter/dashboard', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        fields: {
-          ...fieldsObject,
-        },
-        queries: {
-          ...queryObject,
-        },
-      }),
-    })
-      .then((response) => response.json())
+    getDashboarData(queryBody, page)
       .then((data) => {
-        console.log(data.student);
-        setReceivedData(data.student);
+        setReceivedData(data?.results.students);
         setLoading(false);
       });
   };
 
   const handleDownload = () => {
-    fetch('https://tpc-backend-node.herokuapp.com/download', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        students: receivedData,
-      }),
-    }).then((res) => res.blob()).then((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'data.xlsx';
-      a.click();
-    });
+    downloadExcelForGivenData(receivedData);
   };
 
   const handleDownloadCSV = () => {
-    fetch('https://tpc-backend-node.herokuapp.com/downloadcsv', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        students: receivedData,
-      }),
-    }).then((res) => res.blob()).then((blob) => {
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'data.csv';
-      a.click();
-    });
+    downloadCsvForGivenData(receivedData);
   };
 
   return (
@@ -240,17 +193,48 @@ export default function Dashboard() {
         </Button>
       </form>
       {loading && (
-        <CircularProgress />
+        <CircularProgress
+          style={{
+            position: 'relative',
+            bottom: '1rem',
+            left: '50%',
+          }}
+        />
       )}
       {
         receivedData.length > 0 && (
           <>
+            <br />
+            <Button
+              style={{
+                background: 'rgba(159, 28, 53, 1)',
+              }}
+              variant="contained"
+              disabled={page === 1}
+              onClick={handlePrevious}
+            >
+              {'<'}
+            </Button>
+            &nbsp;&nbsp;
+            <Button
+              variant="contained"
+              disabled={isNextDisabled}
+              onClick={handleNext}
+              style={{
+                background: 'rgba(159, 28, 53, 1)',
+              }}
+            >
+              {'>'}
+            </Button>
+            <br />
+            <br />
             <BasicTable
               data={receivedData}
             />
             <Button
               style={{
                 marginTop: '1rem',
+                background: 'rgba(159, 28, 53, 1)',
               }}
               variant="contained"
               onClick={handleDownload}
@@ -261,6 +245,7 @@ export default function Dashboard() {
             <Button
               style={{
                 marginTop: '1rem',
+                background: 'rgba(159, 28, 53, 1)',
               }}
               variant="contained"
               onClick={handleDownloadCSV}
