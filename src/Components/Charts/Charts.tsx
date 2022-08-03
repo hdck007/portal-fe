@@ -82,7 +82,7 @@ export default function Charts() {
       .then((response) => response.json())
       .then((data) => setBranchWiseData(data));
 
-    fetch('http://tpc-backend-node.herokuapp.com/eligible/top10student')
+    fetch('https://tpc-backend-node.herokuapp.com/eligible/top10student')
       .then((response) => response.json())
       .then((data) => setTop10Data(data.top10studentplaced));
   }, []);
