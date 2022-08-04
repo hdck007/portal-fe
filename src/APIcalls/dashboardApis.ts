@@ -14,15 +14,13 @@ export const getDashboarData = async (queryBody: any, page: number) => {
   return result;
 };
 
-export const downloadExcelForGivenData = (receivedData: any) => {
+export const downloadExcelForGivenData = (queryBody: any) => {
   fetch('https://tpc-backend-node.herokuapp.com/download', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      students: receivedData,
-    }),
+    body: JSON.stringify(queryBody),
   }).then((res) => res.blob()).then((blob) => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -32,15 +30,13 @@ export const downloadExcelForGivenData = (receivedData: any) => {
   });
 };
 
-export const downloadCsvForGivenData = (receivedData: any) => {
+export const downloadCsvForGivenData = (queryBody: any) => {
   fetch('https://tpc-backend-node.herokuapp.com/downloadcsv', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      students: receivedData,
-    }),
+    body: JSON.stringify(queryBody),
   }).then((res) => res.blob()).then((blob) => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
