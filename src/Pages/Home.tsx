@@ -37,8 +37,6 @@ export default function Home() {
             text: data.status,
           });
         } else {
-          console.log(data);
-          console.log('ye', data.roll_no);
           setRole(data.role[0]);
           console.log(role);
           cookies.set('refresh', data.refresh);

@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable max-len */
 import React, { useState } from 'react';
@@ -175,7 +176,14 @@ export default function Pstudent() {
     };
     fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
       .then((response) => response.text())
-      .then((result) => console.log(result))
+      .then((result) => {
+        Swal.fire({
+          title: 'Error!',
+          text: 'Do you want to continue',
+          icon: 'error',
+        });
+        console.log(result);
+      })
       .catch((error) => console.log('error', error));
   };
   const url = `https://tpc-backend-node.herokuapp.com/image/upload/${roll}`;
@@ -212,8 +220,19 @@ export default function Pstudent() {
         // },
       };
       fetch(`${url}`, requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
+        .then((response) => {
+          response.text();
+          if (response.status === 200) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'err',
+            });
+          }
+        })
+        .then((result) => {
+          console.log(result);
+        })
         .catch((error) => console.log('error', error));
     }
   };

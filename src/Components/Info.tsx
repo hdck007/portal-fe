@@ -192,7 +192,14 @@ export default function Pstudent() {
       },
     };
     fetch('https://django-tpc.herokuapp.com/addStudent/', requestOptions)
-      .then((response) => response.text())
+      .then((response) => {
+        response.text();
+        Swal.fire({
+          icon: 'success',
+          title: 'SUCCESS',
+          text: 'Details updated successfully',
+        });
+      })
       .catch((error) => console.log('error', error));
   };
   const url = `https://tpc-backend-node.herokuapp.com/image/upload/${roll}`;
@@ -234,7 +241,14 @@ export default function Pstudent() {
       };
       fetch(`${url}`, requestOptions)
         .then((response) => response.text())
-        .then((result) => console.log(result))
+        .then((result) => {
+          console.log(result);
+          Swal.fire({
+            icon: 'success',
+            title: 'SUCCESS',
+            text: 'Image Uploaded successfully',
+          });
+        })
         .catch((error) => console.log('error', error));
     }
   };
