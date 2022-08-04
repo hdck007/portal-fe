@@ -66,8 +66,9 @@ function AdditionaldetailsWrapper() {
 				style={{ 
 					background: 'rgba(159, 28, 53, 1)',
 					border: 'none',
-					padding: '3px 10px',
-					borderRadius: '500px',
+					padding: '5px 20px',
+					borderRadius: '5px',
+					color: 'white',
 				}}
 			/>
 			{additionalDetails &&
