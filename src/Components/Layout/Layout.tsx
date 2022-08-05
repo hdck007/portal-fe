@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import {
+  styled,
   useTheme,
 } from '@mui/material/styles';
 import Box from '@mui/material/Box';
@@ -12,10 +13,23 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import Drawer from '@mui/material/Drawer';
 import AdminSidebarList from './AdminSidebarList/AdminSidebarList';
 import AppBar from './AppBar';
 import DrawerHeader from './DrawerHeader';
-import Drawer from './Drawer';
+import { drawerWidth } from '.';
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })<{
+  open?: boolean;
+}>(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
+  transition: theme.transitions.create('margin', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  marginLeft: `-${drawerWidth}px`,
+}));
 
 export default function Layout({ children }: any) {
   const theme = useTheme();
@@ -57,7 +71,20 @@ export default function Layout({ children }: any) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Drawer variant="permanent" open={open}>
+      <Drawer
+        sx={{
+          width: 240,
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: 240,
+            boxSizing: 'border-box',
+          },
+        }}
+        keepMounted
+        variant="persistent"
+        anchor="left"
+        open={open}
+      >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === 'rtl'
@@ -68,21 +95,12 @@ export default function Layout({ children }: any) {
         <Divider />
         <AdminSidebarList open={open} />
       </Drawer>
-      <Box
-        component="main"
-        sx={{ flexGrow: 1, p: 2 }}
-        style={{
-          width: '100%',
-          height: '100%',
-          backgroundColor: '#fafafa',
-          minHeight: '100vh',
-        }}
-      >
+      <Main>
         <DrawerHeader />
         <div>
           {children}
         </div>
-      </Box>
+      </Main>
     </Box>
   );
 }

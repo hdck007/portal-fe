@@ -91,11 +91,11 @@ export default function Dashboard() {
   };
 
   const handleDownload = () => {
-    downloadExcelForGivenData(receivedData);
+    downloadExcelForGivenData(filterQueryObject(queryFields, requiredFields));
   };
 
   const handleDownloadCSV = () => {
-    downloadCsvForGivenData(receivedData);
+    downloadCsvForGivenData(filterQueryObject(queryFields, requiredFields));
   };
 
   return (
@@ -239,7 +239,7 @@ export default function Dashboard() {
               variant="contained"
               onClick={handleDownload}
             >
-              download Excel
+              Download Excel
             </Button>
             &nbsp;&nbsp;&nbsp;
             <Button
@@ -250,7 +250,7 @@ export default function Dashboard() {
               variant="contained"
               onClick={handleDownloadCSV}
             >
-              download CSV
+              Download CSV
             </Button>
           </>
         )

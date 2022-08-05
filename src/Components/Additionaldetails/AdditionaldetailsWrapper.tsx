@@ -64,8 +64,11 @@ function AdditionaldetailsWrapper() {
 			<br />
 			<input type='submit'
 				style={{ 
-					backgroundColor: '#00bcd4',
+					background: 'rgba(159, 28, 53, 1)',
 					border: 'none',
+					padding: '5px 20px',
+					borderRadius: '5px',
+					color: 'white',
 				}}
 			/>
 			{additionalDetails &&
