@@ -39,12 +39,24 @@ export default function Home() {
         } else {
           setRole(data.role[0]);
           console.log(role);
-          cookies.set('refresh', data.refresh);
-          cookies.set('access', data.access);
-          cookies.set('roll_no', data.roll_no);
           if (role[0] === 'Student') {
+            Swal.fire({
+              icon: 'success',
+              title: 'SUCCESS',
+              text: 'Logged In Successfully',
+            });
+            cookies.set('access', data.access);
+            cookies.set('roll_no', data.roll_no);
+            cookies.set('refresh', data.refresh);
             router('/vprofile', { replace: true });
           } else {
+            Swal.fire({
+              icon: 'success',
+              title: 'SUCCESS',
+              text: 'Logged In Successfully',
+            });
+            cookies.set('aaccess', data.access);
+            cookies.set('refresh', data.refresh);
             router('/dashboard', { replace: true });
           }
         }

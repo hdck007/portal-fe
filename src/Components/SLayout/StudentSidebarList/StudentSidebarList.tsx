@@ -19,11 +19,18 @@ export default function StudentSidebarList({ open }: IStudentSidebarList) {
   const navigate = useNavigate();
   const logout:any = () => {
     const cookies = new Cookies();
-    cookies.remove('jwt');
-    cookies.remove('roll');
-    window.alert('LOGGED OUT SUCCESSFULLY');
-    navigate('/');
-    window.location.reload();
+    cookies.remove('access');
+    cookies.remove('roll_no');
+    cookies.remove('refresh');
+    Swal.fire({
+      icon: 'success',
+      title: 'SUCCESS',
+      text: 'Logged Out Successfully',
+    });
+    setTimeout(() => {
+      navigate('/');
+      window.location.reload();
+    }, 3000);
   };
   return (
     <>

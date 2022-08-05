@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 import React from 'react';
 import {
   Divider, List, ListItemButton, ListItemIcon, ListItemText,
@@ -19,11 +20,17 @@ export default function StudentSidebarList({ open }: IStudentSidebarList) {
   const navigate = useNavigate();
   const logout:any = () => {
     const cookies = new Cookies();
-    cookies.remove('jwt');
-    cookies.remove('roll');
-    window.alert('LOGGED OUT SUCCESSFULLY');
-    navigate('/');
-    window.location.reload();
+    cookies.remove('admin');
+    cookies.remove('refresh');
+    Swal.fire({
+      icon: 'success',
+      title: 'SUCCESS',
+      text: 'Logged Out Successfully',
+    });
+    setTimeout(() => {
+      navigate('/');
+      window.location.reload();
+    }, 3000);
   };
   return (
     <>

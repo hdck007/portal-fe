@@ -40,13 +40,29 @@ function Login() {
           });
         } else {
           setRole(data.role[0]);
-          cookies.set('refresh', data.refresh);
-          cookies.set('access', data.access);
-          cookies.set('roll_no', data.roll_no);
           if (data.role[0] === 'Student') {
-            router('/vprofile', { replace: true });
+            cookies.set('refresh', data.refresh);
+            cookies.set('access', data.access);
+            cookies.set('roll_no', data.roll_no);
+            Swal.fire({
+              icon: 'success',
+              title: 'SUCCESS',
+              text: 'Logged In Successfully',
+            });
+            setTimeout(() => {
+              router('/vprofile', { replace: true });
+            }, 3000);
           } else {
-            router('/dashboard', { replace: true });
+            cookies.set('refresh', data.refresh);
+            cookies.set('admin', data.access);
+            Swal.fire({
+              icon: 'success',
+              title: 'SUCCESS',
+              text: 'Logged In Successfully',
+            });
+            setTimeout(() => {
+              router('/dashboard', { replace: true });
+            }, 3000);
           }
         }
       }).catch((error) => {
