@@ -326,9 +326,9 @@ export default function Pstudent() {
             name="religion"
             value={gender}
           >
-            <MenuItem value={10}>Male</MenuItem>
-            <MenuItem value={20}>Female</MenuItem>
-            <MenuItem value={30}>Other</MenuItem>
+            <MenuItem value="M">Male</MenuItem>
+            <MenuItem value="F">Female</MenuItem>
+            <MenuItem value="O">Other</MenuItem>
           </Select>
         </div>
       </Card>
